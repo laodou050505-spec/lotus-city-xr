@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/CMakeLists.txt",
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Applications/Unity/Hub/Editor/6000.5.5f1/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/.utmp/Debug/15371m5f/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Applications/Unity/Hub/Editor/6000.5.5f1/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/.utmp/Debug/15371m5f/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "swappywrapper::@7e25bd1f32ce224db4e9": {
+      "artifactName": "swappywrapper",
+      "abi": "arm64-v8a",
+      "output": "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/15371m5f/obj/arm64-v8a/libswappywrapper.so",
+      "runtimeFiles": []
+    }
+  }
+}

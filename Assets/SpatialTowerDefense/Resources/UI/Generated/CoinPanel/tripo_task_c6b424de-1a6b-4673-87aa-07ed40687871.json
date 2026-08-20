@@ -1,0 +1,19 @@
+{
+  "task_id": "c6b424de-1a6b-4673-87aa-07ed40687871",
+  "status": "success",
+  "type": "image_to_image",
+  "progress": 100,
+  "input": {
+    "prompt": "Use the reference scene only for its art direction and materials. Create one front-facing horizontal tower-defense HUD panel, ancient Chinese mountain temple style, dark ink-green jade lacquer body, aged bronze rim, subtle moss and carved lotus details, a round lotus coin medallion on the left, generous empty dark center for a dynamic gold value, clean crisp silhouette, orthographic game UI asset, isolated on a plain neutral background. No words, no letters, no numbers, no scene, no characters, no perspective mockup.",
+    "model_version": "banana"
+  },
+  "output": {
+    "generated_image_url": "https://tripo-data.rg1.data.tripo3d.com/tcli_c6fae067c9334bd9af3d07029c0e7b00/20260806/c6b424de-1a6b-4673-87aa-07ed40687871/generated_image.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly90cmlwby1kYXRhLnJnMS5kYXRhLnRyaXBvM2QuY29tL3RjbGlfYzZmYWUwNjdjOTMzNGJkOWFmM2QwNzAyOWMwZTdiMDAvMjAyNjA4MDYvYzZiNDI0ZGUtMWE2Yi00NjczLTg3YWEtMDdlZDQwNjg3ODcxL2dlbmVyYXRlZF9pbWFnZS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODYxMTE0MjV9fX1dfQ__&Signature=TU38r9jZUmY5Ii72pU8YeLyqT3S-jFkVuD73fmS7SdOBS0--hVmlamE3~o2wgsqZkBQFVd5Ew2T2o~LnxjZspRkAHRipehIASh2jOdwkkxxzh1XxJsIujyspogTM0ZmLsWncSvFq79zoxTw5tbSpZTxAkds76X75fldFKzwp0TmNLHyqRdhqp7PI4p0GzWi~ozOrJg-T~3rpkRcHEBB~75gM~1eLZFGyUx6WM9uvTwmpabbRZ7ek8D2d6kPUfxn8SI8KdGNrcfMWMs7N0QeRedsLYP0wV3TxxfeTiv97xNLl9Rd5acGDDgbYHyGBnThH4CBRTZm586N9KKbLu77cyQ__&Key-Pair-Id=K1676C64NMVM2J"
+  },
+  "created_at": "2026-08-06T14:03:21.761058Z",
+  "completed_at": "2026-08-06T14:03:42.409449Z",
+  "credits_consumed": 5.0,
+  "downloaded_files": [
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Resources/UI/Generated/CoinPanel/01_generated_image_url.png"
+  ]
+}

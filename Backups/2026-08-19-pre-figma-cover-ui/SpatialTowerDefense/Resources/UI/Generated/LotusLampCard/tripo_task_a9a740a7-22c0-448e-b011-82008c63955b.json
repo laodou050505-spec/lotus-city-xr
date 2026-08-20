@@ -1,0 +1,19 @@
+{
+  "task_id": "a9a740a7-22c0-448e-b011-82008c63955b",
+  "status": "success",
+  "type": "image_to_image",
+  "progress": 100,
+  "input": {
+    "prompt": "Use the reference scene only for its art direction and materials. Create one front-facing vertical tower-defense weapon card for a Lotus Dedication Lamp tower, ancient Chinese temple style, dark jade frame, pale weathered stone inset, aged bronze corners, centered carved jade lotus lamp with a quiet cyan-green flame, subtle moss, an empty dark label band at the bottom for Unity text, crisp readable icon, orthographic game UI asset, isolated on a transparent background if supported. No words, no letters, no numbers, no scene, no characters, no perspective mockup.",
+    "model_version": "banana"
+  },
+  "output": {
+    "generated_image_url": "https://tripo-data.rg1.data.tripo3d.com/tcli_c6fae067c9334bd9af3d07029c0e7b00/20260806/a9a740a7-22c0-448e-b011-82008c63955b/generated_image.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly90cmlwby1kYXRhLnJnMS5kYXRhLnRyaXBvM2QuY29tL3RjbGlfYzZmYWUwNjdjOTMzNGJkOWFmM2QwNzAyOWMwZTdiMDAvMjAyNjA4MDYvYTlhNzQwYTctMjJjMC00NDhlLWIwMTEtODIwMDhjNjM5NTViL2dlbmVyYXRlZF9pbWFnZS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODYxMTEzMTB9fX1dfQ__&Signature=KyFsIBUsU5rGd-JM47ZElP7mp1Yz2WMgNF6Ou9wn2idMwSd-Nd~qGxbT8vrxUYvN14SUJ5cotv9Y37YbntB5W4XfLhQNXw-BxTbbiuLHqccKQ5M8kN1q3ZLfB8S9wJRTGr7QOMTa9NGsXP7-FEvi2z1YZ76z2mD7JKR3gTe5Ze-1ogiHCXV6gGJxWiTHTPB3kuE~uTRPCkwmFf5Nt2mHx2KhXT-IgdJlR~uDDfr5tKNXoi8oge8jxHslHXrLrGaAO9I92LSq9nwBVMw173otZtAxPmPlAeg~VfX64GjrhuciKho09YQB~Fkh~UTD1tOVZihmo-6sxVgT64-syrrhqg__&Key-Pair-Id=K1676C64NMVM2J"
+  },
+  "created_at": "2026-08-06T14:01:29.602283Z",
+  "completed_at": "2026-08-06T14:01:49.261512Z",
+  "credits_consumed": 5.0,
+  "downloaded_files": [
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Resources/UI/Generated/LotusLampCard/01_generated_image_url.png"
+  ]
+}

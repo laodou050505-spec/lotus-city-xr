@@ -1,0 +1,5 @@
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/.utmp/Debug/15371m5f/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/.utmp/Debug/15371m5f/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/.utmp/Debug/15371m5f/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/.utmp/Debug/15371m5f/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/.utmp/Debug/15371m5f/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir

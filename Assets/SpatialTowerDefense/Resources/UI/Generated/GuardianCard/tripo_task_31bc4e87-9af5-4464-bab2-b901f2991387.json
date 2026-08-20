@@ -1,0 +1,19 @@
+{
+  "task_id": "31bc4e87-9af5-4464-bab2-b901f2991387",
+  "status": "success",
+  "type": "image_to_image",
+  "progress": 100,
+  "input": {
+    "prompt": "Use the reference scene only for its art direction and materials. Create one front-facing vertical tower-defense weapon card for a Sutra Guardian tower, ancient Chinese temple style, dark jade frame, pale weathered stone inset, aged bronze corners, centered stylized bronze dharma wheel and guardian pillar, restrained warm amber glow, subtle moss, an empty dark label band at the bottom for Unity text, crisp readable icon, orthographic game UI asset, isolated on a plain neutral background. No words, no letters, no numbers, no scene, no characters, no perspective mockup.",
+    "model_version": "banana"
+  },
+  "output": {
+    "generated_image_url": "https://tripo-data.rg1.data.tripo3d.com/tcli_c6fae067c9334bd9af3d07029c0e7b00/20260806/31bc4e87-9af5-4464-bab2-b901f2991387/generated_image.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly90cmlwby1kYXRhLnJnMS5kYXRhLnRyaXBvM2QuY29tL3RjbGlfYzZmYWUwNjdjOTMzNGJkOWFmM2QwNzAyOWMwZTdiMDAvMjAyNjA4MDYvMzFiYzRlODctOWFmNS00NDY0LWJhYjItYjkwMWYyOTkxMzg3L2dlbmVyYXRlZF9pbWFnZS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODYxMTE1NDh9fX1dfQ__&Signature=TSrFQ88IPZtrjkJuCgn7iBjVcP~r3XdDnKZf1zQUbWV4uDKs1Cgq6ZtbJRtfa33kzFc1JARGFYYinnHz3dYYVwqmoM5cuqedhhYilR615tPiPkqzDYdPDqVWWNT0YS2WPYuRGBGcDAXrT-rkJaaiNG0vIm8M3-0kghpNGpgiPTyJ5P3Vqi8WC6pkO8OC9fDWp1LPXp1Onnic0KJ~xkqRrjWwQviAKtGO6vMDK0CIiTHlx6n63unOrBdJX1~JX9Thyu40336-GTYukR1yNrmHOm6w7M0dSQmOVFFzxCvqGSFJ5V0dW1c-2dwPhQfFlqWn65cfI5LAd4dcWUOl26JfVA__&Key-Pair-Id=K1676C64NMVM2J"
+  },
+  "created_at": "2026-08-06T14:05:24.455237Z",
+  "completed_at": "2026-08-06T14:05:44.893278Z",
+  "credits_consumed": 5.0,
+  "downloaded_files": [
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Resources/UI/Generated/GuardianCard/01_generated_image_url.png"
+  ]
+}

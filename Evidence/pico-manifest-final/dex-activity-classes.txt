@@ -1,0 +1,285 @@
+Evidence/pico-manifest-final/classes2.dex:4:  Class descriptor  : 'Lcom/unity3d/player/UnityPlayerActivity;'
+Evidence/pico-manifest-final/classes2.dex:13:    #0              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:18:    #0              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:27:00071c:                                        |[00071c] com.unity3d.player.UnityPlayerActivity.<init>:()V
+Evidence/pico-manifest-final/classes2.dex:34:        0x0000 - 0x0004 reg=0 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:37:    #0              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:46:0005fc:                                        |[0005fc] com.unity3d.player.UnityPlayerActivity.dispatchKeyEvent:(Landroid/view/KeyEvent;)Z
+Evidence/pico-manifest-final/classes2.dex:51:00061a: 5420 0000                              |0007: iget-object v0, v2, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:64:        0x0000 - 0x0013 reg=2 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:67:    #1              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:76:0006d4:                                        |[0006d4] com.unity3d.player.UnityPlayerActivity.getUnityPlayerConnection:()Lcom/unity3d/player/UnityPlayer;
+Evidence/pico-manifest-final/classes2.dex:77:0006e4: 6e10 1a00 0100                         |0000: invoke-virtual {v1}, Lcom/unity3d/player/UnityPlayerActivity;.getUnityPlayerConnection:()Lcom/unity3d/player/UnityPlayerForActivityOrService; // method@001a
+Evidence/pico-manifest-final/classes2.dex:84:        0x0000 - 0x0005 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:86:    #2              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:95:0006f0:                                        |[0006f0] com.unity3d.player.UnityPlayerActivity.getUnityPlayerConnection:()Lcom/unity3d/player/UnityPlayerForActivityOrService;
+Evidence/pico-manifest-final/classes2.dex:96:000700: 5410 0000                              |0000: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:102:        0x0000 - 0x0003 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:104:    #3              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:113:000734:                                        |[000734] com.unity3d.player.UnityPlayerActivity.onConfigurationChanged:(Landroid/content/res/Configuration;)V
+Evidence/pico-manifest-final/classes2.dex:115:00074a: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:124:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:127:    #4              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:136:000758:                                        |[000758] com.unity3d.player.UnityPlayerActivity.onCreate:(Landroid/os/Bundle;)V
+Evidence/pico-manifest-final/classes2.dex:138:00076a: 6e20 3000 0300                         |0001: invoke-virtual {v3, v0}, Lcom/unity3d/player/UnityPlayerActivity;.requestWindowFeature:(I)Z // method@0030
+Evidence/pico-manifest-final/classes2.dex:140:000776: 6e10 1800 0300                         |0007: invoke-virtual {v3}, Lcom/unity3d/player/UnityPlayerActivity;.getIntent:()Landroid/content/Intent; // method@0018
+Evidence/pico-manifest-final/classes2.dex:145:00078a: 6e20 3300 0300                         |0011: invoke-virtual {v3, v0}, Lcom/unity3d/player/UnityPlayerActivity;.updateUnityCommandLineArguments:(Ljava/lang/String;)Ljava/lang/String; // method@0033
+Evidence/pico-manifest-final/classes2.dex:147:000792: 6e10 1800 0300                         |0015: invoke-virtual {v3}, Lcom/unity3d/player/UnityPlayerActivity;.getIntent:()Landroid/content/Intent; // method@0018
+Evidence/pico-manifest-final/classes2.dex:152:0007aa: 5b31 0000                              |0021: iput-object v1, v3, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:153:0007ae: 5431 0000                              |0023: iget-object v1, v3, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:156:0007ba: 6e20 3100 1300                         |0029: invoke-virtual {v3, v1}, Lcom/unity3d/player/UnityPlayerActivity;.setContentView:(Landroid/view/View;)V // method@0031
+Evidence/pico-manifest-final/classes2.dex:157:0007c0: 5431 0000                              |002c: iget-object v1, v3, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:174:        0x0000 - 0x0036 reg=3 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:177:    #5              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:186:0007d4:                                        |[0007d4] com.unity3d.player.UnityPlayerActivity.onDestroy:()V
+Evidence/pico-manifest-final/classes2.dex:187:0007e4: 5410 0000                              |0000: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:197:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:199:    #6              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:208:000634:                                        |[000634] com.unity3d.player.UnityPlayerActivity.onGenericMotionEvent:(Landroid/view/MotionEvent;)Z
+Evidence/pico-manifest-final/classes2.dex:209:000644: 5410 0000                              |0000: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:219:        0x0000 - 0x000b reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:222:    #7              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:231:00065c:                                        |[00065c] com.unity3d.player.UnityPlayerActivity.onKeyDown:(ILandroid/view/KeyEvent;)Z
+Evidence/pico-manifest-final/classes2.dex:232:00066c: 5410 0000                              |0000: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:242:        0x0000 - 0x000b reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:246:    #8              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:255:000684:                                        |[000684] com.unity3d.player.UnityPlayerActivity.onKeyUp:(ILandroid/view/KeyEvent;)Z
+Evidence/pico-manifest-final/classes2.dex:256:000694: 5410 0000                              |0000: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:266:        0x0000 - 0x000b reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:270:    #9              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:279:0007f8:                                        |[0007f8] com.unity3d.player.UnityPlayerActivity.onLowMemory:()V
+Evidence/pico-manifest-final/classes2.dex:281:00080e: 5420 0000                              |0003: iget-object v0, v2, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:291:        0x0000 - 0x000b reg=2 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:293:    #10              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:302:000820:                                        |[000820] com.unity3d.player.UnityPlayerActivity.onMultiWindowModeChanged:(ZLandroid/content/res/Configuration;)V
+Evidence/pico-manifest-final/classes2.dex:304:000836: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:313:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:317:    #11              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:326:000844:                                        |[000844] com.unity3d.player.UnityPlayerActivity.onNewIntent:(Landroid/content/Intent;)V
+Evidence/pico-manifest-final/classes2.dex:327:000854: 6e20 3200 2100                         |0000: invoke-virtual {v1, v2}, Lcom/unity3d/player/UnityPlayerActivity;.setIntent:(Landroid/content/Intent;)V // method@0032
+Evidence/pico-manifest-final/classes2.dex:328:00085a: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:337:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:340:    #12              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:349:000868:                                        |[000868] com.unity3d.player.UnityPlayerActivity.onPause:()V
+Evidence/pico-manifest-final/classes2.dex:351:00087e: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:360:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:362:    #13              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:371:00088c:                                        |[00088c] com.unity3d.player.UnityPlayerActivity.onRequestPermissionsResult:(I[Ljava/lang/String;[I)V
+Evidence/pico-manifest-final/classes2.dex:373:0008a2: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:382:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:387:    #14              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:396:0008b0:                                        |[0008b0] com.unity3d.player.UnityPlayerActivity.onResume:()V
+Evidence/pico-manifest-final/classes2.dex:398:0008c6: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:407:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:409:    #15              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:418:0008d4:                                        |[0008d4] com.unity3d.player.UnityPlayerActivity.onStart:()V
+Evidence/pico-manifest-final/classes2.dex:420:0008ea: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:429:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:431:    #16              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:440:0008f8:                                        |[0008f8] com.unity3d.player.UnityPlayerActivity.onStop:()V
+Evidence/pico-manifest-final/classes2.dex:442:00090e: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:451:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:453:    #17              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:462:0006ac:                                        |[0006ac] com.unity3d.player.UnityPlayerActivity.onTouchEvent:(Landroid/view/MotionEvent;)Z
+Evidence/pico-manifest-final/classes2.dex:463:0006bc: 5410 0000                              |0000: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:473:        0x0000 - 0x000b reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:476:    #18              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:485:00091c:                                        |[00091c] com.unity3d.player.UnityPlayerActivity.onTrimMemory:(I)V
+Evidence/pico-manifest-final/classes2.dex:489:00093a: 5420 0000                              |0007: iget-object v0, v2, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:493:00094a: 5420 0000                              |000f: iget-object v0, v2, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:497:00095a: 5420 0000                              |0017: iget-object v0, v2, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:514:        0x0000 - 0x002e reg=2 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:517:    #19              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:526:000988:                                        |[000988] com.unity3d.player.UnityPlayerActivity.onUnityPlayerQuitted:()V
+Evidence/pico-manifest-final/classes2.dex:532:        0x0000 - 0x0001 reg=0 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:534:    #20              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:543:00099c:                                        |[00099c] com.unity3d.player.UnityPlayerActivity.onUnityPlayerUnloaded:()V
+Evidence/pico-manifest-final/classes2.dex:545:0009ae: 6e20 1b00 0100                         |0001: invoke-virtual {v1, v0}, Lcom/unity3d/player/UnityPlayerActivity;.moveTaskToBack:(Z)Z // method@001b
+Evidence/pico-manifest-final/classes2.dex:552:        0x0000 - 0x0005 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:554:    #21              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:563:0009b8:                                        |[0009b8] com.unity3d.player.UnityPlayerActivity.onWindowFocusChanged:(Z)V
+Evidence/pico-manifest-final/classes2.dex:565:0009ce: 5410 0000                              |0003: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:574:        0x0000 - 0x0009 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:577:    #22              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:586:0009dc:                                        |[0009dc] com.unity3d.player.UnityPlayerActivity.requestPermissions:(Lcom/unity3d/player/PermissionRequest;)V
+Evidence/pico-manifest-final/classes2.dex:587:0009ec: 5410 0000                              |0000: iget-object v0, v1, Lcom/unity3d/player/UnityPlayerActivity;.mUnityPlayer:Lcom/unity3d/player/UnityPlayerForActivityOrService; // field@0000
+Evidence/pico-manifest-final/classes2.dex:595:        0x0000 - 0x0006 reg=1 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:598:    #23              : (in Lcom/unity3d/player/UnityPlayerActivity;)
+Evidence/pico-manifest-final/classes2.dex:607:000708:                                        |[000708] com.unity3d.player.UnityPlayerActivity.updateUnityCommandLineArguments:(Ljava/lang/String;)Ljava/lang/String;
+Evidence/pico-manifest-final/classes2.dex:613:        0x0000 - 0x0001 reg=0 this Lcom/unity3d/player/UnityPlayerActivity;
+Evidence/pico-manifest-final/classes2.dex:616:  source_file_idx   : 27 (UnityPlayerActivity.java)
+Evidence/pico-manifest-final/classes5.dex:4:  Class descriptor  : 'Lcom/unity3d/player/appui/AppUIActivity$1;'
+Evidence/pico-manifest-final/classes5.dex:10:    #0              : (in Lcom/unity3d/player/appui/AppUIActivity$1;)
+Evidence/pico-manifest-final/classes5.dex:12:      type          : 'Lcom/unity3d/player/appui/AppUIActivity;'
+Evidence/pico-manifest-final/classes5.dex:15:    #0              : (in Lcom/unity3d/player/appui/AppUIActivity$1;)
+Evidence/pico-manifest-final/classes5.dex:17:      type          : '(Lcom/unity3d/player/appui/AppUIActivity;Landroid/os/Handler;)V'
+Evidence/pico-manifest-final/classes5.dex:24:0009cc:                                        |[0009cc] com.unity3d.player.appui.AppUIActivity$1.<init>:(Lcom/unity3d/player/appui/AppUIActivity;Landroid/os/Handler;)V
+Evidence/pico-manifest-final/classes5.dex:25:0009dc: 5b01 0700                              |0000: iput-object v1, v0, Lcom/unity3d/player/appui/AppUIActivity$1;.this$0:Lcom/unity3d/player/appui/AppUIActivity; // field@0007
+Evidence/pico-manifest-final/classes5.dex:32:        0x0000 - 0x0006 reg=0 this Lcom/unity3d/player/appui/AppUIActivity$1;
+Evidence/pico-manifest-final/classes5.dex:33:        0x0000 - 0x0006 reg=1 this$0 Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:37:    #0              : (in Lcom/unity3d/player/appui/AppUIActivity$1;)
+Evidence/pico-manifest-final/classes5.dex:46:0009b8:                                        |[0009b8] com.unity3d.player.appui.AppUIActivity$1.deliverSelfNotifications:()Z
+Evidence/pico-manifest-final/classes5.dex:53:        0x0000 - 0x0002 reg=1 this Lcom/unity3d/player/appui/AppUIActivity$1;
+Evidence/pico-manifest-final/classes5.dex:55:    #1              : (in Lcom/unity3d/player/appui/AppUIActivity$1;)
+Evidence/pico-manifest-final/classes5.dex:64:0009e8:                                        |[0009e8] com.unity3d.player.appui.AppUIActivity$1.onChange:(Z)V
+Evidence/pico-manifest-final/classes5.dex:66:0009fe: 5440 0700                              |0003: iget-object v0, v4, Lcom/unity3d/player/appui/AppUIActivity$1;.this$0:Lcom/unity3d/player/appui/AppUIActivity; // field@0007
+Evidence/pico-manifest-final/classes5.dex:67:000a02: 6e10 2c00 0000                         |0005: invoke-virtual {v0}, Lcom/unity3d/player/appui/AppUIActivity;.getApplicationContext:()Landroid/content/Context; // method@002c
+Evidence/pico-manifest-final/classes5.dex:69:000a0a: 7110 2300 0000                         |0009: invoke-static {v0}, Lcom/unity3d/player/appui/AppUIActivity;.IsRemoveAnimationEnabled:(Landroid/content/Context;)Z // method@0023
+Evidence/pico-manifest-final/classes5.dex:71:000a12: 5441 0700                              |000d: iget-object v1, v4, Lcom/unity3d/player/appui/AppUIActivity$1;.this$0:Lcom/unity3d/player/appui/AppUIActivity; // field@0007
+Evidence/pico-manifest-final/classes5.dex:72:000a16: 5511 0d00                              |000f: iget-boolean v1, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentReduceMotion:Z // field@000d
+Evidence/pico-manifest-final/classes5.dex:74:000a1e: 5441 0700                              |0013: iget-object v1, v4, Lcom/unity3d/player/appui/AppUIActivity$1;.this$0:Lcom/unity3d/player/appui/AppUIActivity; // field@0007
+Evidence/pico-manifest-final/classes5.dex:75:000a22: 5c10 0d00                              |0015: iput-boolean v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentReduceMotion:Z // field@000d
+Evidence/pico-manifest-final/classes5.dex:91:        0x0000 - 0x0021 reg=4 this Lcom/unity3d/player/appui/AppUIActivity$1;
+Evidence/pico-manifest-final/classes5.dex:94:  source_file_idx   : 4 (AppUIActivity.java)
+Evidence/pico-manifest-final/classes5.dex:97:  Class descriptor  : 'Lcom/unity3d/player/appui/AppUIActivity;'
+Evidence/pico-manifest-final/classes5.dex:99:  Superclass        : 'Lcom/unity3d/player/UnityPlayerActivity;'
+Evidence/pico-manifest-final/classes5.dex:103:    #0              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:107:    #1              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:111:    #2              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:115:    #3              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:119:    #4              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:123:    #5              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:127:    #6              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:131:    #7              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:135:    #8              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:140:    #0              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:149:000c60:                                        |[000c60] com.unity3d.player.appui.AppUIActivity.<init>:()V
+Evidence/pico-manifest-final/classes5.dex:150:000c70: 7010 1300 0200                         |0000: invoke-direct {v2}, Lcom/unity3d/player/UnityPlayerActivity;.<init>:()V // method@0013
+Evidence/pico-manifest-final/classes5.dex:152:000c78: 5920 0f00                              |0004: iput v0, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentUiMode:I // field@000f
+Evidence/pico-manifest-final/classes5.dex:154:000c80: 5921 0a00                              |0008: iput v1, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentFontScale:F // field@000a
+Evidence/pico-manifest-final/classes5.dex:155:000c84: 5921 0e00                              |000a: iput v1, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentScaledDensity:F // field@000e
+Evidence/pico-manifest-final/classes5.dex:156:000c88: 5921 0800                              |000c: iput v1, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensity:F // field@0008
+Evidence/pico-manifest-final/classes5.dex:158:000c90: 5921 0900                              |0010: iput v1, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensityDpi:I // field@0009
+Evidence/pico-manifest-final/classes5.dex:159:000c94: 5c20 0b00                              |0012: iput-boolean v0, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentHighContrast:Z // field@000b
+Evidence/pico-manifest-final/classes5.dex:160:000c98: 5c20 0d00                              |0014: iput-boolean v0, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentReduceMotion:Z // field@000d
+Evidence/pico-manifest-final/classes5.dex:161:000c9c: 5920 0c00                              |0016: iput v0, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentLayoutDirection:I // field@000c
+Evidence/pico-manifest-final/classes5.dex:175:        0x0000 - 0x0019 reg=2 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:177:    #1              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:186:000c18:                                        |[000c18] com.unity3d.player.appui.AppUIActivity.GetLayoutDirection:(Landroid/content/res/Configuration;)I
+Evidence/pico-manifest-final/classes5.dex:207:    #2              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:216:000a54:                                        |[000a54] com.unity3d.player.appui.AppUIActivity.IsHighContrastEnabled:(Landroid/content/Context;)Z
+Evidence/pico-manifest-final/classes5.dex:277:    #3              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:286:000b2c:                                        |[000b2c] com.unity3d.player.appui.AppUIActivity.IsRemoveAnimationEnabled:(Landroid/content/Context;)Z
+Evidence/pico-manifest-final/classes5.dex:324:    #0              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:333:000ca4:                                        |[000ca4] com.unity3d.player.appui.AppUIActivity.AddReduceMotionChangeListener:()V
+Evidence/pico-manifest-final/classes5.dex:334:000cb4: 2200 1700                              |0000: new-instance v0, Lcom/unity3d/player/appui/AppUIActivity$1; // type@0017
+Evidence/pico-manifest-final/classes5.dex:337:000cc2: 7030 1600 4001                         |0007: invoke-direct {v0, v4, v1}, Lcom/unity3d/player/appui/AppUIActivity$1;.<init>:(Lcom/unity3d/player/appui/AppUIActivity;Landroid/os/Handler;)V // method@0016
+Evidence/pico-manifest-final/classes5.dex:338:000cc8: 6e10 2d00 0400                         |000a: invoke-virtual {v4}, Lcom/unity3d/player/appui/AppUIActivity;.getContentResolver:()Landroid/content/ContentResolver; // method@002d
+Evidence/pico-manifest-final/classes5.dex:354:        0x0000 - 0x0019 reg=4 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:356:    #1              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:365:000bb8:                                        |[000bb8] com.unity3d.player.appui.AppUIActivity.Density:()F
+Evidence/pico-manifest-final/classes5.dex:366:000bc8: 5210 0800                              |0000: iget v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensity:F // field@0008
+Evidence/pico-manifest-final/classes5.dex:372:        0x0000 - 0x0003 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:374:    #2              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:383:000c00:                                        |[000c00] com.unity3d.player.appui.AppUIActivity.DensityDpi:()I
+Evidence/pico-manifest-final/classes5.dex:384:000c10: 5210 0900                              |0000: iget v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensityDpi:I // field@0009
+Evidence/pico-manifest-final/classes5.dex:390:        0x0000 - 0x0003 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:392:    #3              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:401:000bd0:                                        |[000bd0] com.unity3d.player.appui.AppUIActivity.FontScale:()F
+Evidence/pico-manifest-final/classes5.dex:402:000be0: 5210 0a00                              |0000: iget v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentFontScale:F // field@000a
+Evidence/pico-manifest-final/classes5.dex:408:        0x0000 - 0x0003 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:410:    #4              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:419:000a3c:                                        |[000a3c] com.unity3d.player.appui.AppUIActivity.HighContrast:()Z
+Evidence/pico-manifest-final/classes5.dex:420:000a4c: 5510 0b00                              |0000: iget-boolean v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentHighContrast:Z // field@000b
+Evidence/pico-manifest-final/classes5.dex:426:        0x0000 - 0x0003 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:428:    #5              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:437:000ae8:                                        |[000ae8] com.unity3d.player.appui.AppUIActivity.IsNightModeDefined:()Z
+Evidence/pico-manifest-final/classes5.dex:438:000af8: 5210 0f00                              |0000: iget v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentUiMode:I // field@000f
+Evidence/pico-manifest-final/classes5.dex:448:        0x0000 - 0x0008 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:450:    #6              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:459:000b08:                                        |[000b08] com.unity3d.player.appui.AppUIActivity.IsNightModeEnabled:()Z
+Evidence/pico-manifest-final/classes5.dex:460:000b18: 5220 0f00                              |0000: iget v0, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentUiMode:I // field@000f
+Evidence/pico-manifest-final/classes5.dex:471:        0x0000 - 0x000a reg=2 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:473:    #7              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:482:000c48:                                        |[000c48] com.unity3d.player.appui.AppUIActivity.LayoutDirection:()I
+Evidence/pico-manifest-final/classes5.dex:483:000c58: 5210 0c00                              |0000: iget v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentLayoutDirection:I // field@000c
+Evidence/pico-manifest-final/classes5.dex:489:        0x0000 - 0x0003 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:491:    #8              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:500:000ba0:                                        |[000ba0] com.unity3d.player.appui.AppUIActivity.ReduceMotion:()Z
+Evidence/pico-manifest-final/classes5.dex:501:000bb0: 5510 0d00                              |0000: iget-boolean v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentReduceMotion:Z // field@000d
+Evidence/pico-manifest-final/classes5.dex:507:        0x0000 - 0x0003 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:509:    #9              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:518:000ce8:                                        |[000ce8] com.unity3d.player.appui.AppUIActivity.RunHapticFeedback:(I)V
+Evidence/pico-manifest-final/classes5.dex:523:000d06: 6e40 2900 1302                         |0007: invoke-virtual {v3, v1, v2, v0}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:(JI)V // method@0029
+Evidence/pico-manifest-final/classes5.dex:526:000d12: 6e20 2a00 0300                         |000d: invoke-virtual {v3, v0}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:([J)V // method@002a
+Evidence/pico-manifest-final/classes5.dex:529:000d1e: 6e20 2a00 0300                         |0013: invoke-virtual {v3, v0}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:([J)V // method@002a
+Evidence/pico-manifest-final/classes5.dex:532:000d2a: 6e20 2a00 0300                         |0019: invoke-virtual {v3, v0}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:([J)V // method@002a
+Evidence/pico-manifest-final/classes5.dex:536:000d3a: 6e40 2900 0321                         |0021: invoke-virtual {v3, v0, v1, v2}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:(JI)V // method@0029
+Evidence/pico-manifest-final/classes5.dex:540:000d4a: 6e40 2900 0321                         |0029: invoke-virtual {v3, v0, v1, v2}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:(JI)V // method@0029
+Evidence/pico-manifest-final/classes5.dex:543:000d56: 6e40 2900 1302                         |002f: invoke-virtual {v3, v1, v2, v0}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:(JI)V // method@0029
+Evidence/pico-manifest-final/classes5.dex:566:        0x0000 - 0x0046 reg=3 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:569:    #10              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:578:000be8:                                        |[000be8] com.unity3d.player.appui.AppUIActivity.ScaledDensity:()F
+Evidence/pico-manifest-final/classes5.dex:579:000bf8: 5210 0e00                              |0000: iget v0, v1, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentScaledDensity:F // field@000e
+Evidence/pico-manifest-final/classes5.dex:585:        0x0000 - 0x0003 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:587:    #11              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:596:000d84:                                        |[000d84] com.unity3d.player.appui.AppUIActivity.Vibrate:(J)V
+Evidence/pico-manifest-final/classes5.dex:598:000d96: 6e40 2900 2103                         |0001: invoke-virtual {v1, v2, v3, v0}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:(JI)V // method@0029
+Evidence/pico-manifest-final/classes5.dex:605:        0x0000 - 0x0005 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:608:    #12              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:617:000da0:                                        |[000da0] com.unity3d.player.appui.AppUIActivity.Vibrate:(JI)V
+Evidence/pico-manifest-final/classes5.dex:619:000db2: 5420 1000                              |0001: iget-object v0, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_Vibrator:Landroid/os/Vibrator; // field@0010
+Evidence/pico-manifest-final/classes5.dex:630:        0x0000 - 0x000b reg=2 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:634:    #13              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:643:000dc8:                                        |[000dc8] com.unity3d.player.appui.AppUIActivity.Vibrate:([J)V
+Evidence/pico-manifest-final/classes5.dex:645:000dda: 6e30 2b00 2100                         |0001: invoke-virtual {v1, v2, v0}, Lcom/unity3d/player/appui/AppUIActivity;.Vibrate:([JI)V // method@002b
+Evidence/pico-manifest-final/classes5.dex:652:        0x0000 - 0x0005 reg=1 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:655:    #14              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:664:000de4:                                        |[000de4] com.unity3d.player.appui.AppUIActivity.Vibrate:([JI)V
+Evidence/pico-manifest-final/classes5.dex:666:000df6: 5420 1000                              |0001: iget-object v0, v2, Lcom/unity3d/player/appui/AppUIActivity;.m_Vibrator:Landroid/os/Vibrator; // field@0010
+Evidence/pico-manifest-final/classes5.dex:677:        0x0000 - 0x000b reg=2 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:681:    #15              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:690:000e0c:                                        |[000e0c] com.unity3d.player.appui.AppUIActivity.onConfigurationChanged:(Landroid/content/res/Configuration;)V
+Evidence/pico-manifest-final/classes5.dex:691:000e1c: 6f20 1400 dc00                         |0000: invoke-super {v12, v13}, Lcom/unity3d/player/UnityPlayerActivity;.onConfigurationChanged:(Landroid/content/res/Configuration;)V // method@0014
+Evidence/pico-manifest-final/classes5.dex:692:000e22: 6e10 2e00 0c00                         |0003: invoke-virtual {v12}, Lcom/unity3d/player/appui/AppUIActivity;.getResources:()Landroid/content/res/Resources; // method@002e
+Evidence/pico-manifest-final/classes5.dex:699:000e3c: 52c3 0f00                              |0010: iget v3, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentUiMode:I // field@000f
+Evidence/pico-manifest-final/classes5.dex:702:000e48: 59c2 0f00                              |0016: iput v2, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentUiMode:I // field@000f
+Evidence/pico-manifest-final/classes5.dex:704:000e4e: 52c3 0f00                              |0019: iget v3, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentUiMode:I // field@000f
+Evidence/pico-manifest-final/classes5.dex:716:000e80: 52c5 0a00                              |0032: iget v5, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentFontScale:F // field@000a
+Evidence/pico-manifest-final/classes5.dex:719:000e8c: 59c3 0a00                              |0038: iput v3, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentFontScale:F // field@000a
+Evidence/pico-manifest-final/classes5.dex:726:000ea8: 52c6 0a00                              |0046: iget v6, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentFontScale:F // field@000a
+Evidence/pico-manifest-final/classes5.dex:733:000ec6: 52c6 0e00                              |0055: iget v6, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentScaledDensity:F // field@000e
+Evidence/pico-manifest-final/classes5.dex:736:000ed2: 59c5 0e00                              |005b: iput v5, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentScaledDensity:F // field@000e
+Evidence/pico-manifest-final/classes5.dex:743:000eee: 52c7 0e00                              |0069: iget v7, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentScaledDensity:F // field@000e
+Evidence/pico-manifest-final/classes5.dex:750:000f0c: 52c7 0800                              |0078: iget v7, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensity:F // field@0008
+Evidence/pico-manifest-final/classes5.dex:753:000f18: 59c6 0800                              |007e: iput v6, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensity:F // field@0008
+Evidence/pico-manifest-final/classes5.dex:760:000f34: 52c8 0800                              |008c: iget v8, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensity:F // field@0008
+Evidence/pico-manifest-final/classes5.dex:767:000f52: 52c8 0900                              |009b: iget v8, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensityDpi:I // field@0009
+Evidence/pico-manifest-final/classes5.dex:769:000f5a: 59c7 0900                              |009f: iput v7, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensityDpi:I // field@0009
+Evidence/pico-manifest-final/classes5.dex:776:000f76: 52c9 0900                              |00ad: iget v9, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensityDpi:I // field@0009
+Evidence/pico-manifest-final/classes5.dex:782:000f90: 7110 1e00 0d00                         |00ba: invoke-static {v13}, Lcom/unity3d/player/appui/AppUIActivity;.GetLayoutDirection:(Landroid/content/res/Configuration;)I // method@001e
+Evidence/pico-manifest-final/classes5.dex:784:000f98: 52c9 0c00                              |00be: iget v9, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentLayoutDirection:I // field@000c
+Evidence/pico-manifest-final/classes5.dex:786:000fa0: 59c8 0c00                              |00c2: iput v8, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentLayoutDirection:I // field@000c
+Evidence/pico-manifest-final/classes5.dex:793:000fbc: 52ca 0c00                              |00d0: iget v10, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentLayoutDirection:I // field@000c
+Evidence/pico-manifest-final/classes5.dex:799:000fd6: 7110 2000 0c00                         |00dd: invoke-static {v12}, Lcom/unity3d/player/appui/AppUIActivity;.IsHighContrastEnabled:(Landroid/content/Context;)Z // method@0020
+Evidence/pico-manifest-final/classes5.dex:801:000fde: 55ca 0b00                              |00e1: iget-boolean v10, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentHighContrast:Z // field@000b
+Evidence/pico-manifest-final/classes5.dex:803:000fe6: 5cc9 0b00                              |00e5: iput-boolean v9, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentHighContrast:Z // field@000b
+Evidence/pico-manifest-final/classes5.dex:810:001002: 55cb 0b00                              |00f3: iget-boolean v11, v12, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentHighContrast:Z // field@000b
+Evidence/pico-manifest-final/classes5.dex:881:        0x0000 - 0x011a reg=12 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:884:    #16              : (in Lcom/unity3d/player/appui/AppUIActivity;)
+Evidence/pico-manifest-final/classes5.dex:893:001050:                                        |[001050] com.unity3d.player.appui.AppUIActivity.onCreate:(Landroid/os/Bundle;)V
+Evidence/pico-manifest-final/classes5.dex:894:001060: 6f20 1500 7600                         |0000: invoke-super {v6, v7}, Lcom/unity3d/player/UnityPlayerActivity;.onCreate:(Landroid/os/Bundle;)V // method@0015
+Evidence/pico-manifest-final/classes5.dex:895:001066: 6e10 2e00 0600                         |0003: invoke-virtual {v6}, Lcom/unity3d/player/appui/AppUIActivity;.getResources:()Landroid/content/res/Resources; // method@002e
+Evidence/pico-manifest-final/classes5.dex:901:00107e: 5962 0f00                              |000f: iput v2, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentUiMode:I // field@000f
+Evidence/pico-manifest-final/classes5.dex:903:001086: 5962 0a00                              |0013: iput v2, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentFontScale:F // field@000a
+Evidence/pico-manifest-final/classes5.dex:908:00109a: 6e20 2f00 2600                         |001d: invoke-virtual {v6, v2}, Lcom/unity3d/player/appui/AppUIActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object; // method@002f
+Evidence/pico-manifest-final/classes5.dex:913:0010ae: 5b63 1000                              |0027: iput-object v3, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_Vibrator:Landroid/os/Vibrator; // field@0010
+Evidence/pico-manifest-final/classes5.dex:916:0010b8: 6e20 2f00 2600                         |002c: invoke-virtual {v6, v2}, Lcom/unity3d/player/appui/AppUIActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object; // method@002f
+Evidence/pico-manifest-final/classes5.dex:919:0010c4: 5b62 1000                              |0032: iput-object v2, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_Vibrator:Landroid/os/Vibrator; // field@0010
+Evidence/pico-manifest-final/classes5.dex:923:0010d4: 5963 0e00                              |003a: iput v3, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentScaledDensity:F // field@000e
+Evidence/pico-manifest-final/classes5.dex:925:0010dc: 5963 0800                              |003e: iput v3, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensity:F // field@0008
+Evidence/pico-manifest-final/classes5.dex:927:0010e4: 5963 0900                              |0042: iput v3, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentDensityDpi:I // field@0009
+Evidence/pico-manifest-final/classes5.dex:928:0010e8: 7110 2000 0600                         |0044: invoke-static {v6}, Lcom/unity3d/player/appui/AppUIActivity;.IsHighContrastEnabled:(Landroid/content/Context;)Z // method@0020
+Evidence/pico-manifest-final/classes5.dex:930:0010f0: 5c63 0b00                              |0048: iput-boolean v3, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentHighContrast:Z // field@000b
+Evidence/pico-manifest-final/classes5.dex:931:0010f4: 7110 2300 0600                         |004a: invoke-static {v6}, Lcom/unity3d/player/appui/AppUIActivity;.IsRemoveAnimationEnabled:(Landroid/content/Context;)Z // method@0023
+Evidence/pico-manifest-final/classes5.dex:933:0010fc: 5c63 0d00                              |004e: iput-boolean v3, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentReduceMotion:Z // field@000d
+Evidence/pico-manifest-final/classes5.dex:934:001100: 6e10 1a00 0600                         |0050: invoke-virtual {v6}, Lcom/unity3d/player/appui/AppUIActivity;.AddReduceMotionChangeListener:()V // method@001a
+Evidence/pico-manifest-final/classes5.dex:935:001106: 7110 1e00 0100                         |0053: invoke-static {v1}, Lcom/unity3d/player/appui/AppUIActivity;.GetLayoutDirection:(Landroid/content/res/Configuration;)I // method@001e
+Evidence/pico-manifest-final/classes5.dex:937:00110e: 5963 0c00                              |0057: iput v3, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentLayoutDirection:I // field@000c
+Evidence/pico-manifest-final/classes5.dex:943:001128: 5264 0f00                              |0064: iget v4, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentUiMode:I // field@000f
+Evidence/pico-manifest-final/classes5.dex:955:00115c: 5265 0a00                              |007e: iget v5, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentFontScale:F // field@000a
+Evidence/pico-manifest-final/classes5.dex:999:00121c: 5565 0b00                              |00de: iget-boolean v5, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentHighContrast:Z // field@000b
+Evidence/pico-manifest-final/classes5.dex:1010:00124c: 5565 0d00                              |00f6: iget-boolean v5, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentReduceMotion:Z // field@000d
+Evidence/pico-manifest-final/classes5.dex:1021:00127c: 5265 0c00                              |010e: iget v5, v6, Lcom/unity3d/player/appui/AppUIActivity;.m_CurrentLayoutDirection:I // field@000c
+Evidence/pico-manifest-final/classes5.dex:1062:        0x0000 - 0x011c reg=6 this Lcom/unity3d/player/appui/AppUIActivity;
+Evidence/pico-manifest-final/classes5.dex:1065:  source_file_idx   : 4 (AppUIActivity.java)

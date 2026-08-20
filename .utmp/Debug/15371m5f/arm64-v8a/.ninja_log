@@ -1,0 +1,14 @@
+# ninja log v5
+0	661	1785752683654362999	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	34b5a1016908e528
+1	631	1785752683625183592	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	d69f51f8d9666145
+1	654	1785752683647394648	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	20eba4b56b72c994
+5	596	1785752683588369665	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	12e9c1b263290dd4
+1	583	1785752683577570430	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	3ef2de8d640a0f51
+661	706	1785752683699351487	/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/15371m5f/obj/arm64-v8a/libgame.so	5d5a33219bc096eb
+1	573	1785752683566793694	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	fdc8f63aaa5d0cc4
+2	553	1785752683545082140	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	d8134024f1281d2f
+126	226	1787202565784373679	/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/15371m5f/obj/arm64-v8a/libswappywrapper.so	4ca47a47306f888a
+4	570	1785752683563954562	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	8babd6d12ea16c29
+0	126	1787202565710623256	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	2fb4851398a9057c
+0	67	1787214867361605878	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	2fb4851398a9057c
+68	116	1787214867404932794	/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/15371m5f/obj/arm64-v8a/libswappywrapper.so	4ca47a47306f888a

@@ -1,0 +1,19 @@
+{
+  "task_id": "a40b1d24-c6d4-4909-a4a2-e11fa379d26e",
+  "status": "success",
+  "type": "image_to_image",
+  "progress": 100,
+  "input": {
+    "prompt": "Using the reference game's exact stylized ancient Chinese temple, mossy stone, grass and jade-bronze color language, generate ONE compact horizontal top HUD panel for a mixed-reality tabletop tower defense game. Straight-on orthographic front view, ultra-wide 21:9 format. A small embossed lotus coin medallion on the left, dark jade stone center with generous clean empty space for dynamic Unity text, restrained antique bronze corners, subtle moss details. No letters, no words, no numbers, no icons except the lotus coin medallion. The panel must read clearly at small size and float above the whole island without blocking gameplay. Isolated single UI element centered on a plain neutral gray background, crisp edges, no perspective, no cast shadow, no extra objects.",
+    "model_version": "banana"
+  },
+  "output": {
+    "generated_image_url": "https://tripo-data.rg1.data.tripo3d.com/tcli_c6fae067c9334bd9af3d07029c0e7b00/20260807/a40b1d24-c6d4-4909-a4a2-e11fa379d26e/generated_image.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly90cmlwby1kYXRhLnJnMS5kYXRhLnRyaXBvM2QuY29tL3RjbGlfYzZmYWUwNjdjOTMzNGJkOWFmM2QwNzAyOWMwZTdiMDAvMjAyNjA4MDcvYTQwYjFkMjQtYzZkNC00OTA5LWE0YTItZTExZmEzNzlkMjZlL2dlbmVyYXRlZF9pbWFnZS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODYxNTc1OTZ9fX1dfQ__&Signature=MfWSyGwTy7n6-jkTShmd-khy2jZAvUpg9O2CyGzbVsOmbx~QKwBrpAlAiCrE1lu1flKr~ndMjDaCYXzlRwp5lZZkPGbQbpAEEr-9YlO8EYCuEvHxbXOSs3uMmvDrkak2miBZAX0xB3bFskwyTZfj~v09BMVcZZ4KxyCyXd~Nh65C~LUWv-bCelXPQbgU0wTmFwDHrzRO1IAg8CgLOhPuo5SRMlBUhmHjaPW47Tks~ZgoF~SyguQxvz9LnB2aXXEUlqL26kX74B8Io6AkHOoQHTguM3eMSEDlXy0kmHf1aUw5pANmjiz6GhMTM0yPTaPzg8grfnXd63jeJ7ei9wcsbA__&Key-Pair-Id=K1676C64NMVM2J"
+  },
+  "created_at": "2026-08-07T02:53:03.723953Z",
+  "completed_at": "2026-08-07T02:53:12.938408Z",
+  "credits_consumed": 5.0,
+  "downloaded_files": [
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Resources/UI/Generated/CoinPanelTop/01_generated_image_url.png"
+  ]
+}

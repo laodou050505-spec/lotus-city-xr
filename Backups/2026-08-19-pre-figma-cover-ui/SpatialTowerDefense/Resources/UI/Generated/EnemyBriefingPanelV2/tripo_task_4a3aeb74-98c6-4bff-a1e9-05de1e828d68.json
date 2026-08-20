@@ -1,0 +1,19 @@
+{
+  "task_id": "4a3aeb74-98c6-4bff-a1e9-05de1e828d68",
+  "status": "success",
+  "type": "text_to_image",
+  "progress": 100,
+  "input": {
+    "prompt": "Standalone game UI panel asset for an elegant stylized Chinese temple defense game, orthographic front view. A distinctly tall enemy intelligence briefing plaque shaped like an ancient command scroll pavilion: curved dark-jade roof crest across the top, two aged bronze side posts, a deep green hanging scroll body with a slightly curved lower edge and small hanging bronze tabs, asymmetrical left vertical warning seal containing a cyan mist-and-shadow enemy emblem. Large clean uninterrupted dark green writing area across center and right. Premium hand-painted PBR game UI, moss details, warm bronze edges, crisp high detail, same visual world as dark jade Chinese temple architecture. The outer silhouette must be clearly different from a simple thin horizontal rectangle or coin counter bar. No letters, no words, no numbers, no typography, no currency symbols, no lotus icon. Centered on a plain light gray background, even warm studio lighting, no perspective.",
+    "model_version": "banana"
+  },
+  "output": {
+    "generated_image_url": "https://tripo-data.rg1.data.tripo3d.com/tcli_c6fae067c9334bd9af3d07029c0e7b00/20260807/4a3aeb74-98c6-4bff-a1e9-05de1e828d68/generated_image.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly90cmlwby1kYXRhLnJnMS5kYXRhLnRyaXBvM2QuY29tL3RjbGlfYzZmYWUwNjdjOTMzNGJkOWFmM2QwNzAyOWMwZTdiMDAvMjAyNjA4MDcvNGEzYWViNzQtOThjNi00YmZmLWExZTktMDVkZTFlODI4ZDY4L2dlbmVyYXRlZF9pbWFnZS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODYxNjM3NDl9fX1dfQ__&Signature=rmmxnLO0qLbgFqFtlw~iKj6IJ5KZasgQfi8Pi1fRLTo~j6DUThTsrCqOnz2oaiYVXKqkaARor4eOZBWgKJZCML3AL6go8kTH4B~Bilh36sdHREnwn0vJz895fVuHlkxvxtBprtaKRZMTo73cVxze4oxS4PpWqUqdcsVMWj9eNa6YOD1Lo95lvLnrykvbAgVQ1gFRG2EgwDf~ilMNRrsnCeL0KHgD9uTlqwap1NQxxPgySCWG74VTMmsI1DX2kQ98rc0EHukJE4ApcsK-RapWy35xSgG3HcFl329w-h6bfOC6sp1XaE9jTuSoiXc-nGsylxZNP2D4hZptLeydpauxqw__&Key-Pair-Id=K1676C64NMVM2J"
+  },
+  "created_at": "2026-08-07T04:35:32.520717Z",
+  "completed_at": "2026-08-07T04:35:48.926458Z",
+  "credits_consumed": 5.0,
+  "downloaded_files": [
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Resources/UI/Generated/EnemyBriefingPanelV2/01_generated_image_url.png"
+  ]
+}

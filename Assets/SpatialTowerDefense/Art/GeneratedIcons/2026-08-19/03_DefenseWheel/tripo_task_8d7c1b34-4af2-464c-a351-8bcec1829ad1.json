@@ -1,0 +1,19 @@
+{
+  "task_id": "8d7c1b34-4af2-464c-a351-8bcec1829ad1",
+  "status": "success",
+  "type": "text_to_image",
+  "progress": 100,
+  "input": {
+    "prompt": "Premium square mobile game app icon, no text, no letters, no watermark. A refined miniature floating temple island inside a luminous jade and bronze defense wheel, with three distinct tiny guardian towers arranged around one protected central sanctuary. The island and defense wheel fill 90 percent of the square canvas, close crop, bold readable tower-defense silhouette at small size. Deep jade, dark pine green, antique bronze and muted gold, subtle mist, high-end art-directed isometric 3D diorama, luxurious materials, clean composition, no UI, no border.",
+    "model_version": "banana2"
+  },
+  "output": {
+    "generated_image_url": "https://tripo-data.rg1.data.tripo3d.com/tcli_c6fae067c9334bd9af3d07029c0e7b00/20260819/8d7c1b34-4af2-464c-a351-8bcec1829ad1/generated_image.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly90cmlwby1kYXRhLnJnMS5kYXRhLnRyaXBvM2QuY29tL3RjbGlfYzZmYWUwNjdjOTMzNGJkOWFmM2QwNzAyOWMwZTdiMDAvMjAyNjA4MTkvOGQ3YzFiMzQtNGFmMi00NjRjLWEzNTEtOGJjZWMxODI5YWQxL2dlbmVyYXRlZF9pbWFnZS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODcyMTgwNTF9fX1dfQ__&Signature=T9m7xdFAQnOe5ojL38mbLeSv0-QkUK0gbwTVP-htvH0qULIkg8O1Gq60WljJ2r0Q4K0vmg8kdkx9kvPtrDxz7m90oC~U3oGtQ6wyu24YkYe6f6uzVz8KH9ND4BPmYBmrdLUr2FCAnIc92~~g7cGOdgvbMICYnOkDfVMaw~50sj4YRs0xlt-04sXk~VrRKI-2i6kTTgrRs5~CRHh6lnzenMPi3N5aCnGIpHIYw1NJ15itEMI9sAHR25xN35Tb2IxMCBz251TRR7mUCaKdMUa4O~86VdhVonYzTJcAIqHhn-nACbiK4CLaJtpE8EYd2uGEttdcpluxnnJH-V8m7njuMg__&Key-Pair-Id=K1676C64NMVM2J"
+  },
+  "created_at": "2026-08-19T09:27:07.000392Z",
+  "completed_at": "2026-08-19T09:27:26.132667Z",
+  "credits_consumed": 10.0,
+  "downloaded_files": [
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Art/GeneratedIcons/2026-08-19/03_DefenseWheel/01_generated_image_url.png"
+  ]
+}

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/SpatialTowerDefense/Scenes/SpatialDefense.unity
+    guid: fe59b981d81ac4508be71242c7bd150e
+  m_configObjects:
+    ByteDance.PICO.XR.Settings: {fileID: 11400000, guid: 2bdcd722d44024ef28a8e228ff7cd5b0, type: 2}
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: b235bd9095c8f41b995a5075956d55a2, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fe2fca2b9848044d7bd0805a00070ea5, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 4a6df479423da487ebe0f97981ea0917, type: 2}

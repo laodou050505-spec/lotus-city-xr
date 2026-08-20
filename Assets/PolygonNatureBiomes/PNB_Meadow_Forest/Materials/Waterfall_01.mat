@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Waterfall_01
+  m_Shader: {fileID: 4800000, guid: 276a39a5a210b124885f0eff3e80f1f3, type: 3}
+  m_Parent: {fileID: 2100000, guid: fbaf5bb6262710e469cc9f94a1e0e517, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _OpacityMin: 0.36
+    - _WaterOpacityMin: 0.36
+    - _WaterSpecular: 0.234
+    m_Colors:
+    - _DeepColour: {r: 0.08627451, g: 0.34117648, b: 0.32941177, a: 0}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShallowColour: {r: 0.14117648, g: 0.35686275, b: 0.25882354, a: 0}
+    - _VeryDeepColour: {r: 0.015686275, g: 0.16862746, b: 0.03137255, a: 0}
+    - _WaterDeepColor: {r: 0.056069765, g: 0.33962262, b: 0.3294575, a: 0}
+    - _WaterReallyDeepColor: {r: 0.0056069805, g: 0.16981131, b: 0.027871966, a: 1}
+    - _WaterShallowColor: {r: 0.12006053, g: 0.3584906, b: 0.2587217, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -1,0 +1,19 @@
+{
+  "task_id": "2822c613-4be3-4c0a-be29-792ded4fd647",
+  "status": "success",
+  "type": "text_to_image",
+  "progress": 100,
+  "input": {
+    "prompt": "Premium square mobile game app icon, no text and no letters. A lush floating fantasy island shaped like a lotus leaf, a refined miniature East Asian sanctuary tower at its center, one glowing jade guardian lantern and a precise circular defense ring subtly surrounding the island. Rich deep jade green, patinated bronze, muted gold, foggy teal atmosphere. High-end art direction, cinematic isometric 3D diorama, clean bold silhouette filling 88 percent of the square canvas, polished material detail, elegant controlled contrast, soft ambient mist, no characters, no UI, no border, no watermark.",
+    "model_version": "banana2"
+  },
+  "output": {
+    "generated_image_url": "https://tripo-data.rg1.data.tripo3d.com/tcli_c6fae067c9334bd9af3d07029c0e7b00/20260819/2822c613-4be3-4c0a-be29-792ded4fd647/generated_image.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly90cmlwby1kYXRhLnJnMS5kYXRhLnRyaXBvM2QuY29tL3RjbGlfYzZmYWUwNjdjOTMzNGJkOWFmM2QwNzAyOWMwZTdiMDAvMjAyNjA4MTkvMjgyMmM2MTMtNGJlMy00YzBhLWJlMjktNzkyZGVkNGZkNjQ3L2dlbmVyYXRlZF9pbWFnZS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODcyMTc5NjJ9fX1dfQ__&Signature=wmSZCHNm1kq6EMvak7t~fOAeQ0yHlrS2HcuVWbiG0vwdzdjzNwtdRC5xCDKQnT1Bu8YtmiyH8VH-mTTpmujxMCO2K-Vt9hJ8vBRr3kdDrfvimzcev6yKHI0mMFnrEnNiNnYChbh4F31Kq0fieOOqsrIkmbbF6FMsp-f1KuPAzvzvsGHEMnYGcn1RDiUScAXvQ~v3PvZArclrcHRIFjGCMwqcuLDd5vw9zSQmbUZF1HaAaYaozkd5KQeQGu~SNX5vw-6M-VXDuUll3C-epAGCrabIlV-O2hKly1w~HtUfmVWg0PjhygBJTX8f8SMqqFkMlgAYB0AxqsQTvZRwsXCHRA__&Key-Pair-Id=K1676C64NMVM2J"
+  },
+  "created_at": "2026-08-19T09:25:43.819138Z",
+  "completed_at": "2026-08-19T09:26:01.152735Z",
+  "credits_consumed": 10.0,
+  "downloaded_files": [
+    "/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Art/GeneratedIcons/2026-08-19/01_generated_image_url.png"
+  ]
+}

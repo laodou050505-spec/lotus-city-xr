@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <application android:requestLegacyExternalStorage="true">
+    <meta-data android:name="pxr.sdk.generation" android:value="4" />
+    <meta-data android:name="pvr.app.type" android:value="vr" />
+    <meta-data android:name="pxr.sdk.version_code" android:value="6000" />
+    <meta-data android:name="use.pxr.sdk" android:value="1" />
+    <meta-data android:name="pvr.sdk.version" android:value="Unity_XR_6.0.0" />
+    <meta-data android:name="rendering_mode" android:value="1" />
+    <meta-data android:name="controller" android:value="1" />
+    <meta-data android:name="enable_vst" android:value="1" />
+    <meta-data android:name="enable_mr_safeguard" android:value="1" />
+    <!-- The unavailable legacy UI entry is not bundled in this project. The
+         PICO launcher must target the actual Unity Activity that is packaged in
+         classes.dex; keeping this as a standard exported VR Activity avoids
+         a pre-Unity ClassNotFoundException on SpaceOS. -->
+    <activity android:name="com.unity3d.player.UnityPlayerActivity" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density" android:enabled="true" android:exported="true" android:hardwareAccelerated="false" android:launchMode="singleTask" android:resizeableActivity="false" android:screenOrientation="landscape" android:theme="@style/UnityThemeSelector">
+      <intent-filter>
+        <category android:name="android.intent.category.LAUNCHER" />
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+    </activity>
+  </application>
+  <uses-permission android:name="android.permission.VIBRATE" />
+</manifest>
