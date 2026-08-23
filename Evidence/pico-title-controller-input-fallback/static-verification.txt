@@ -1,0 +1,100 @@
+APK: /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Builds/PICO/SpatialTowerDefensePICO.apk
+
+SHA-256:
+e9373bf73d66debf33d6c8356be2d790edfba1fdfca67787b7272daf8281adc9  /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Builds/PICO/SpatialTowerDefensePICO.apk
+
+BUILD:
+Build Finished, Result: Success.
+
+PACKAGE:
+package: name='com.codex.spatialtowerdefense.pico' versionCode='1' versionName='0.2.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+launchable-activity: name='com.unity3d.player.UnityPlayerActivity'  label='' icon=''
+native-code: 'arm64-v8a'
+
+PICO / LAUNCHER:
+      E: meta-data (line=56)
+        A: android:name(0x01010003)="pvr.app.type" (Raw: "pvr.app.type")
+        A: android:value(0x01010024)="vr" (Raw: "vr")
+      E: meta-data (line=59)
+--
+      E: meta-data (line=62)
+        A: android:name(0x01010003)="use.pxr.sdk" (Raw: "use.pxr.sdk")
+        A: android:value(0x01010024)=(type 0x10)0x1
+      E: meta-data (line=65)
+--
+        A: android:theme(0x01010000)=@0x7f050001
+        A: android:name(0x01010003)="com.unity3d.player.UnityPlayerActivity" (Raw: "com.unity3d.player.UnityPlayerActivity")
+        A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+        A: android:exported(0x01010010)=(type 0x12)0xffffffff
+
+FORBIDDEN APPUI:
+not present
+
+NO-POSE INPUT SOURCE:
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-53-        // PICO Emulator can expose a paired controller's trigger before it
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-54-        // publishes a stable controller pose. Title stages use this only for
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-55-        // their deliberate no-pose fallback; normal world interaction still
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-56-        // requires the corresponding visible controller ray to hit a target.
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs:57:        public bool HasTrackedControllerPose => _leftTracked || _rightTracked;
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-58-        public Vector3 HeadPosition { get; private set; }
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-59-        public Quaternion HeadRotation { get; private set; }
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-60-        public Vector3 LocalTrackedHeadPosition { get; private set; } = new(0f, GameDefinitions.DesignPlayerEyeHeight, 0f);
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-61-
+--
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-388-            bool recenterPressed;
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-389-            // The emulator can pair a virtual controller and report its
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-390-            // trigger before it publishes a pose through InputTracking. Do
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-391-            // not equate "tracked pose" with "available controller input":
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs:392:            // doing so dropped every trigger event during NoTrackingData and
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-393-            // stranded the title screen.
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-394-            XRInputDevice right = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-395-            XRInputDevice left = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs:396:            bool hasControllerInput = right.isValid || left.isValid;
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs:397:            if (hasControllerInput)
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-398-            {
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-399-                bool attackPressed = ReadTriggerPressed(right, _attackPressed);
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-400-                right.TryGetFeatureValue(XRCommonUsages.secondaryButton, out bool secondaryPressed);
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/SpatialInputRig.cs-401-                right.TryGetFeatureValue(XRCommonUsages.grip, out float rightGrip);
+--
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-109-            // simulator launchers leave queued on frame zero.
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-110-            bool confirmDown = _input.ConsumeConfirmDown();
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-111-            if (confirmDown && inputReady && Time.frameCount > _inputSettledFrame)
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-112-            {
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs:113:                _pressArmed = CanActivateStart(leftHoveringStart);
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-114-                if (_pressArmed)
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-115-                {
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-116-                    StartCoroutine(LoadGameplayAfterStart());
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-117-                    return;
+--
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-126-            bool rightReleased = !rightPressed && _rightTriggerWasPressed;
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-127-            _rightTriggerWasPressed = rightPressed;
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-128-            if (rightDown && inputReady && Time.frameCount > _inputSettledFrame)
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-129-            {
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs:130:                _rightPressArmed = CanActivateStart(rightHoveringStart);
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-131-                if (_rightPressArmed)
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-132-                {
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-133-                    StartCoroutine(LoadGameplayAfterStart());
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-134-                    return;
+--
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-346-                _pressedRenderer.enabled = pressed;
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-347-            }
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-348-        }
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-349-
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs:350:        private bool CanActivateStart(bool rayHitsStart)
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-351-        {
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-352-            if (rayHitsStart)
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-353-            {
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-354-                return true;
+--
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-357-#if UNITY_ANDROID && !UNITY_EDITOR
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-358-            // A real tracked controller must always point at the physical
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-359-            // world-space target. The official emulator, however, sometimes
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-360-            // provides a trigger while reporting no controller poses at all
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs:361:            // (its known `NoTrackingData` condition). In that case there is
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-362-            // no ray to test, so a post-debounce trigger is the documented
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-363-            // controller fallback for this otherwise isolated title stage.
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs:364:            return !_input.HasTrackedControllerPose;
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-365-#else
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-366-            return false;
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-367-#endif
+/Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Assets/SpatialTowerDefense/Runtime/LotusTitleStage.cs-368-        }

@@ -142,21 +142,24 @@ namespace PicoTowerDefense
             }
         }
 
-        // The title is a separate world-space entry stage, not a card placed
-        // over an already visible board. Its floor-origin player start faces
-        // an opaque Figma title shrine at this landmark. Gameplay has its own
-        // tabletop landmark above, so each stage can recenter consistently.
-        public static readonly Vector3 TitlePlayerViewTargetWorld = new(0f, DesignPlayerEyeHeight, 3.80f);
-        // The authored Figma shrine sits on the +Z side of the title origin.
-        // Desktop orbit looks toward +Z from the origin, so the XR floor rig
-        // must use the same +Z-facing yaw.  Without this 180-degree heading
-        // the title was physically behind the player in PICO: only the
-        // passthrough room was visible and the START collider could not be
-        // reached by a controller ray.
-        public const float TitlePlayerYaw = 180f;
-        public const float TitlePlayerPitch = 0f;
-        public const float TitlePlayerViewingDistance = 3.80f;
-        public static readonly Vector3 TitlePlayerRigWorldPosition = Vector3.zero;
+        // The title is a separate scene, but it shares the gameplay start's
+        // X/Z landmark, player eye position and yaw.  A tracked HMD starts
+        // looking forward (rather than inheriting the desktop camera's 25°
+        // tabletop pitch), so the cover must be placed at that forward gaze
+        // height.  Keeping it at the table height pushed the whole cover to
+        // the bottom of the PICO simulator view.
+        public static readonly Vector3 TitlePanelLocalPosition = new(
+            DesignPlayerViewTargetLocal.x,
+            DesignPlayerEyeLocal.y,
+            DesignPlayerViewTargetLocal.z);
+        public const float TitlePanelViewPitch = 0f;
+        public static readonly float TitlePanelViewingDistance = Mathf.Abs(
+            DesignPlayerEyeLocal.z - TitlePanelLocalPosition.z);
+        // Unity's built-in Quad has its readable face on local -Z. The
+        // shared player eye is also on the landmark's -Z side, so zero yaw
+        // keeps the native Figma frame front-facing in both Title and game.
+        public const float TitlePanelFacingYaw = 0f;
+        public const float TitleRaycastDistance = 12f;
 
         // The final scene was uniformly enlarged and moved together with the
         // authored terrain. Runtime-only content uses this same parent pose so

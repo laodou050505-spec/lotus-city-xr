@@ -20,6 +20,11 @@ namespace PicoTowerDefense
         private Transform _rightControllerVisual;
         private LineRenderer _interactionLine;
         private LineRenderer _attackLine;
+        // Input is still read from both official PICO controller nodes, but
+        // their proxy meshes/rays are deliberately hidden. The game space
+        // must not contain a floating physical-controller model or its broad
+        // arc across the lower field of view.
+        private bool _controllerPresentationVisible;
         private bool _leftTracked;
         private bool _rightTracked;
         private bool _floorOriginSet;
@@ -50,6 +55,11 @@ namespace PicoTowerDefense
 
         public Camera Camera => _camera;
         public bool HasTrackedHead { get; private set; }
+        // PICO Emulator can expose a paired controller's trigger before it
+        // publishes a stable controller pose. Title stages use this only for
+        // their deliberate no-pose fallback; normal world interaction still
+        // requires the corresponding visible controller ray to hit a target.
+        public bool HasTrackedControllerPose => _leftTracked || _rightTracked;
         public Vector3 HeadPosition { get; private set; }
         public Quaternion HeadRotation { get; private set; }
         public Vector3 LocalTrackedHeadPosition { get; private set; } = new(0f, GameDefinitions.DesignPlayerEyeHeight, 0f);
@@ -153,6 +163,12 @@ namespace PicoTowerDefense
             UpdateDesktopCamera();
         }
 
+        public void SetControllerPresentationVisible(bool visible)
+        {
+            _controllerPresentationVisible = visible;
+            ApplyControllerPresentationVisibility();
+        }
+
         public void Tick()
         {
             RequestFloorTrackingOrigin();
@@ -199,6 +215,23 @@ namespace PicoTowerDefense
             if (presenter != null)
             {
                 presenter.enabled = enabled;
+            }
+#endif
+        }
+
+        // Title stages use an authored opaque surround instead of the PICO
+        // camera feed.  This matters in the emulator, where a transparent
+        // see-through layer is represented as an intrusive black rectangle.
+        // Gameplay keeps the normal PICO see-through presentation.
+        public void SetPicoPassthroughEnabled(bool enabled, Color backgroundColor)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            PicoMixedRealityPresenter presenter = _camera != null
+                ? _camera.GetComponent<PicoMixedRealityPresenter>()
+                : null;
+            if (presenter != null)
+            {
+                presenter.ConfigurePassthrough(enabled, backgroundColor);
             }
 #endif
         }
@@ -271,8 +304,8 @@ namespace PicoTowerDefense
 
         public void SetAimVisual(Vector3 hitPoint, bool hasHit)
         {
-            _interactionLine.enabled = _leftTracked;
-            if (!_leftTracked)
+            _interactionLine.enabled = _controllerPresentationVisible && _leftTracked;
+            if (!_controllerPresentationVisible || !_leftTracked)
             {
                 return;
             }
@@ -285,8 +318,8 @@ namespace PicoTowerDefense
 
         public void SetAttackVisual(Vector3 hitPoint, bool hasTarget)
         {
-            _attackLine.enabled = _rightTracked;
-            if (!_rightTracked)
+            _attackLine.enabled = _controllerPresentationVisible && _rightTracked;
+            if (!_controllerPresentationVisible || !_rightTracked)
             {
                 return;
             }
@@ -356,8 +389,45 @@ namespace PicoTowerDefense
                 }
             }
 
-            _leftControllerVisual.gameObject.SetActive(_leftTracked);
-            _rightControllerVisual.gameObject.SetActive(_rightTracked);
+            ApplyControllerPresentationVisibility();
+        }
+
+        private void ApplyControllerPresentationVisibility()
+        {
+            if (_leftControllerVisual != null)
+            {
+                _leftControllerVisual.gameObject.SetActive(_controllerPresentationVisible && _leftTracked);
+            }
+            if (_rightControllerVisual != null)
+            {
+                _rightControllerVisual.gameObject.SetActive(_controllerPresentationVisible && _rightTracked);
+            }
+            if (_interactionLine != null)
+            {
+                _interactionLine.enabled = false;
+            }
+            if (_attackLine != null)
+            {
+                _attackLine.enabled = false;
+            }
+
+            // PICO may attach its own controller/laser presentation below the
+            // camera through SDK helpers. This project does not use those
+            // visuals: it reads the controller poses and triggers directly.
+            // Disable only renderer components so tracking/input remain live.
+            if (!_controllerPresentationVisible && _camera != null)
+            {
+                Renderer[] sdkPresentation = _camera.GetComponentsInChildren<Renderer>(true);
+                for (int i = 0; i < sdkPresentation.Length; i++)
+                {
+                    sdkPresentation[i].enabled = false;
+                }
+                LineRenderer[] sdkLines = _camera.GetComponentsInChildren<LineRenderer>(true);
+                for (int i = 0; i < sdkLines.Length; i++)
+                {
+                    sdkLines[i].enabled = false;
+                }
+            }
         }
 
         private void RequestFloorTrackingOrigin()
@@ -381,13 +451,19 @@ namespace PicoTowerDefense
         private void ReadButtons()
         {
             bool recenterPressed;
-            if (_leftTracked || _rightTracked)
+            // The emulator can pair a virtual controller and report its
+            // trigger before it publishes a pose through InputTracking. Do
+            // not equate "tracked pose" with "available controller input":
+            // doing so dropped every trigger event during NoTrackingData and
+            // stranded the title screen.
+            XRInputDevice right = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+            XRInputDevice left = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+            bool hasControllerInput = right.isValid || left.isValid;
+            if (hasControllerInput)
             {
-                XRInputDevice right = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
                 bool attackPressed = ReadTriggerPressed(right, _attackPressed);
                 right.TryGetFeatureValue(XRCommonUsages.secondaryButton, out bool secondaryPressed);
                 right.TryGetFeatureValue(XRCommonUsages.grip, out float rightGrip);
-                XRInputDevice left = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
                 bool interactionTriggerPressed = ReadTriggerPressed(left, _interactionTriggerWasPressed);
                 left.TryGetFeatureValue(XRCommonUsages.primaryButton, out bool cyclePressed);
                 left.TryGetFeatureValue(XRCommonUsages.secondaryButton, out bool startWavePressed);

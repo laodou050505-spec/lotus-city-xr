@@ -1,0 +1,108 @@
+APK: /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Builds/PICO/SpatialTowerDefensePICO.apk
+
+SHA-256:
+40da118f93c949c452f1d98d12b0e82863705f7e1e6b07944544f8e3b8f6ca0a  /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Builds/PICO/SpatialTowerDefensePICO.apk
+
+AAPT: /Applications/Unity/Hub/Editor/6000.5.5f1/PlaybackEngines/AndroidPlayer/SDK/build-tools/36.0.0/aapt
+
+BADGING:
+package: name='com.codex.spatialtowerdefense.pico' versionCode='1' versionName='0.2.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+install-location:'preferExternal'
+sdkVersion:'29'
+targetSdkVersion:'36'
+uses-permission: name='android.permission.VIBRATE'
+uses-permission: name='android.permission.INTERNET'
+uses-permission: name='android.permission.CAMERA'
+uses-permission: name='android.permission.WRITE_SETTINGS'
+application-label:'Yi Nian Lotus City PICO'
+application-icon-120:'res/mipmap-ldpi-v4/app_icon.png'
+application-icon-160:'res/mipmap-mdpi-v4/app_icon.png'
+application-icon-240:'res/mipmap-hdpi-v4/app_icon.png'
+application-icon-320:'res/mipmap-xhdpi-v4/app_icon.png'
+application-icon-480:'res/mipmap-xxhdpi-v4/app_icon.png'
+application-icon-640:'res/mipmap-xxxhdpi-v4/app_icon.png'
+application: label='Yi Nian Lotus City PICO' icon='res/mipmap-mdpi-v4/app_icon.png'
+application-debuggable
+launchable-activity: name='com.unity3d.player.UnityPlayerActivity'  label='' icon=''
+feature-group: label=''
+  uses-gl-es: '0x30000'
+  uses-feature-not-required: name='android.hardware.camera'
+  uses-feature-not-required: name='android.hardware.camera.autofocus'
+  uses-feature-not-required: name='android.hardware.camera.front'
+  uses-feature-not-required: name='android.hardware.touchscreen'
+  uses-feature-not-required: name='android.hardware.touchscreen.multitouch'
+  uses-feature-not-required: name='android.hardware.touchscreen.multitouch.distinct'
+  uses-feature: name='android.hardware.screen.landscape'
+  uses-implied-feature: name='android.hardware.screen.landscape' reason='one or more activities have specified a landscape orientation'
+main
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--'
+densities: '120' '160' '240' '320' '480' '640'
+native-code: 'arm64-v8a'
+
+LAUNCHER RESOLUTION:
+        A: android:value(0x01010024)=(type 0x12)0xffffffff
+      E: activity (line=111)
+        A: android:theme(0x01010000)=@0x7f050001
+        A: android:name(0x01010003)="com.unity3d.player.UnityPlayerActivity" (Raw: "com.unity3d.player.UnityPlayerActivity")
+        A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+        A: android:exported(0x01010010)=(type 0x12)0xffffffff
+        A: android:launchMode(0x0101001d)=(type 0x10)0x2
+        A: android:screenOrientation(0x0101001e)=(type 0x10)0x0
+        A: android:configChanges(0x0101001f)=(type 0x11)0x40003fff
+        A: android:hardwareAccelerated(0x010102d3)=(type 0x12)0x0
+        A: android:resizeableActivity(0x010104f6)=(type 0x12)0xffffffff
+        E: intent-filter (line=121)
+          E: category (line=122)
+            A: android:name(0x01010003)="android.intent.category.LAUNCHER" (Raw: "android.intent.category.LAUNCHER")
+          E: action (line=124)
+            A: android:name(0x01010003)="android.intent.action.MAIN" (Raw: "android.intent.action.MAIN")
+        E: meta-data (line=127)
+          A: android:name(0x01010003)="unityplayer.UnityActivity" (Raw: "unityplayer.UnityActivity")
+          A: android:value(0x01010024)=(type 0x12)0xffffffff
+        E: meta-data (line=130)
+          A: android:name(0x01010003)="WindowManagerPreference:FreeformWindowSize" (Raw: "WindowManagerPreference:FreeformWindowSize")
+          A: android:value(0x01010024)=@0x7f040002
+        E: meta-data (line=133)
+          A: android:name(0x01010003)="WindowManagerPreference:FreeformWindowOrientation" (Raw: "WindowManagerPreference:FreeformWindowOrientation")
+          A: android:value(0x01010024)=@0x7f040000
+        E: meta-data (line=136)
+          A: android:name(0x01010003)="notch_support" (Raw: "notch_support")
+          A: android:value(0x01010024)=(type 0x12)0xffffffff
+        E: layout (line=140)
+          A: android:minWidth(0x0101013f)=(type 0x5)0x19000
+          A: android:minHeight(0x01010140)=(type 0x5)0x12c00
+      E: meta-data (line=145)
+        A: android:name(0x01010003)="enable_cpt" (Raw: "enable_cpt")
+        A: android:value(0x01010024)=(type 0x10)0x0
+      E: meta-data (line=148)
+        A: android:name(0x01010003)="Enable_AdaptiveHandModel" (Raw: "Enable_AdaptiveHandModel")
+
+APPUI ACTIVITY SEARCH:
+132:          A: android:name(0x01010003)="WindowManagerPreference:FreeformWindowSize" (Raw: "WindowManagerPreference:FreeformWindowSize")
+135:          A: android:name(0x01010003)="WindowManagerPreference:FreeformWindowOrientation" (Raw: "WindowManagerPreference:FreeformWindowOrientation")
+
+DEX ACTIVITY CLASS SEARCH:
+
+PICO METADATA:
+      E: meta-data (line=56)
+        A: android:name(0x01010003)="pvr.app.type" (Raw: "pvr.app.type")
+        A: android:value(0x01010024)="vr" (Raw: "vr")
+      E: meta-data (line=59)
+        A: android:name(0x01010003)="pxr.sdk.version_code" (Raw: "pxr.sdk.version_code")
+--
+      E: meta-data (line=62)
+        A: android:name(0x01010003)="use.pxr.sdk" (Raw: "use.pxr.sdk")
+        A: android:value(0x01010024)=(type 0x10)0x1
+      E: meta-data (line=65)
+        A: android:name(0x01010003)="pvr.sdk.version" (Raw: "pvr.sdk.version")
+--
+      E: meta-data (line=68)
+        A: android:name(0x01010003)="rendering_mode" (Raw: "rendering_mode")
+        A: android:value(0x01010024)=(type 0x10)0x1
+      E: meta-data (line=71)
+        A: android:name(0x01010003)="controller" (Raw: "controller")
+        A: android:value(0x01010024)=(type 0x10)0x1
+      E: meta-data (line=74)
+        A: android:name(0x01010003)="enable_vst" (Raw: "enable_vst")

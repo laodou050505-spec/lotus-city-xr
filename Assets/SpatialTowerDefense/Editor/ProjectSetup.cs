@@ -578,7 +578,7 @@ namespace PicoTowerDefenseEditor
         private static void ConfigurePlayer()
         {
             PlayerSettings.companyName = "Codex Spatial Lab";
-            PlayerSettings.productName = "Yi Nian Lotus City PICO";
+            PlayerSettings.productName = "一念莲城";
             PlayerSettings.bundleVersion = "0.2.0";
             PlayerSettings.colorSpace = ColorSpace.Linear;
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;

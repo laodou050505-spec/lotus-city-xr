@@ -1,0 +1,31 @@
+APK: /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Builds/PICO/SpatialTowerDefensePICO.apk
+
+SHA-256:
+2cdfdeadc42445fd43fdb2c1250eb6b017876138c707bcaeee1f171df2297514  /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Builds/PICO/SpatialTowerDefensePICO.apk
+
+BUILD:
+Build Finished, Result: Success.
+
+PACKAGE:
+package: name='com.codex.spatialtowerdefense.pico' versionCode='1' versionName='0.2.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+launchable-activity: name='com.unity3d.player.UnityPlayerActivity'  label='' icon=''
+native-code: 'arm64-v8a'
+
+PICO / LAUNCHER:
+      E: meta-data (line=56)
+        A: android:name(0x01010003)="pvr.app.type" (Raw: "pvr.app.type")
+        A: android:value(0x01010024)="vr" (Raw: "vr")
+      E: meta-data (line=59)
+--
+      E: meta-data (line=62)
+        A: android:name(0x01010003)="use.pxr.sdk" (Raw: "use.pxr.sdk")
+        A: android:value(0x01010024)=(type 0x10)0x1
+      E: meta-data (line=65)
+--
+        A: android:theme(0x01010000)=@0x7f050001
+        A: android:name(0x01010003)="com.unity3d.player.UnityPlayerActivity" (Raw: "com.unity3d.player.UnityPlayerActivity")
+        A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+        A: android:exported(0x01010010)=(type 0x12)0xffffffff
+
+FORBIDDEN LAUNCHER:
+not present

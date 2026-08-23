@@ -14,6 +14,8 @@ namespace PicoTowerDefense
     public sealed class PicoMixedRealityPresenter : MonoBehaviour
     {
         private Camera _camera;
+        private bool _passthroughEnabled = true;
+        private Color _opaqueBackground = new(0.70f, 0.71f, 0.67f, 1f);
 
         private void Awake()
         {
@@ -23,7 +25,16 @@ namespace PicoTowerDefense
         private void Start()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR && (ENABLE_PICO_XR_SDK || ENABLE_PICO_OPENXR_SDK)
-            EnablePassthrough();
+            ApplyPresentation();
+#endif
+        }
+
+        public void ConfigurePassthrough(bool enabled, Color opaqueBackground)
+        {
+            _passthroughEnabled = enabled;
+            _opaqueBackground = new Color(opaqueBackground.r, opaqueBackground.g, opaqueBackground.b, 1f);
+#if UNITY_ANDROID && !UNITY_EDITOR && (ENABLE_PICO_XR_SDK || ENABLE_PICO_OPENXR_SDK)
+            ApplyPresentation();
 #endif
         }
 
@@ -32,7 +43,7 @@ namespace PicoTowerDefense
 #if UNITY_ANDROID && !UNITY_EDITOR && (ENABLE_PICO_XR_SDK || ENABLE_PICO_OPENXR_SDK)
             if (!paused)
             {
-                EnablePassthrough();
+                ApplyPresentation();
             }
 #endif
         }
@@ -45,12 +56,14 @@ namespace PicoTowerDefense
         }
 
 #if UNITY_ANDROID && !UNITY_EDITOR && (ENABLE_PICO_XR_SDK || ENABLE_PICO_OPENXR_SDK)
-        private void EnablePassthrough()
+        private void ApplyPresentation()
         {
             if (_camera != null)
             {
                 _camera.clearFlags = CameraClearFlags.SolidColor;
-                _camera.backgroundColor = new Color(0f, 0f, 0f, 0f);
+                _camera.backgroundColor = _passthroughEnabled
+                    ? new Color(0f, 0f, 0f, 0f)
+                    : _opaqueBackground;
             }
 
             // The manager lives beside the XR camera so its eye-camera discovery sees this stereo camera.
@@ -59,7 +72,7 @@ namespace PicoTowerDefense
                 gameObject.AddComponent<PXR_Manager>();
             }
 
-            PXR_Manager.EnableVideoSeeThrough = true;
+            PXR_Manager.EnableVideoSeeThrough = _passthroughEnabled;
         }
 #endif
     }

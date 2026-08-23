@@ -64,12 +64,14 @@ namespace PicoTowerDefense
             // active virtual/physical controller is the right hand.  Both
             // controller rays use the same explicit world-space START target.
             Ray ray = _input.AimRay();
-            bool hit = Physics.Raycast(ray, out RaycastHit hitInfo, 12f, ~(1 << 2));
+            bool hit = Physics.Raycast(ray, out RaycastHit hitInfo, GameDefinitions.TitleRaycastDistance, ~(1 << 2));
             Collider hitCollider = hit ? hitInfo.collider : null;
             Ray rightRay = _input.AttackRay();
-            bool rightHit = Physics.Raycast(rightRay, out RaycastHit rightHitInfo, 12f, ~(1 << 2));
+            bool rightHit = Physics.Raycast(rightRay, out RaycastHit rightHitInfo, GameDefinitions.TitleRaycastDistance, ~(1 << 2));
             Collider rightHitCollider = rightHit ? rightHitInfo.collider : null;
-            bool hoveringStart = hitCollider == _startCollider || rightHitCollider == _startCollider;
+            bool leftHoveringStart = hitCollider == _startCollider;
+            bool rightHoveringStart = rightHitCollider == _startCollider;
+            bool hoveringStart = leftHoveringStart || rightHoveringStart;
             // Keep the authored pressed Figma frame visible for either hand
             // from the instant its trigger is armed, rather than only for the
             // left ray. This is vital in the PICO emulator where one virtual
@@ -108,7 +110,7 @@ namespace PicoTowerDefense
             bool confirmDown = _input.ConsumeConfirmDown();
             if (confirmDown && inputReady && Time.frameCount > _inputSettledFrame)
             {
-                _pressArmed = hoveringStart;
+                _pressArmed = CanActivateStart(leftHoveringStart);
             }
 
             // On the title only, either hand may activate START.  Keep the
@@ -120,7 +122,7 @@ namespace PicoTowerDefense
             _rightTriggerWasPressed = rightPressed;
             if (rightDown && inputReady && Time.frameCount > _inputSettledFrame)
             {
-                _rightPressArmed = rightHitCollider == _startCollider;
+                _rightPressArmed = CanActivateStart(rightHoveringStart);
             }
 
             if (released)
@@ -157,42 +159,30 @@ namespace PicoTowerDefense
             rig.transform.SetParent(transform, false);
             _input = rig.AddComponent<SpatialInputRig>();
             _input.Initialize();
+            _input.SetControllerPresentationVisible(false);
             _input.SetDesktopMixedRealityEnabled(false);
-            _input.Camera.clearFlags = CameraClearFlags.SolidColor;
-            _input.Camera.backgroundColor = Color.black;
+            // Keep the PICO see-through layer transparent.  The title is
+            // exactly one world-space Figma cover: no extra backing quad,
+            // no colour field and no duplicate frame behind it.
+            _input.SetPicoPassthroughEnabled(true, Color.black);
 
             _titleRoot = new GameObject("Pure World Space Figma Title Root").transform;
             _titleRoot.SetParent(transform, false);
-            _titleRoot.position = GameDefinitions.TitlePlayerViewTargetWorld;
-            _titleRoot.rotation = Quaternion.identity;
+            _titleRoot.localPosition = GameDefinitions.TitlePanelLocalPosition;
+            // A Unity Quad faces -Z. The player is located at -Z in the
+            // shared design pose, so zero yaw keeps the cover's readable
+            // front facing the player.
+            // This keeps Title and gameplay at the same landmark and avoids
+            // relying on a two-sided material to mask a reversed panel.
+            _titleRoot.localRotation = Quaternion.Euler(0f, GameDefinitions.TitlePanelFacingYaw, 0f);
 
             // Fits the entire native 16:9 Figma frame in the desktop and XR
-            // design view, while the separate opaque backdrop still fills the
-            // surrounding view. START and EXIT can never be cropped away.
-            // The 16:9 Figma frame is intentionally a little smaller than
-            // the 55° design frustum at the 3.80m viewing distance.  This
-            // preserves a quiet black surround and keeps the left wordmark,
-            // START and EXIT fully inside both the desktop and XR start view.
+            // design view. START and EXIT can never be cropped away.
+            // Keep the native 16:9 Figma source whole and readable.  The
+            // opaque title environment fills the rest of the wider PICO
+            // field, so it never becomes a black screen behind the cover.
             const float coverHeight = 2.70f;
             float coverWidth = coverHeight * (16f / 9f);
-            Material backdropMaterial = ProceduralFactory.CreateUnlitMaterial(Color.black);
-            GameObject opaqueBackdrop = ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Cube,
-                "Opaque Title Environment Backdrop",
-                _titleRoot,
-                new Vector3(0f, 0f, 0.035f),
-                new Vector3(9.0f, 6.0f, 0.04f),
-                backdropMaterial);
-            ConfigureTitleRenderer(opaqueBackdrop.GetComponent<Renderer>());
-            // VisualPrimitive normally removes primitive colliders. Keep this
-            // explicit because a build with a retained backdrop collider would
-            // be the first Physics.Raycast hit and make the visible START
-            // target impossible to select.
-            Collider backdropCollider = opaqueBackdrop.GetComponent<Collider>();
-            if (backdropCollider != null)
-            {
-                Destroy(backdropCollider);
-            }
 
             _defaultMaterial = CreateTitleMaterial("UI/Startup/LotusCityStartCover");
             GameObject defaultFrame = ProceduralFactory.VisualPrimitive(
@@ -227,14 +217,19 @@ namespace PicoTowerDefense
                 new Vector3(coverWidth * 0.26f, coverHeight * 0.16f, 0.04f));
             _exitCollider = CreateTitleTarget(
                 "World Space Figma EXIT Ray Target",
-                new Vector3(-coverWidth * 0.28f, -coverHeight * 0.178f, -0.025f),
+                new Vector3(-coverWidth * 0.28f, -coverHeight * 0.178f, -0.08f),
                 new Vector3(coverWidth * 0.20f, coverHeight * 0.09f, 0.035f));
 
             ConfigureDesktopTitleStart();
             _inputEnabledAt = Time.unscaledTime + 2f;
             _inputHasSettled = false;
             _inputSettledFrame = int.MaxValue;
-            _pointerReadyFrame = int.MaxValue;
+            // A fresh player launch is not guaranteed to receive an
+            // OnApplicationFocus(true) callback on PICO. Starting at
+            // int.MaxValue therefore made START permanently unclickable in
+            // the emulator. Keep only a short launch debounce; a later focus
+            // callback can still extend it to filter its own OS click.
+            _pointerReadyFrame = Time.frameCount + 12;
             _rightTriggerWasPressed = false;
             Debug.Log("[Yi Nian Lotus City] Title scene ready: only the opaque Figma title shrine is active; gameplay scene is not loaded.");
         }
@@ -276,14 +271,18 @@ namespace PicoTowerDefense
         private static Material CreateTitleMaterial(string resourcePath)
         {
             Texture2D texture = Resources.Load<Texture2D>(resourcePath);
-            Shader shader = Shader.Find("Unlit/Transparent") ?? Shader.Find("Sprites/Default") ?? Shader.Find("Unlit/Texture");
+            // The source pixels themselves are fully opaque.  Keep the
+            // stable transparent pass used by the PICO build: it is safe for
+            // the two eye views while the camera now owns an opaque, nonblack
+            // environment behind this world-space cover.
+            Shader shader = Shader.Find("Unlit/Transparent") ?? Shader.Find("Sprites/Default") ?? Shader.Find("Unlit/Color");
             Material material = new(shader)
             {
                 color = Color.white,
                 mainTexture = texture,
                 renderQueue = 3000
             };
-            material.SetInt("_Cull", (int)CullMode.Off);
+            material.SetInt("_Cull", (int)CullMode.Back);
             return material;
         }
 
@@ -303,19 +302,19 @@ namespace PicoTowerDefense
         private void ConfigureDesktopTitleStart()
         {
             _input.ConfigureDesktopView(
-                GameDefinitions.TitlePlayerViewTargetWorld,
+                GameDefinitions.TitlePanelLocalPosition,
                 1f,
-                GameDefinitions.TitlePlayerYaw,
-                GameDefinitions.TitlePlayerPitch,
-                GameDefinitions.TitlePlayerViewingDistance);
+                GameDefinitions.DesignPlayerYaw,
+                GameDefinitions.TitlePanelViewPitch,
+                GameDefinitions.TitlePanelViewingDistance);
             ResetXrToTitleStart();
         }
 
         private void ResetXrToTitleStart()
         {
             _input.ResetXrRigToDesignStart(
-                GameDefinitions.TitlePlayerRigWorldPosition,
-                Quaternion.Euler(0f, GameDefinitions.TitlePlayerYaw, 0f));
+                GameDefinitions.DesignPlayerEyeLocal - Vector3.up * GameDefinitions.DesignPlayerEyeHeight,
+                Quaternion.Euler(0f, GameDefinitions.DesignPlayerYaw, 0f));
         }
 
         private void SetPressedVisual(bool pressed)
@@ -328,6 +327,26 @@ namespace PicoTowerDefense
             {
                 _pressedRenderer.enabled = pressed;
             }
+        }
+
+        private bool CanActivateStart(bool rayHitsStart)
+        {
+            if (rayHitsStart)
+            {
+                return true;
+            }
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+            // A real tracked controller must always point at the physical
+            // world-space target. The official emulator, however, sometimes
+            // provides a trigger while reporting no controller poses at all
+            // (its known `NoTrackingData` condition). In that case there is
+            // no ray to test, so a post-debounce trigger is the documented
+            // controller fallback for this otherwise isolated title stage.
+            return !_input.HasTrackedControllerPose;
+#else
+            return false;
+#endif
         }
 
         private IEnumerator LoadGameplayAfterStart()

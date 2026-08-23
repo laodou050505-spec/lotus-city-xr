@@ -1,0 +1,58 @@
+APK: /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Builds/PICO/SpatialTowerDefensePICO.apk
+
+SHA-256:
+335887e6fd7f19bfec14c63b81535160b1e28e0bea44c46405936a532681340a  /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO/Builds/PICO/SpatialTowerDefensePICO.apk
+
+BUILD:
+Build Finished, Result: Success.
+
+LAUNCHER:
+package: name='com.codex.spatialtowerdefense.pico' versionCode='1' versionName='0.2.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+launchable-activity: name='com.unity3d.player.UnityPlayerActivity'  label='' icon=''
+native-code: 'arm64-v8a'
+
+MANIFEST ACTIVITY:
+      E: activity (line=111)
+        A: android:theme(0x01010000)=@0x7f050001
+        A: android:name(0x01010003)="com.unity3d.player.UnityPlayerActivity" (Raw: "com.unity3d.player.UnityPlayerActivity")
+        A: android:enabled(0x0101000e)=(type 0x12)0xffffffff
+        A: android:exported(0x01010010)=(type 0x12)0xffffffff
+        A: android:launchMode(0x0101001d)=(type 0x10)0x2
+        A: android:screenOrientation(0x0101001e)=(type 0x10)0x0
+        A: android:configChanges(0x0101001f)=(type 0x11)0x40003fff
+        A: android:hardwareAccelerated(0x010102d3)=(type 0x12)0x0
+        A: android:resizeableActivity(0x010104f6)=(type 0x12)0xffffffff
+        E: intent-filter (line=121)
+          E: category (line=122)
+            A: android:name(0x01010003)="android.intent.category.LAUNCHER" (Raw: "android.intent.category.LAUNCHER")
+          E: action (line=124)
+            A: android:name(0x01010003)="android.intent.action.MAIN" (Raw: "android.intent.action.MAIN")
+        E: meta-data (line=127)
+          A: android:name(0x01010003)="unityplayer.UnityActivity" (Raw: "unityplayer.UnityActivity")
+          A: android:value(0x01010024)=(type 0x12)0xffffffff
+
+FORBIDDEN APPUI ACTIVITY:
+not present
+
+START UNLOCK SOURCE:
+233-            ConfigureDesktopTitleStart();
+234-            _inputEnabledAt = Time.unscaledTime + 2f;
+235-            _inputHasSettled = false;
+236:            _inputSettledFrame = int.MaxValue;
+237-            // A fresh player launch is not guaranteed to receive an
+238-            // OnApplicationFocus(true) callback on PICO. Starting at
+239:            // int.MaxValue therefore made START permanently unclickable in
+240-            // the emulator. Keep only a short launch debounce; a later focus
+241-            // callback can still extend it to filter its own OS click.
+242:            _pointerReadyFrame = Time.frameCount + 12;
+243-            _rightTriggerWasPressed = false;
+244-            Debug.Log("[Yi Nian Lotus City] Title scene ready: only the opaque Figma title shrine is active; gameplay scene is not loaded.");
+245-        }
+--
+359-            // their window. Delay the first title press well past that OS
+360-            // gesture; an intentional XR trigger or mouse ray click still
+361-            // works immediately afterwards.
+362:            _pointerReadyFrame = Time.frameCount + 12;
+363-            _pressArmed = false;
+364-            _rightPressArmed = false;
+365-            _rightTriggerWasPressed = _input.IsAttackPressed;

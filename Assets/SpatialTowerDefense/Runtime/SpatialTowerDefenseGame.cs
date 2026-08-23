@@ -220,6 +220,7 @@ namespace PicoTowerDefense
             inputObject.transform.SetParent(transform, false);
             _input = inputObject.AddComponent<SpatialInputRig>();
             _input.Initialize();
+            _input.SetControllerPresentationVisible(false);
 
             _arenaRoot = new GameObject("Room Anchored Arena").transform;
             _arenaRoot.SetParent(transform, false);
@@ -2033,8 +2034,8 @@ namespace PicoTowerDefense
             const float coverWidth = coverHeight * (16f / 9f);
             _startupCoverRoot = new GameObject("Independent World Space Yi Nian Lotus City Title Root").transform;
             _startupCoverRoot.SetParent(transform, false);
-            _startupCoverRoot.localPosition = GameDefinitions.TitlePlayerViewTargetWorld;
-            _startupCoverRoot.localRotation = Quaternion.identity;
+            _startupCoverRoot.localPosition = GameDefinitions.TitlePanelLocalPosition;
+            _startupCoverRoot.localRotation = Quaternion.Euler(0f, GameDefinitions.TitlePanelFacingYaw, 0f);
             _startupCoverRoot.localScale = Vector3.one;
 
             _startupCoverMaterial = CreateStartupCoverMaterial();
@@ -2099,7 +2100,7 @@ namespace PicoTowerDefense
                 mainTexture = texture,
                 renderQueue = 3000
             };
-            material.SetInt("_Cull", (int)CullMode.Off);
+            material.SetInt("_Cull", (int)CullMode.Back);
             return material;
         }
 
@@ -2125,7 +2126,7 @@ namespace PicoTowerDefense
                 mainTexture = texture,
                 renderQueue = 3000
             };
-            material.SetInt("_Cull", (int)CullMode.Off);
+            material.SetInt("_Cull", (int)CullMode.Back);
             return material;
         }
 
