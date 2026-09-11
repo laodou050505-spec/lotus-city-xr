@@ -7822,6 +7822,7 @@ GameObject:
   - component: {fileID: 1694996002}
   - component: {fileID: 1694996001}
   - component: {fileID: 1694996000}
+  - component: {fileID: 1694996004}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -7917,12 +7918,27 @@ Transform:
   m_GameObject: {fileID: 1694995999}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 298.9, y: -250.8, z: 142.2}
+  m_LocalPosition: {x: 298.9, y: -259.5564, z: 142.2}
   m_LocalScale: {x: 23.363522, y: 23.363522, z: 23.363522}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1694996004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694995999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906d54f14c8140229e927569be5e2528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PicoTowerDefense.SceneModelAnchor
+  resourcePath: 
+  sourceAssetPath: Assets/PolygonNatureBiomes/PNB_Core/Materials/Water_Mat_01.mat
+  suppressMatchingLayoutEntry: 0
 --- !u!21 &1699972068
 Material:
   serializedVersion: 8
@@ -9429,8 +9445,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5408a51f5c2f4496a899dcb88225e39c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1937001119}
   m_SourcePrefab: {fileID: 100100000, guid: 5408a51f5c2f4496a899dcb88225e39c, type: 3}
+--- !u!1 &1937001118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5408a51f5c2f4496a899dcb88225e39c, type: 3}
+  m_PrefabInstance: {fileID: 1937001117}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1937001119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937001118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906d54f14c8140229e927569be5e2528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PicoTowerDefense.SceneModelAnchor
+  resourcePath: 
+  sourceAssetPath: "Assets/\u6A21\u578B\u8D44\u4EA7/s1/tripo_convert_dabf4fdf-9e52-4695-ad96-a0409841049c.fbx"
+  suppressMatchingLayoutEntry: 0
 --- !u!21 &1974648246
 Material:
   serializedVersion: 8

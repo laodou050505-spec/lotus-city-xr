@@ -20,11 +20,14 @@ namespace PicoTowerDefense
         private Transform _rightControllerVisual;
         private LineRenderer _interactionLine;
         private LineRenderer _attackLine;
-        // Input is still read from both official PICO controller nodes, but
-        // their proxy meshes/rays are deliberately hidden. The game space
-        // must not contain a floating physical-controller model or its broad
-        // arc across the lower field of view.
+        private Transform _interactionReticle;
+        private Transform _attackReticle;
+        // Input is read from both official PICO controller nodes. Proxy
+        // controller meshes stay hidden; pointer lines can be enabled
+        // independently where precise spatial interaction needs feedback.
         private bool _controllerPresentationVisible;
+        private bool _pointerPresentationVisible;
+        private Renderer[] _sdkPresentation = System.Array.Empty<Renderer>();
         private bool _leftTracked;
         private bool _rightTracked;
         private bool _floorOriginSet;
@@ -90,7 +93,7 @@ namespace PicoTowerDefense
 #if UNITY_ANDROID && !UNITY_EDITOR
             // Mild supersampling keeps small world-space labels crisp on PICO
             // without the much larger cost of doubling the eye texture.
-            XRSettings.eyeTextureResolutionScale = Mathf.Max(XRSettings.eyeTextureResolutionScale, 1.15f);
+            XRSettings.eyeTextureResolutionScale = 1.0f;
 #endif
             var cameraObject = new GameObject("XR Head Camera");
             cameraObject.tag = "MainCamera";
@@ -129,8 +132,12 @@ namespace PicoTowerDefense
                     Quaternion.Euler(90f, 0f, 0f));
             }
 
-            _interactionLine = _leftControllerVisual.gameObject.AddComponent<LineRenderer>();
+            GameObject interactionRayObject = new("Left Pointer Ray");
+            interactionRayObject.layer = 2;
+            interactionRayObject.transform.SetParent(transform, false);
+            _interactionLine = interactionRayObject.AddComponent<LineRenderer>();
             ConfigureControllerLine(_interactionLine, new Color(0.35f, 0.88f, 1f, 0.9f));
+            _interactionReticle = CreatePointerReticle("Left Pointer Reticle", new Color(0.35f, 0.88f, 1f, 0.95f));
 
             _rightControllerVisual = new GameObject("Right Controller").transform;
             _rightControllerVisual.gameObject.layer = 2;
@@ -156,8 +163,12 @@ namespace PicoTowerDefense
                 weaponMaterial,
                 Quaternion.Euler(90f, 0f, 0f));
 
-            _attackLine = _rightControllerVisual.gameObject.AddComponent<LineRenderer>();
+            GameObject attackRayObject = new("Right Pointer Ray");
+            attackRayObject.layer = 2;
+            attackRayObject.transform.SetParent(transform, false);
+            _attackLine = attackRayObject.AddComponent<LineRenderer>();
             ConfigureControllerLine(_attackLine, new Color(1f, 0.72f, 0.24f, 0.95f));
+            _attackReticle = CreatePointerReticle("Right Pointer Reticle", new Color(1f, 0.72f, 0.24f, 0.95f));
 
             _lastMousePosition = DesktopMousePosition();
             UpdateDesktopCamera();
@@ -166,6 +177,14 @@ namespace PicoTowerDefense
         public void SetControllerPresentationVisible(bool visible)
         {
             _controllerPresentationVisible = visible;
+            if (!visible && _camera != null)
+                _sdkPresentation = _camera.GetComponentsInChildren<Renderer>(true);
+            ApplyControllerPresentationVisibility();
+        }
+
+        public void SetPointerPresentationVisible(bool visible)
+        {
+            _pointerPresentationVisible = visible;
             ApplyControllerPresentationVisibility();
         }
 
@@ -174,10 +193,10 @@ namespace PicoTowerDefense
             RequestFloorTrackingOrigin();
             ReadTrackedPoses();
             ReadButtons();
-            if (!HasTrackedHead)
-            {
+#if !UNITY_ANDROID || UNITY_EDITOR
+            if (!HasTrackedHead && !XRSettings.isDeviceActive)
                 UpdateDesktopOrbit();
-            }
+#endif
         }
 
         public Ray AimRay()
@@ -304,8 +323,13 @@ namespace PicoTowerDefense
 
         public void SetAimVisual(Vector3 hitPoint, bool hasHit)
         {
-            _interactionLine.enabled = _controllerPresentationVisible && _leftTracked;
-            if (!_controllerPresentationVisible || !_leftTracked)
+            bool show = (_controllerPresentationVisible || _pointerPresentationVisible) && _leftTracked;
+            _interactionLine.enabled = show;
+            if (_interactionReticle != null)
+            {
+                _interactionReticle.gameObject.SetActive(show && hasHit);
+            }
+            if (!show)
             {
                 return;
             }
@@ -314,12 +338,21 @@ namespace PicoTowerDefense
             _interactionLine.SetPosition(1, hasHit
                 ? hitPoint
                 : _leftControllerVisual.position + _leftControllerVisual.forward * (4f * _desktopViewScale));
+            if (_interactionReticle != null && hasHit)
+            {
+                _interactionReticle.position = hitPoint - _leftControllerVisual.forward * 0.006f;
+            }
         }
 
         public void SetAttackVisual(Vector3 hitPoint, bool hasTarget)
         {
-            _attackLine.enabled = _controllerPresentationVisible && _rightTracked;
-            if (!_controllerPresentationVisible || !_rightTracked)
+            bool show = (_controllerPresentationVisible || _pointerPresentationVisible) && _rightTracked;
+            _attackLine.enabled = show;
+            if (_attackReticle != null)
+            {
+                _attackReticle.gameObject.SetActive(show && hasTarget);
+            }
+            if (!show)
             {
                 return;
             }
@@ -329,6 +362,10 @@ namespace PicoTowerDefense
             _attackLine.endColor = new Color(start.r, start.g, start.b, 0.10f);
             _attackLine.SetPosition(0, _rightControllerVisual.position);
             _attackLine.SetPosition(1, hitPoint);
+            if (_attackReticle != null && hasTarget)
+            {
+                _attackReticle.position = hitPoint - _rightControllerVisual.forward * 0.006f;
+            }
         }
 
         public void Pulse(float amplitude = 0.35f, float duration = 0.06f)
@@ -368,12 +405,7 @@ namespace PicoTowerDefense
 
                 if (state.nodeType == XRNode.Head)
                 {
-                    HasTrackedHead = true;
-                    LocalTrackedHeadPosition = position;
-                    HeadPosition = transform.TransformPoint(position);
-                    HeadRotation = transform.rotation * rotation;
-                    _camera.transform.localPosition = position;
-                    _camera.transform.localRotation = rotation;
+                    ApplyTrackedHeadPose(position, rotation);
                 }
                 else if (state.nodeType == XRNode.RightHand)
                 {
@@ -389,7 +421,25 @@ namespace PicoTowerDefense
                 }
             }
 
+            // Some runtimes expose CenterEye without a Head node. Keep the
+            // same meter-based pose path; never substitute desktop orbit in XR.
+            if (!HasTrackedHead)
+            {
+                XRInputDevice head = InputDevices.GetDeviceAtXRNode(XRNode.CenterEye);
+                if (head.TryGetFeatureValue(XRCommonUsages.devicePosition, out Vector3 position) &&
+                    head.TryGetFeatureValue(XRCommonUsages.deviceRotation, out Quaternion rotation))
+                    ApplyTrackedHeadPose(position, rotation);
+            }
             ApplyControllerPresentationVisibility();
+        }
+
+        private void ApplyTrackedHeadPose(Vector3 position, Quaternion rotation)
+        {
+            HasTrackedHead = true;
+            LocalTrackedHeadPosition = position;
+            _camera.transform.SetLocalPositionAndRotation(position, rotation);
+            HeadPosition = _camera.transform.position;
+            HeadRotation = _camera.transform.rotation;
         }
 
         private void ApplyControllerPresentationVisibility()
@@ -410,6 +460,14 @@ namespace PicoTowerDefense
             {
                 _attackLine.enabled = false;
             }
+            if (_interactionReticle != null)
+            {
+                _interactionReticle.gameObject.SetActive(false);
+            }
+            if (_attackReticle != null)
+            {
+                _attackReticle.gameObject.SetActive(false);
+            }
 
             // PICO may attach its own controller/laser presentation below the
             // camera through SDK helpers. This project does not use those
@@ -417,16 +475,10 @@ namespace PicoTowerDefense
             // Disable only renderer components so tracking/input remain live.
             if (!_controllerPresentationVisible && _camera != null)
             {
-                Renderer[] sdkPresentation = _camera.GetComponentsInChildren<Renderer>(true);
-                for (int i = 0; i < sdkPresentation.Length; i++)
-                {
-                    sdkPresentation[i].enabled = false;
-                }
-                LineRenderer[] sdkLines = _camera.GetComponentsInChildren<LineRenderer>(true);
-                for (int i = 0; i < sdkLines.Length; i++)
-                {
-                    sdkLines[i].enabled = false;
-                }
+                // SDK presentation is discovered when initialized, not by
+                // allocating and traversing the camera hierarchy every frame.
+                for (int i = 0; i < _sdkPresentation.Length; i++)
+                    if (_sdkPresentation[i] != null) _sdkPresentation[i].enabled = false;
             }
         }
 
@@ -458,7 +510,19 @@ namespace PicoTowerDefense
             // stranded the title screen.
             XRInputDevice right = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
             XRInputDevice left = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+#if UNITY_ANDROID && !UNITY_EDITOR
+            // PICO Emulator can provide trigger input before controller pose,
+            // so Android accepts a valid controller device even while its
+            // initial tracking data is unavailable.
             bool hasControllerInput = right.isValid || left.isValid;
+#else
+            // Desktop can retain a valid virtual XR device from another app
+            // even though this fallback player has no tracked controller.
+            // Treating that stale trigger as live input skipped the title
+            // automatically; only a genuinely tracked desktop controller may
+            // replace the explicit mouse fallback.
+            bool hasControllerInput = (_leftTracked && left.isValid) || (_rightTracked && right.isValid);
+#endif
             if (hasControllerInput)
             {
                 bool attackPressed = ReadTriggerPressed(right, _attackPressed);
@@ -517,24 +581,27 @@ namespace PicoTowerDefense
         {
             Mouse currentMouse = Mouse.current;
             bool primaryPressed = currentMouse?.leftButton.isPressed ?? false;
+            bool pressedThisFrame = currentMouse?.leftButton.wasPressedThisFrame ?? false;
+            bool releasedThisFrame = currentMouse?.leftButton.wasReleasedThisFrame ?? false;
             Vector3 mouse = DesktopMousePosition();
-            if (primaryPressed && !_desktopPrimaryWasPressed)
+            // A complete quick click may arrive between two game frames.
+            // Preserve both edges even when the final button state is released.
+            if (pressedThisFrame || (primaryPressed && !_desktopPrimaryWasPressed))
             {
                 _desktopPressPosition = mouse;
                 _desktopPrimaryDragged = false;
                 _confirmDown = true;
             }
-            else if (primaryPressed && !_desktopPrimaryDragged)
+            if (primaryPressed && !_desktopPrimaryDragged)
             {
                 float thresholdSquared = DesktopDragThreshold * DesktopDragThreshold;
                 _desktopPrimaryDragged = (mouse - _desktopPressPosition).sqrMagnitude >= thresholdSquared;
             }
-            else if (!primaryPressed && _desktopPrimaryWasPressed)
+            if (releasedThisFrame || (!primaryPressed && _desktopPrimaryWasPressed))
             {
                 _confirmUp = true;
                 _confirmReleaseWasDrag = _desktopPrimaryDragged;
             }
-
             _desktopPrimaryWasPressed = primaryPressed;
         }
 
@@ -628,6 +695,27 @@ namespace PicoTowerDefense
             line.startColor = color;
             line.endColor = new Color(color.r, color.g, color.b, 0.08f);
             line.enabled = false;
+        }
+
+        private Transform CreatePointerReticle(string name, Color color)
+        {
+            GameObject reticle = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            reticle.name = name;
+            reticle.layer = 2;
+            reticle.transform.SetParent(transform, false);
+            reticle.transform.localScale = Vector3.one * 0.022f;
+            reticle.GetComponent<Renderer>().sharedMaterial = ProceduralFactory.CreateUnlitMaterial(color);
+            Collider collider = reticle.GetComponent<Collider>();
+            if (Application.isPlaying)
+            {
+                Destroy(collider);
+            }
+            else
+            {
+                DestroyImmediate(collider);
+            }
+            reticle.SetActive(false);
+            return reticle.transform;
         }
 
         private static bool TryAttachOfficialControllerModel(Transform parent, string resourcePath)

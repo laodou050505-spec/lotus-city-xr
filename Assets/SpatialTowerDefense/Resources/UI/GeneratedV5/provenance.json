@@ -1,0 +1,29 @@
+{
+  "edition": "V5 restrained jade matched to game, light Song lettering and whitespace",
+  "outputs": [
+    {
+      "name": "Arsenal",
+      "path": "/Users/ld/.codex/generated_images/01a07f94-1e51-7171-9146-3b2c4b06b02e/exec-21cdb592-cdd8-4429-9274-922bae01ba85.png"
+    },
+    {
+      "name": "Status",
+      "path": "/Users/ld/.codex/generated_images/01a07f94-1e51-7171-9146-3b2c4b06b02e/exec-2e05e99a-02fc-4fb6-bf2a-ca074b237785.png"
+    },
+    {
+      "name": "Briefing",
+      "path": "/Users/ld/.codex/generated_images/01a07f94-1e51-7171-9146-3b2c4b06b02e/exec-4b947ce8-1b77-4ae3-9425-c11a35ed398e.png"
+    },
+    {
+      "name": "Guide",
+      "path": "/Users/ld/.codex/generated_images/01a07f94-1e51-7171-9146-3b2c4b06b02e/exec-bd7c43c3-9380-45a7-917a-d22ac7ccaf8a.png"
+    },
+    {
+      "name": "Stats",
+      "path": "/Users/ld/.codex/generated_images/01a07f94-1e51-7171-9146-3b2c4b06b02e/exec-720007be-8def-405c-abab-cdd573e5f83c.png"
+    },
+    {
+      "name": "WaveStates",
+      "path": "/Users/ld/.codex/generated_images/01a07f94-1e51-7171-9146-3b2c4b06b02e/exec-15cd0b22-b3c4-43e0-92cd-d6b3ae99fb30.png"
+    }
+  ]
+}

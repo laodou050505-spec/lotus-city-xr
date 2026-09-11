@@ -98,6 +98,11 @@ namespace PicoTowerDefenseEditor
                 }
             }
 
+            if (Resources.Load<Font>("Fonts/NotoSansSC-Regular") == null)
+            {
+                throw new BuildFailedException("Required Noto Sans SC font is missing; Chinese world-space UI cannot render.");
+            }
+
             foreach (string textureResource in new[]
                      {
                          "UI/Generated/CoinPanelTop/01_generated_image_url",
@@ -114,6 +119,12 @@ namespace PicoTowerDefenseEditor
             }
             ValidateFigmaStartupFrame(StartupCoverPath, "default");
             ValidateFigmaStartupFrame(StartupCoverPressedPath, "Start interaction");
+            Shader titleFeatherShader = Resources.Load<Shader>(LotusTitleStage.TitleFeatherShaderResource);
+            if (titleFeatherShader == null || !titleFeatherShader.isSupported ||
+                titleFeatherShader.name != LotusTitleStage.TitleFeatherShaderName)
+            {
+                throw new BuildFailedException("The title edge-feather shader is missing, unsupported, or has the wrong shader name.");
+            }
             if (Resources.Load<Shader>("UI/GeneratedUiSurface") == null ||
                 Resources.Load<Shader>("UI/WorldTextOverlay") == null ||
                 Resources.Load<Shader>("UI/WorldTextTransparent") == null ||
@@ -346,6 +357,20 @@ namespace PicoTowerDefenseEditor
                 UnityEngine.Object.DestroyImmediate(startupCoverCleanupRoot);
             }
 
+            var interactionGuideRoot = new GameObject("Two Hand Guide Lifecycle Smoke Test");
+            try
+            {
+                SpatialTowerDefenseGame interactionGuideGame = interactionGuideRoot.AddComponent<SpatialTowerDefenseGame>();
+                if (!interactionGuideGame.RunInteractionGuideLifecycleSmokeTest(out string interactionGuideError))
+                {
+                    throw new BuildFailedException(interactionGuideError);
+                }
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(interactionGuideRoot);
+            }
+
             var worldSpacePresentationRoot = new GameObject("World Space Presentation Smoke Test");
             try
             {
@@ -360,7 +385,164 @@ namespace PicoTowerDefenseEditor
                 UnityEngine.Object.DestroyImmediate(worldSpacePresentationRoot);
             }
 
-            Debug.Log("[Yi Nian Lotus City] VERIFY PASSED: three-level spatial temple, purification theme, left-hand card/tower placement, right-hand keeper purification, movable restored towers, manual merges through level three, 25 waves with one boss every five waves, PICO immersive VR manifest, PICO XR 6.0.0 loader, Multiview, ARM64/IL2CPP, and controller input are valid.");
+            VerifyRoomScaleWalkaround();
+
+            Debug.Log("[Yi Nian Lotus City] VERIFY PASSED: room-anchored tabletop, left-controller selection/placement/wave controls, right-controller purification/recenter controls, world-space two-hand guide, movable restored towers, manual merges through level three, 25 waves with one boss every five waves, PICO immersive VR manifest, PICO XR 6.0.0 loader, Multiview, ARM64/IL2CPP, and Input System-only controls are valid.");
+        }
+
+        // Exercise the serialized production scene, not an empty smoke-test host.
+        public static void VerifyRoomScaleWalkaround()
+        {
+            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            try
+            {
+                SpatialTowerDefenseGame game = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<SpatialTowerDefenseGame>(true)).Single();
+                var scenery = new AuthoredSceneryRegression.Snapshot(scene);
+                game.BuildWorld();
+                scenery.Verify(game);
+                Transform arena = game.ArenaRoot;
+                float width = arena.TransformVector(Vector3.right * GameDefinitions.GridColumns * GameDefinitions.CellSize).magnitude;
+                if (Mathf.Abs(width - 2.2f) > 0.01f)
+                    throw new BuildFailedException($"Room-scale board must be 2.2 meters wide; production scene is {width:F3} meters (scale {arena.lossyScale}).");
+                if (!game.RunWorldSpacePresentationSmokeTest(out string error))
+                    throw new BuildFailedException(error);
+                SpatialInputRig rig = game.GetComponentInChildren<SpatialInputRig>();
+                var applyPose = typeof(SpatialInputRig).GetMethod("ApplyTrackedHeadPose",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                Vector3 fixedPosition = arena.position;
+                Quaternion fixedRotation = arena.rotation;
+                Vector3 target = arena.TransformPoint(GameDefinitions.DesignPlayerViewTargetLocal);
+                Vector3 startingHead = new Vector3(0f, 1.62f, 0f);
+                applyPose.Invoke(rig, new object[] { startingHead, Quaternion.identity });
+                Vector3 beforeStep = rig.Camera.transform.position;
+                applyPose.Invoke(rig, new object[] { startingHead + Vector3.right, Quaternion.identity });
+                float step = Vector3.Distance(beforeStep, rig.Camera.transform.position);
+                float parallax = Vector3.Angle(target - beforeStep, target - rig.Camera.transform.position);
+                if (Mathf.Abs(step - 1f) > 0.001f || parallax < 15f)
+                    throw new BuildFailedException($"One-meter head step failed: displacement={step:F3}m, parallax={parallax:F2} degrees.");
+                SpatialActionTarget firstCard = arena.GetComponentsInChildren<SpatialActionTarget>(true)
+                    .First(action => action.Action == SpatialAction.SelectArrow);
+                typeof(SpatialTowerDefenseGame).GetMethod("UpdateTowerCardHover",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .Invoke(game, new object[] { TowerKind.Arrow, firstCard.transform });
+                for (int angle = 0; angle < 360; angle += 45)
+                {
+                    Vector3 eye = target + Quaternion.Euler(0f, angle, 0f) * new Vector3(0f, 0.8f, -2.4f);
+                    Quaternion look = Quaternion.LookRotation(target - eye, Vector3.up);
+                    applyPose.Invoke(rig, new object[] { rig.transform.InverseTransformPoint(eye), Quaternion.Inverse(rig.transform.rotation) * look });
+                    foreach (BillboardText panel in arena.GetComponentsInChildren<BillboardText>(true))
+                    {
+                        Vector3 position = panel.transform.position;
+                        panel.FaceTarget();
+                        if (Vector3.Distance(panel.transform.position, position) > 0.0001f ||
+                            Vector3.Dot(panel.transform.forward, (panel.transform.position - eye).normalized) < 0.999f)
+                            throw new BuildFailedException("Panel must rotate toward viewer without moving: " + panel.name);
+                    }
+                    Vector3 projected = rig.Camera.WorldToViewportPoint(target);
+                    if (Vector3.Distance(rig.Camera.transform.position, eye) > 0.001f ||
+                        Vector3.Distance(arena.position, fixedPosition) > 0.001f ||
+                        Quaternion.Angle(arena.rotation, fixedRotation) > 0.001f ||
+                        Mathf.Abs(projected.x - 0.5f) > 0.001f || projected.z < 0f)
+                        throw new BuildFailedException($"Tracked walkaround failed at {angle} degrees.");
+                }
+                if (arena.GetComponentsInChildren<TextMesh>(true).Length != 0)
+                    throw new BuildFailedException("Generated gameplay panels must not contain runtime TextMesh labels.");
+                CombatVisualEffects.SpawnKeeperImpact(Vector3.zero, arena);
+                TransientPurificationRing impact = arena.GetComponentInChildren<TransientPurificationRing>();
+                foreach (LineRenderer line in impact.GetComponentsInChildren<LineRenderer>())
+                    if (line.startColor.a > 0.001f || line.startWidth > 0.0061f)
+                        throw new BuildFailedException("Impact first frame must be transparent and thin; no default white flash.");
+                UnityEngine.Object.DestroyImmediate(impact.gameObject);
+                Debug.Log("[Lotus UI V5] PASS: baked art, zero TextMesh labels, facing panels anchored during 360-degree circuit, no white first-frame impact.");
+                Debug.Log($"[Lotus Walkaround] PASS: production board={width:F3}m, head step={step:F3}m, parallax={parallax:F2} degrees, full 360-degree circuit in 8 tracked poses, arena unchanged.");
+            }
+            finally
+            {
+                EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            }
+        }
+
+        public static void BuildUiV5Packages()
+        {
+            BuildDesktopTest();
+            BuildDevelopmentApk();
+        }
+
+        public static void VerifyAndRenderUiV5()
+        {
+            Verify();
+            RenderWalkaroundPreview();
+            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            SpatialTowerDefenseGame game = scene.GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<SpatialTowerDefenseGame>(true)).Single();
+            game.BuildPreviewState();
+            Camera camera = game.PreviewCamera;
+            string output = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Evidence", "ui-v5-20260908"));
+            foreach (string name in new[] { "Spatial Arsenal UI", "World Status HUD", "Next Wave Enemy Skill Briefing", "Two Hand World Interaction Guide", "Tower Hover Information Panel" })
+            {
+                Transform panel = game.ArenaRoot.Find(name);
+                panel.gameObject.SetActive(true);
+                if (name == "Tower Hover Information Panel")
+                {
+                    typeof(SpatialTowerDefenseGame).GetMethod("SetTowerHoverText", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                        .Invoke(game, new object[] { TowerKind.Arrow, 1 });
+                    panel.position = new Vector3(0f, 1.6f, -1.4f);
+                }
+                camera.transform.position = panel.position + new Vector3(0f, 0.08f, -1.1f);
+                camera.transform.LookAt(panel.position);
+                foreach (BillboardText face in game.ArenaRoot.GetComponentsInChildren<BillboardText>(true)) face.FaceTarget();
+                var render = new RenderTexture(1600, 1200, 24) { antiAliasing = 2 };
+                camera.targetTexture = render;
+                RenderTexture previous = RenderTexture.active;
+                RenderTexture.active = render;
+                camera.Render();
+                var texture = new Texture2D(1600, 1200, TextureFormat.RGB24, false);
+                texture.ReadPixels(new Rect(0, 0, 1600, 1200), 0, 0);
+                texture.Apply();
+                File.WriteAllBytes(Path.Combine(output, name.Replace(" ", "-") + ".png"), texture.EncodeToPNG());
+                camera.targetTexture = null;
+                RenderTexture.active = previous;
+                UnityEngine.Object.DestroyImmediate(texture);
+                UnityEngine.Object.DestroyImmediate(render);
+            }
+            RenderTitleInteractionPreviews();
+        }
+
+        public static void RenderWalkaroundPreview()
+        {
+            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            try
+            {
+                SpatialTowerDefenseGame game = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<SpatialTowerDefenseGame>(true)).Single();
+                game.BuildPreviewState();
+                Camera camera = game.PreviewCamera;
+                Vector3 target = game.ArenaRoot.TransformPoint(GameDefinitions.DesignPlayerViewTargetLocal);
+                string output = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Evidence", "ui-v5-20260908"));
+                Directory.CreateDirectory(output);
+                foreach (int angle in new[] { 0, 90, 180, 270 })
+                {
+                    camera.transform.position = target + Quaternion.Euler(0f, angle, 0f) * new Vector3(0f, 1.12f, -2.4f);
+                    camera.transform.LookAt(target);
+                    foreach (BillboardText panel in game.ArenaRoot.GetComponentsInChildren<BillboardText>(true)) panel.FaceTarget();
+                    var render = new RenderTexture(1200, 900, 24) { antiAliasing = 4 };
+                    camera.targetTexture = render;
+                    RenderTexture previous = RenderTexture.active;
+                    RenderTexture.active = render;
+                    camera.Render();
+                    var texture = new Texture2D(1200, 900, TextureFormat.RGB24, false);
+                    texture.ReadPixels(new Rect(0, 0, 1200, 900), 0, 0);
+                    texture.Apply();
+                    File.WriteAllBytes(Path.Combine(output, $"view-{angle:D3}.png"), texture.EncodeToPNG());
+                    camera.targetTexture = null;
+                    RenderTexture.active = previous;
+                    UnityEngine.Object.DestroyImmediate(texture);
+                    UnityEngine.Object.DestroyImmediate(render);
+                }
+                Debug.Log("[Lotus Walkaround] Four production-scene views rendered: " + output);
+            }
+            finally { EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single); }
         }
 
         private static void ValidateFigmaStartupFrame(string assetPath, string frameName)
@@ -444,7 +626,92 @@ namespace PicoTowerDefenseEditor
             EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
         }
 
-        [MenuItem("Tools/Spatial Tower Defense/Build PICO Development APK")]
+        public static void RenderInteractionGuidePreview()
+        {
+            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            SpatialTowerDefenseGame game = scene.GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<SpatialTowerDefenseGame>(true))
+                .Single();
+            game.BuildPreviewState();
+
+            Camera camera = game.PreviewCamera;
+            const int width = 1600;
+            const int height = 1000;
+            var renderTexture = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32)
+            {
+                antiAliasing = 4
+            };
+            camera.targetTexture = renderTexture;
+            RenderTexture previous = RenderTexture.active;
+            RenderTexture.active = renderTexture;
+            camera.Render();
+
+            var texture = new Texture2D(width, height, TextureFormat.RGB24, false);
+            texture.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+            texture.Apply();
+            byte[] png = texture.EncodeToPNG();
+            string evidenceDirectory = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Evidence"));
+            Directory.CreateDirectory(evidenceDirectory);
+            string outputPath = Path.Combine(evidenceDirectory, "desktop-two-hand-guide-and-world-anchor.png");
+            File.WriteAllBytes(outputPath, png);
+
+            camera.targetTexture = null;
+            RenderTexture.active = previous;
+            UnityEngine.Object.DestroyImmediate(texture);
+            UnityEngine.Object.DestroyImmediate(renderTexture);
+            Debug.Log($"[Spatial Tower Defense] Interaction guide preview rendered: {outputPath}");
+            EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+        }
+
+        public static void RenderTitleInteractionPreviews()
+        {
+            Scene titleScene = EditorSceneManager.OpenScene(TitleScenePath, OpenSceneMode.Single);
+            LotusTitleStage title = titleScene.GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<LotusTitleStage>(true))
+                .Single();
+            title.BuildTitleStage();
+
+            string evidenceDirectory = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Evidence", "ui-v5-20260908"));
+            Directory.CreateDirectory(evidenceDirectory);
+            RenderTitleState(title, false, false, "desktop-title-default-20260908.png", evidenceDirectory);
+            RenderTitleState(title, true, false, "desktop-title-start-hover-20260908.png", evidenceDirectory);
+            RenderTitleState(title, false, true, "desktop-title-exit-hover-20260908.png", evidenceDirectory);
+            Debug.Log($"[Spatial Tower Defense] Title interaction previews rendered: {evidenceDirectory}");
+            EditorSceneManager.OpenScene(TitleScenePath, OpenSceneMode.Single);
+        }
+
+        private static void RenderTitleState(
+            LotusTitleStage title,
+            bool startHover,
+            bool exitHover,
+            string fileName,
+            string evidenceDirectory)
+        {
+            title.SetPreviewButtonFeedback(startHover, exitHover, false);
+            Camera camera = title.TitleCamera;
+            const int width = 1920;
+            const int height = 1080;
+            var renderTexture = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32)
+            {
+                antiAliasing = 4
+            };
+            camera.targetTexture = renderTexture;
+            RenderTexture previous = RenderTexture.active;
+            RenderTexture.active = renderTexture;
+            camera.Render();
+
+            var texture = new Texture2D(width, height, TextureFormat.RGB24, false);
+            texture.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+            texture.Apply();
+            File.WriteAllBytes(Path.Combine(evidenceDirectory, fileName), texture.EncodeToPNG());
+
+            camera.targetTexture = null;
+            RenderTexture.active = previous;
+            UnityEngine.Object.DestroyImmediate(texture);
+            UnityEngine.Object.DestroyImmediate(renderTexture);
+        }
+
+        [MenuItem("Tools/Spatial Tower Defense/Build PICO APK")]
         public static void BuildDevelopmentApk()
         {
             Apply();
@@ -458,7 +725,11 @@ namespace PicoTowerDefenseEditor
                 locationPathName = apkPath,
                 target = BuildTarget.Android,
                 targetGroup = BuildTargetGroup.Android,
-                options = BuildOptions.Development
+                // PICO Emulator 0.13 raises the Unity log level shortly after
+                // launch. Unity 6 development players abort in that native SDK
+                // callback, so the distributable validation APK must use the
+                // normal player configuration.
+                options = BuildOptions.None
             };
             BuildReport report = BuildPipeline.BuildPlayer(options);
             if (report.summary.result != BuildResult.Succeeded)
@@ -466,7 +737,7 @@ namespace PicoTowerDefenseEditor
                 throw new BuildFailedException($"Android build failed: {report.summary.result} ({report.summary.totalErrors} errors)");
             }
 
-            Debug.Log($"[Spatial Tower Defense] PICO development APK built: {apkPath}");
+            Debug.Log($"[Spatial Tower Defense] PICO APK built: {apkPath}");
         }
 
         [MenuItem("Tools/Spatial Tower Defense/Build macOS Desktop Test")]

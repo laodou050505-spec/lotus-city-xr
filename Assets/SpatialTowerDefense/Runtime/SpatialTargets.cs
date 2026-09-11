@@ -13,6 +13,8 @@ namespace PicoTowerDefense
 
         private MaterialPropertyBlock _propertyBlock;
         private Renderer[] _renderers;
+        private Material[][] _sharedMaterials;
+        private int _hoverState = -1;
 
         public Vector2Int Coordinates { get; private set; }
         public bool IsPath { get; private set; }
@@ -26,6 +28,8 @@ namespace PicoTowerDefense
             IsBuildable = isBuildable;
             _renderers = renderers ?? GetComponentsInChildren<Renderer>(true);
             _propertyBlock = new MaterialPropertyBlock();
+            _sharedMaterials = new Material[_renderers.Length][];
+            for (int i = 0; i < _renderers.Length; i++) _sharedMaterials[i] = _renderers[i].sharedMaterials;
             SetHovered(false, false);
         }
 
@@ -36,6 +40,9 @@ namespace PicoTowerDefense
                 return;
             }
 
+            int state = hovered ? (valid ? 2 : 1) : 0;
+            if (state == _hoverState) return;
+            _hoverState = state;
             Color baseColor = IsPath ? PathColor : GrassColor;
             Color color = hovered ? (valid ? ValidColor : InvalidColor) : baseColor;
             Color emission = hovered ? color * 0.28f : Color.black;
@@ -47,7 +54,7 @@ namespace PicoTowerDefense
                     continue;
                 }
 
-                Material[] materials = renderer.sharedMaterials;
+                Material[] materials = _sharedMaterials[rendererIndex];
                 for (int materialIndex = 0; materialIndex < materials.Length; materialIndex++)
                 {
                     Material material = materials[materialIndex];
@@ -92,6 +99,8 @@ namespace PicoTowerDefense
         private MaterialPropertyBlock _propertyBlock;
         private Color _baseColor;
 
+        private int _lastState = -1;
+        private Material[] _materials;
         public SpatialAction Action { get; private set; }
 
         public void Initialize(SpatialAction action, Color color)
@@ -100,6 +109,7 @@ namespace PicoTowerDefense
             _renderer = GetComponent<Renderer>();
             _propertyBlock = new MaterialPropertyBlock();
             _baseColor = color;
+            _materials = _renderer != null ? _renderer.sharedMaterials : System.Array.Empty<Material>();
             SetState(false, false, true);
         }
 
@@ -110,11 +120,14 @@ namespace PicoTowerDefense
                 return;
             }
 
-            float brightness = !enabled ? 0.28f : hovered ? 1.45f : selected ? 1.18f : 0.82f;
+            int state = (selected ? 1 : 0) | (hovered ? 2 : 0) | (enabled ? 4 : 0);
+            if (state == _lastState) return;
+            _lastState = state;
+            float brightness = !enabled ? 0.78f : hovered ? 0.90f : selected ? 0.96f : 1f;
             Color color = _baseColor * brightness;
             color.a = 1f;
             Color emission = (selected || hovered) && enabled ? _baseColor * 0.65f : Color.black;
-            Material[] materials = _renderer.sharedMaterials;
+            Material[] materials = _materials;
             for (int materialIndex = 0; materialIndex < materials.Length; materialIndex++)
             {
                 Material material = materials[materialIndex];

@@ -25,23 +25,18 @@ namespace PicoTowerDefense
         private Transform _crystal;
         private Transform _baseHealthFill;
         private SpatialInputRig _input;
-        private TextMesh _statusText;
-        private TextMesh _statusTitleText;
-        private TextMesh _statusStatsText;
-        private TextMesh _statusPhaseText;
-        private TextMesh _statusWaveLabelText;
+        private LotusDigitField _goldDigits, _lifeDigits, _waveDigits, _startDigits, _briefingWaveDigits;
+        private readonly LotusDigitField[] _enemyCountDigits = new LotusDigitField[6];
+        private readonly LotusDigitField[] _towerDigits = new LotusDigitField[4];
+        private Renderer _waveArt;
         private Transform _statusHudRoot;
         private Transform _controlsRoot;
         private Transform _statusWaveProgress;
         private Transform _statusHealthFill;
         private Transform _waveBriefingRoot;
-        private TextMesh _waveBriefingTitleText;
-        private TextMesh _waveBriefingBodyText;
-        private TextMesh _startWaveLabelText;
+        private Transform _interactionGuideRoot;
         private Transform _startWaveProgressFill;
         private Transform _towerInfoRoot;
-        private TextMesh _towerInfoTitleText;
-        private TextMesh _towerInfoBodyText;
         private BoardCell _hoveredCell;
         private SpatialActionTarget _hoveredAction;
         private TowerAgent _hoveredMergeTower;
@@ -52,6 +47,8 @@ namespace PicoTowerDefense
         private TowerKind _draggedCardKind;
         private const float TowerMergeSnapRadius = 0.14f;
         private const float PlayerWeaponTargetGrace = 0.22f;
+        private const float InteractionGuideForwardOffset = 0.50f;
+        private static readonly Vector3 InteractionGuideBasePosition = new(1.55f, 1.75f, -0.22f);
         private const string ProtectedStructureObjectName = "tripo_convert_dabf4fdf-9e52-4695-ad96-a0409841049c";
         private LineRenderer _rangeRing;
         private AudioSource _audioSource;
@@ -88,6 +85,10 @@ namespace PicoTowerDefense
         private bool _startupCoverTransitioning;
         private float _titleInputReadyAt;
         private bool _titleInputHasSettled;
+        private Vector3 _arenaWorldPositionAtBuild;
+        private Quaternion _arenaWorldRotationAtBuild;
+        private Vector3 _arenaWorldScaleAtBuild;
+        private readonly List<TerrainData> _runtimeTerrainData = new();
 
         private const float MenuMusicVolume = 0.085f;
         private const float GameMusicVolume = 0.14f;
@@ -113,6 +114,23 @@ namespace PicoTowerDefense
             }
         }
 
+        private void OnDestroy()
+        {
+            // Room Anchored Arena deliberately lives beside this controller
+            // instead of below it, so player motion can never carry the board.
+            // Clean that independent root explicitly when the gameplay scene
+            // or an editor smoke-test host is destroyed.
+            if (_arenaRoot != null)
+            {
+                GameObject arenaObject = _arenaRoot.gameObject;
+                _arenaRoot = null;
+                DestroyRuntimeObject(arenaObject);
+            }
+            foreach (TerrainData data in _runtimeTerrainData)
+                if (data != null) DestroyRuntimeObject(data);
+            _runtimeTerrainData.Clear();
+        }
+
         private void Update()
         {
             if (!_built)
@@ -121,6 +139,7 @@ namespace PicoTowerDefense
             }
 
             _input.Tick();
+            EnsureArenaWorldAnchor();
             bool recenterDown = _input.ConsumeRecenterDown();
             bool cycleTowerDown = _input.ConsumeCycleTowerDown();
             bool startWaveDown = _input.ConsumeStartWaveDown();
@@ -209,11 +228,11 @@ namespace PicoTowerDefense
 
             Application.targetFrameRate = 90;
             QualitySettings.vSyncCount = 0;
-            QualitySettings.antiAliasing = 4;
+            QualitySettings.antiAliasing = 2;
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
             QualitySettings.globalTextureMipmapLimit = 0;
-            QualitySettings.lodBias = Mathf.Max(QualitySettings.lodBias, 2.5f);
-            QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
+            QualitySettings.lodBias = 1.2f;
+            QualitySettings.shadowResolution = ShadowResolution.Medium;
             _built = true;
 
             var inputObject = new GameObject("Player Space XR Rig");
@@ -221,9 +240,15 @@ namespace PicoTowerDefense
             _input = inputObject.AddComponent<SpatialInputRig>();
             _input.Initialize();
             _input.SetControllerPresentationVisible(false);
+            // Controller meshes remain hidden, while slim rays make the
+            // left placement and right purification roles discoverable.
+            _input.SetPointerPresentationVisible(true);
 
             _arenaRoot = new GameObject("Room Anchored Arena").transform;
-            _arenaRoot.SetParent(transform, false);
+            // The arena is a true scene root. Keeping it outside the gameplay
+            // controller/XR Rig hierarchy makes head motion and recentering
+            // structurally incapable of translating the board with the user.
+            _arenaRoot.SetParent(null, false);
             EditableSceneModelLayout authoredLayout = GetComponent<EditableSceneModelLayout>();
             bool useAuthoredScene = authoredLayout != null;
             if (useAuthoredScene)
@@ -231,7 +256,7 @@ namespace PicoTowerDefense
                 GameDefinitions.ApplyAuthoredSceneTransform(_arenaRoot);
                 _worldScale = GameDefinitions.AuthoredSceneScale;
             }
-            QualitySettings.shadowDistance = 8f * _worldScale;
+
             _actorsRoot = new GameObject("Actors").transform;
             _actorsRoot.SetParent(_arenaRoot, false);
             _projectilesRoot = new GameObject("Projectiles").transform;
@@ -249,6 +274,16 @@ namespace PicoTowerDefense
                 AdoptAuthoredTerrain(_arenaRoot);
             }
             authoredLayout?.Build(_arenaRoot);
+            // Saved objects must first be adopted in their authored coordinate
+            // system. Then convert the entire assembled island to real meters,
+            // preserving every model's relative pose and the saved scene assets.
+            if (useAuthoredScene)
+                NormalizeAuthoredArenaToMeters();
+            _worldScale = _arenaRoot.lossyScale.x;
+            _arenaWorldPositionAtBuild = _arenaRoot.position;
+            _arenaWorldRotationAtBuild = _arenaRoot.rotation;
+            _arenaWorldScaleAtBuild = _arenaRoot.lossyScale;
+            QualitySettings.shadowDistance = 8f * _worldScale;
             EnableAuthoredStairColliders();
             if (!SceneModelAnchor.HasSavedModelForPath("GameplayModels/Scene_S12_ReleasePond"))
             {
@@ -256,6 +291,7 @@ namespace PicoTowerDefense
             }
             BuildObjective();
             BuildSpatialControls();
+            BuildInteractionGuide();
             BuildStatusDisplay();
             BuildWaveBriefingDisplay();
             BuildRangeRing();
@@ -267,6 +303,7 @@ namespace PicoTowerDefense
             _experienceStarted = true;
             SetGameplayInterfaceVisible(true);
             ConfigureGameplayStagePlayerStart();
+            OptimizeStaticPresentation();
             // Avoid treating the OS click that focuses a newly opened desktop
             // player as a Start activation. A deliberate ray/mouse press and
             // release after the title is visible is required.
@@ -454,10 +491,14 @@ namespace PicoTowerDefense
             bool fired = FirePlayerWeapon(acquired, false);
             float expectedDamage = GameDefinitions.PlayerWeaponDamage * (1f - enemy.Definition.Armor);
             bool damageValid = Mathf.Abs(enemy.HitPoints - (hitPointsBefore - expectedDamage)) < 0.001f;
+            enemy.Dispose();
+            bool disposedTargetRejected = !enemy.IsValid &&
+                                          !IsPlayerWeaponTargetValid(enemy, aimedRay.origin) &&
+                                          !FirePlayerWeapon(enemy, false);
 
-            if (!fired || acquired != enemy || !damageValid)
+            if (!fired || acquired != enemy || !damageValid || !disposedTargetRejected)
             {
-                error = "The right-hand player weapon failed to acquire and damage an enemy along its aim ray.";
+                error = "The right-hand player weapon failed acquisition, damage, or destroyed-target rejection.";
                 return false;
             }
 
@@ -470,7 +511,7 @@ namespace PicoTowerDefense
             BuildWorld();
             StartExperience();
             bool briefingVisible = _waveBriefingRoot != null && _waveBriefingRoot.gameObject.activeSelf &&
-                                   _waveBriefingBodyText != null && _waveBriefingBodyText.text.Contains("RESTLESS DUST");
+                                   _enemyCountDigits[0] != null && _enemyCountDigits[0].Value == "8";
             bool waveStarted = StartNextWave();
             bool briefingHiddenDuringWave = _waveBriefingRoot != null && !_waveBriefingRoot.gameObject.activeSelf;
             // Place the smoke-test tower beside the existing lower gate so the
@@ -531,18 +572,70 @@ namespace PicoTowerDefense
             bool arenaPresentation = _controlsRoot != null && _controlsRoot.parent == _arenaRoot &&
                                      _statusHudRoot != null && _statusHudRoot.parent == _arenaRoot &&
                                      _waveBriefingRoot != null && _waveBriefingRoot.parent == _arenaRoot &&
+                                     _interactionGuideRoot != null && _interactionGuideRoot.parent == _arenaRoot &&
                                      _actorsRoot != null && _actorsRoot.parent == _arenaRoot;
+            bool arenaIndependentFromPlayer = _arenaRoot.parent == null &&
+                                              _arenaRoot != _input.transform &&
+                                              !_arenaRoot.IsChildOf(_input.transform);
+            bool primaryPanelsFaceViewer =
+                _controlsRoot.GetComponent<BillboardText>() != null &&
+                _statusHudRoot.GetComponent<BillboardText>() != null &&
+                _waveBriefingRoot.GetComponent<BillboardText>() != null &&
+                _interactionGuideRoot.GetComponent<BillboardText>() != null;
             bool noTitleInGameplay = _startupCoverRoot == null;
             Vector3 target = _arenaRoot.TransformPoint(GameDefinitions.DesignPlayerViewTargetLocal);
-            // The authored scene has a protected uniform scale. The camera
-            // uses the same world target and the 2.65m design distance before
-            // that layout transform is applied; do not multiply it again.
+            // Capture the desktop design composition before explicitly
+            // exercising the XR-only recenter path below.
             float expectedDistance = GameDefinitions.DesignPlayerTableDistance;
             float actualDistance = Vector3.Distance(_input.Camera.transform.position, target);
             bool desktopPoseMatches = Mathf.Abs(actualDistance - expectedDistance) < 0.02f * _worldScale;
-            if (!arenaPresentation || !noTitleInGameplay || !desktopPoseMatches)
+            Vector3 arenaPositionBeforeRecenter = _arenaRoot.position;
+            Quaternion arenaRotationBeforeRecenter = _arenaRoot.rotation;
+            _input.transform.position += new Vector3(0.48f, 0.12f, -0.31f) * _worldScale;
+            _input.transform.rotation *= Quaternion.Euler(0f, 32f, 0f);
+            EnsureArenaWorldAnchor();
+            ResetGameplayXrRigToDesignStart();
+            bool arenaStayedFixed = Vector3.Distance(arenaPositionBeforeRecenter, _arenaRoot.position) < 0.0001f &&
+                                    Quaternion.Angle(arenaRotationBeforeRecenter, _arenaRoot.rotation) < 0.001f;
+            if (!arenaPresentation || !arenaIndependentFromPlayer || !primaryPanelsFaceViewer ||
+                !arenaStayedFixed || !noTitleInGameplay || !desktopPoseMatches)
             {
-                error = $"Gameplay presentation failed: arena={arenaPresentation}, noTitle={noTitleInGameplay}, distance={actualDistance:F3}, expected={expectedDistance:F3}.";
+                error = $"Gameplay presentation failed: arena={arenaPresentation}, independent={arenaIndependentFromPlayer}, fixedPanels={primaryPanelsFaceViewer}, fixedAfterRecenter={arenaStayedFixed}, noTitle={noTitleInGameplay}, distance={actualDistance:F3}, expected={expectedDistance:F3}.";
+                return false;
+            }
+
+            error = string.Empty;
+            return true;
+        }
+
+        public bool RunInteractionGuideLifecycleSmokeTest(out string error)
+        {
+            BuildWorld();
+            Vector3 expectedPosition = InteractionGuidePositionTowardViewer();
+            bool positionValid = _interactionGuideRoot != null &&
+                                 Vector3.Distance(_interactionGuideRoot.localPosition, expectedPosition) < 0.0001f;
+            Vector3 movement = expectedPosition - InteractionGuideBasePosition;
+            Vector3 directionToViewer = (GameDefinitions.DesignPlayerEyeLocal - InteractionGuideBasePosition).normalized;
+            bool movementDirectionValid = Mathf.Abs(movement.magnitude - InteractionGuideForwardOffset) < 0.0001f &&
+                                          Vector3.Dot(movement.normalized, directionToViewer) > 0.9999f;
+            bool visibleBeforeWave = _interactionGuideRoot != null && _interactionGuideRoot.gameObject.activeSelf;
+            bool waveStarted = StartNextWave();
+            bool visibleDuringFirstWave = _interactionGuideRoot != null && _interactionGuideRoot.gameObject.activeSelf;
+
+            // Resolve the first wave without spawning its enemies. This tests
+            // the lifecycle boundary directly while leaving production wave
+            // composition and combat timing untouched.
+            _spawning = false;
+            _spawnQueue.Clear();
+            UpdateGame(0f);
+            bool hiddenAfterFirstWave = _waveIndex == 1 &&
+                                        _interactionGuideRoot != null &&
+                                        !_interactionGuideRoot.gameObject.activeSelf;
+
+            if (!positionValid || !movementDirectionValid || !visibleBeforeWave || !waveStarted ||
+                !visibleDuringFirstWave || !hiddenAfterFirstWave)
+            {
+                error = $"Two-hand guide failed its camera-facing/lifecycle contract: position={positionValid}, direction={movementDirectionValid}, before={visibleBeforeWave}, started={waveStarted}, during={visibleDuringFirstWave}, after={hiddenAfterFirstWave}.";
                 return false;
             }
 
@@ -577,7 +670,7 @@ namespace PicoTowerDefense
             sun.type = LightType.Directional;
             sun.color = new Color(1f, 0.94f, 0.84f);
             sun.intensity = 0.68f;
-            sun.shadows = LightShadows.Soft;
+            sun.shadows = LightShadows.Hard;
             sun.shadowResolution = UnityEngine.Rendering.LightShadowResolution.Medium;
             RenderSettings.sun = sun;
 
@@ -1398,7 +1491,7 @@ namespace PicoTowerDefense
             {
                 temple.SetParent(_arenaRoot, true);
             }
-            else if (layout != null)
+            else if (temple == null && layout != null)
             {
                 layout.TryGetBuiltEntry("Upper Main Temple", out temple);
             }
@@ -1520,137 +1613,42 @@ namespace PicoTowerDefense
 
         private void BuildSpatialControls()
         {
-            // The UI is presented as a slim floating interface in front of the
-            // arena. It faces the viewer instead of lying over the island.
-            const float controlsZ = -1.24f;
-            _controlsRoot = new GameObject("Spatial Arsenal UI").transform;
-            _controlsRoot.gameObject.layer = 2;
-            _controlsRoot.SetParent(_arenaRoot, false);
-            _controlsRoot.localPosition = new Vector3(0f, GameDefinitions.TableHeight + 0.16f, controlsZ);
-            _controlsRoot.localScale = Vector3.one * 0.52f;
-            AttachBillboard(_controlsRoot);
-
-            CreateActionPedestal(_controlsRoot, SpatialAction.SelectArrow, TowerKind.Arrow, "MORNING BELL\n50 LIGHT", -0.54f);
-            CreateActionPedestal(_controlsRoot, SpatialAction.SelectCannon, TowerKind.Cannon, "SUTRA GUARD\n120 LIGHT", -0.15f);
-            CreateActionPedestal(_controlsRoot, SpatialAction.SelectFrost, TowerKind.Frost, "LOTUS LAMP\n90 LIGHT", 0.24f);
-
-            Material bronze = ProceduralFactory.CreateMaterial(new Color(0.45f, 0.31f, 0.15f), 0.48f, 0.42f);
-            ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Cube,
-                "Start Wave Bronze Rim",
-                _controlsRoot,
-                new Vector3(0.63f, -0.05f, 0.018f),
-                new Vector3(0.38f, 0.26f, 0.035f),
-                bronze);
-
-            Material waveMaterial = ProceduralFactory.CreateMaterial(new Color(0.13f, 0.50f, 0.31f), 0.10f, 0.42f);
-            GameObject waveButton = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            waveButton.name = "Start Wave Spatial Button";
-            waveButton.transform.SetParent(_controlsRoot, false);
-            waveButton.transform.localPosition = new Vector3(0.63f, -0.05f, 0f);
-            waveButton.transform.localScale = new Vector3(0.34f, 0.22f, 0.028f);
-            waveButton.GetComponent<Renderer>().sharedMaterial = waveMaterial;
-            SpatialActionTarget waveTarget = waveButton.AddComponent<SpatialActionTarget>();
-            waveTarget.Initialize(SpatialAction.StartWave, new Color(0.22f, 0.62f, 0.39f));
-            _actions.Add(waveTarget);
-
-            Material orbMaterial = ProceduralFactory.CreateMaterial(new Color(0.96f, 0.78f, 0.28f), 0.34f, 0.62f);
-            ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Sphere,
-                "Vigil Heart Light",
-                _controlsRoot,
-                new Vector3(0.63f, 0.015f, -0.035f),
-                Vector3.one * 0.030f,
-                orbMaterial);
-            _startWaveLabelText = ProceduralFactory.WorldText(
-                "Wave Label",
-                $"START ATTACK\nWAVE 1 / {GameDefinitions.Waves.Length}",
-                _controlsRoot,
-                new Vector3(0.63f, -0.055f, -0.040f),
-                0.0125f,
-                new Color(0.98f, 0.95f, 0.82f));
-
-            Material progressTrack = ProceduralFactory.CreateUnlitMaterial(new Color(0.025f, 0.055f, 0.047f));
-            Material progressFill = ProceduralFactory.CreateUnlitMaterial(new Color(0.92f, 0.68f, 0.22f));
-            ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Cube,
-                "Start Wave Progress Bronze Rim",
-                _controlsRoot,
-                new Vector3(0.63f, -0.205f, 0.018f),
-                new Vector3(0.38f, 0.050f, 0.030f),
-                bronze);
-            ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Cube,
-                "Start Wave Progress Track",
-                _controlsRoot,
-                new Vector3(0.63f, -0.205f, 0f),
-                new Vector3(0.34f, 0.026f, 0.022f),
-                progressTrack);
-            _startWaveProgressFill = ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Cube,
-                "Start Wave Progress Fill",
-                _controlsRoot,
-                new Vector3(0.473f, -0.205f, -0.014f),
-                new Vector3(0.006f, 0.017f, 0.018f),
-                progressFill).transform;
+            _controlsRoot = PanelRoot("Spatial Arsenal UI", new Vector3(0f, 1.03f, -1.40f));
+            const float width = 0.18f, height = 0.36f;
+            for (int index = 0; index < 4; index++)
+            {
+                float x = (index - 1.5f) * 0.20f;
+                GameObject art = GeneratedLotusPanel.Create(_controlsRoot, "Generated Arsenal Card " + index,
+                    "Arsenal", new Vector2(width, height), new Vector3(x, 0f, 0f), index);
+                art.layer = 0;
+                BoxCollider collider = art.AddComponent<BoxCollider>();
+                collider.size = new Vector3(1f, 1f, 0.02f);
+                SpatialAction action = index == 0 ? SpatialAction.SelectArrow : index == 1 ? SpatialAction.SelectCannon :
+                    index == 2 ? SpatialAction.SelectFrost : SpatialAction.StartWave;
+                SpatialActionTarget target = art.AddComponent<SpatialActionTarget>();
+                target.Initialize(action, Color.white);
+                _actions.Add(target);
+                if (index == 3)
+                {
+                    _waveArt = art.GetComponent<Renderer>();
+                    _startDigits = GeneratedLotusPanel.Digits(_controlsRoot, new Vector3(x, -0.098f, -0.003f), 0.029f);
+                }
+            }
         }
 
-        private void CreateActionPedestal(Transform controlsRoot, SpatialAction action, TowerKind kind, string labelText, float x)
+        private Transform PanelRoot(string name, Vector3 localPosition)
         {
-            TowerDefinition definition = GameDefinitions.Tower(kind);
-            GameObject pedestal = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            pedestal.name = $"{definition.Name} Spatial Button";
-            pedestal.transform.SetParent(controlsRoot, false);
-            pedestal.transform.localPosition = new Vector3(x, -0.05f, 0.012f);
-            pedestal.transform.localScale = new Vector3(0.32f, 0.42f, 0.030f);
-            pedestal.GetComponent<Renderer>().sharedMaterial = ProceduralFactory.CreateMaterial(
-                Color.Lerp(new Color(0.05f, 0.10f, 0.085f), definition.Color, 0.10f),
-                0.12f,
-                0.28f);
-            SpatialActionTarget target = pedestal.AddComponent<SpatialActionTarget>();
-            target.Initialize(action, definition.Color);
-            _actions.Add(target);
-
-            ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Quad,
-                $"{definition.Name} Generated Card Art",
-                controlsRoot,
-                new Vector3(x, -0.05f, -0.010f),
-                new Vector3(0.32f, 0.42f, 1f),
-                CreateGeneratedCardMaterial(kind));
-
-            ProceduralFactory.WorldText($"{definition.Name} Label", labelText, controlsRoot, new Vector3(x, -0.145f, -0.030f), 0.0083f, new Color(0.95f, 0.92f, 0.82f));
-
-            Material pipMaterial = ProceduralFactory.CreateMaterial(definition.Color, 0.18f, 0.52f);
-            for (int level = 0; level < GameDefinitions.MaxTowerLevel; level++)
-            {
-                ProceduralFactory.VisualPrimitive(
-                    PrimitiveType.Sphere,
-                    $"{definition.Name} Level Pip {level + 1}",
-                    controlsRoot,
-                    new Vector3(x - 0.035f + level * 0.035f, -0.175f, -0.025f),
-                    Vector3.one * 0.010f,
-                    pipMaterial);
-            }
+            Transform panel = new GameObject(name).transform;
+            panel.gameObject.layer = 2;
+            panel.SetParent(_arenaRoot, false);
+            panel.localPosition = localPosition;
+            AttachBillboard(panel);
+            return panel;
         }
 
         private static Material CreateGeneratedCardMaterial(TowerKind kind)
         {
-            return kind switch
-            {
-                TowerKind.Arrow => CreateGeneratedUiMaterial(
-                    "UI/Generated/MorningBellCard/01_generated_image_url",
-                    new Vector2(0.628f, 0.663f),
-                    new Vector2(0.188f, 0.165f)),
-                TowerKind.Cannon => CreateGeneratedUiMaterial(
-                    "UI/Generated/GuardianCard/01_generated_image_url",
-                    new Vector2(0.624f, 0.625f),
-                    new Vector2(0.180f, 0.226f)),
-                _ => CreateGeneratedUiMaterial(
-                    "UI/Generated/LotusLampCard/01_generated_image_url",
-                    new Vector2(0.554f, 0.620f),
-                    new Vector2(0.223f, 0.190f))
-            };
+            return GeneratedLotusPanel.Material("Arsenal", (int)kind);
         }
 
         private static Material CreateGeneratedUiMaterial(string resourcePath, Vector2 cropScale, Vector2 cropOffset)
@@ -1676,9 +1674,11 @@ namespace PicoTowerDefense
                 return ProceduralFactory.CreateMaterial(new Color(0.11f, 0.24f, 0.20f), 0.08f, 0.28f);
             }
 
-            texture.filterMode = FilterMode.Trilinear;
+            // Bilinear sampling with an inward crop prevents the pale source
+            // matte from bleeding into the card edge at oblique XR angles.
+            texture.filterMode = FilterMode.Bilinear;
             texture.anisoLevel = 16;
-            texture.mipMapBias = -0.65f;
+            texture.mipMapBias = -0.35f;
             texture.wrapMode = TextureWrapMode.Clamp;
             var material = new Material(shader)
             {
@@ -1690,128 +1690,164 @@ namespace PicoTowerDefense
             return material;
         }
 
+        private static void BuildLotusPanelFrame(
+            Transform parent,
+            string name,
+            Vector3 center,
+            Vector2 size,
+            Material bronze,
+            Material jade,
+            float depth)
+        {
+            float innerWidth = Mathf.Max(0.02f, size.x - 0.046f);
+            float innerHeight = Mathf.Max(0.02f, size.y - 0.046f);
+            ProceduralFactory.VisualPrimitive(
+                PrimitiveType.Cube,
+                name + " Bronze Frame",
+                parent,
+                center,
+                new Vector3(size.x, size.y, depth),
+                bronze);
+            ProceduralFactory.VisualPrimitive(
+                PrimitiveType.Cube,
+                name + " Jade Inlay",
+                parent,
+                center + new Vector3(0f, 0f, -depth * 0.55f),
+                new Vector3(innerWidth, innerHeight, depth * 0.82f),
+                jade);
+
+            Vector3[] cornerOffsets =
+            {
+                new(-size.x * 0.43f, size.y * 0.43f, -depth * 1.05f),
+                new(size.x * 0.43f, size.y * 0.43f, -depth * 1.05f),
+                new(-size.x * 0.43f, -size.y * 0.43f, -depth * 1.05f),
+                new(size.x * 0.43f, -size.y * 0.43f, -depth * 1.05f)
+            };
+            Vector3 ornamentScale = new(Mathf.Min(0.055f, size.x * 0.15f), Mathf.Min(0.034f, size.y * 0.12f), depth * 0.65f);
+            for (int i = 0; i < cornerOffsets.Length; i++)
+            {
+                ProceduralFactory.VisualPrimitive(
+                    PrimitiveType.Cube,
+                    name + $" Corner Ornament {i + 1}",
+                    parent,
+                    center + cornerOffsets[i],
+                    ornamentScale,
+                    bronze,
+                    Quaternion.Euler(0f, 0f, i % 2 == 0 ? 32f : -32f));
+            }
+        }
+
         private void BuildStatusDisplay()
         {
-            _statusHudRoot = new GameObject("World Status HUD").transform;
-            _statusHudRoot.gameObject.layer = 2;
-            _statusHudRoot.SetParent(_arenaRoot, false);
-            // Float above the central mountain silhouette shown in the authored view.
-            _statusHudRoot.localPosition = new Vector3(0f, 1.78f, 0.26f);
-            _statusHudRoot.localScale = Vector3.one * 0.56f;
-            AttachBillboard(_statusHudRoot);
-
-            Material bronze = ProceduralFactory.CreateMaterial(new Color(0.54f, 0.36f, 0.16f), 0.44f, 0.42f);
-            GameObject statusPanel = ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Quad,
-                "Generated Lotus Coin Panel",
-                _statusHudRoot,
-                new Vector3(0f, 0f, 0.010f),
-                new Vector3(1.20f, 0.318f, 1f),
-                CreateGeneratedOverlayUiMaterial(
-                    "UI/Generated/CoinPanelTop/01_generated_image_url",
-                    new Vector2(0.620f, 0.375f),
-                    new Vector2(0.180f, 0.308f)));
-            ConfigureOverlayRenderer(statusPanel);
-
-            ProceduralFactory.BuildImportedUiVisual(
-                ProceduralFactory.CoinVisualResourcePath,
-                "Ancient Coin HUD Model",
-                _statusHudRoot,
-                new Vector3(-0.37f, 0f, -0.038f),
-                0.27f,
-                0.27f,
-                -8f,
-                90f);
-
-            _statusTitleText = ProceduralFactory.WorldText(
-                "World Status Title",
-                "COIN BALANCE",
-                _statusHudRoot,
-                new Vector3(0.105f, 0.095f, -0.022f),
-                0.0145f,
-                new Color(0.94f, 0.82f, 0.49f),
-                overlay: true);
-            _statusStatsText = ProceduralFactory.WorldText(
-                "World Status Stats",
-                string.Empty,
-                _statusHudRoot,
-                new Vector3(0.105f, 0.025f, -0.022f),
-                0.022f,
-                new Color(0.91f, 0.92f, 0.84f),
-                overlay: true);
-            _statusPhaseText = ProceduralFactory.WorldText(
-                "World Status Phase",
-                string.Empty,
-                _statusHudRoot,
-                new Vector3(0.105f, -0.045f, -0.022f),
-                0.0115f,
-                new Color(0.67f, 0.82f, 0.72f),
-                overlay: true);
-            _statusText = _statusStatsText;
-
-            Material track = ProceduralFactory.CreateMaterial(new Color(0.025f, 0.042f, 0.036f), 0f, 0.12f);
-            ProceduralFactory.VisualPrimitive(PrimitiveType.Cube, "Vigil Progress Track", _statusHudRoot, new Vector3(-0.090f, -0.140f, -0.020f), new Vector3(0.42f, 0.026f, 0.012f), track);
-            ProceduralFactory.VisualPrimitive(PrimitiveType.Cube, "Lamp Health Track", _statusHudRoot, new Vector3(0.370f, -0.140f, -0.020f), new Vector3(0.24f, 0.026f, 0.012f), track);
-            _statusWaveProgress = ProceduralFactory.VisualPrimitive(PrimitiveType.Cube, "Vigil Progress", _statusHudRoot, new Vector3(-0.295f, -0.140f, -0.032f), new Vector3(0.010f, 0.019f, 0.012f), bronze).transform;
-            _statusHealthFill = ProceduralFactory.VisualPrimitive(PrimitiveType.Cube, "Lamp Health", _statusHudRoot, new Vector3(0.255f, -0.140f, -0.032f), new Vector3(0.010f, 0.019f, 0.012f), ProceduralFactory.CreateMaterial(new Color(0.30f, 0.66f, 0.43f), 0.08f, 0.34f)).transform;
-            _statusWaveLabelText = ProceduralFactory.WorldText(
-                "Wave Progress Label",
-                "WAVE READY",
-                _statusHudRoot,
-                new Vector3(-0.090f, -0.092f, -0.024f),
-                0.011f,
-                new Color(0.92f, 0.88f, 0.68f),
-                overlay: true);
-            ProceduralFactory.WorldText(
-                "Temple Health Label",
-                "TEMPLE",
-                _statusHudRoot,
-                new Vector3(0.370f, -0.092f, -0.024f),
-                0.011f,
-                new Color(0.67f, 0.84f, 0.72f),
-                overlay: true);
+            _statusHudRoot = PanelRoot("World Status HUD", new Vector3(0f, 1.90f, 0.26f));
+            GeneratedLotusPanel.Create(_statusHudRoot, "Generated Chinese Status", "Status", new Vector2(0.90f, 0.30f), Vector3.zero);
+            _goldDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(-0.30f, -0.042f, -0.003f), 0.055f);
+            _lifeDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0f, -0.042f, -0.003f), 0.050f);
+            _waveDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0.30f, -0.042f, -0.003f), 0.050f);
         }
 
         private void BuildWaveBriefingDisplay()
         {
-            _waveBriefingRoot = new GameObject("Next Wave Enemy Skill Briefing").transform;
-            _waveBriefingRoot.gameObject.layer = 2;
-            _waveBriefingRoot.SetParent(_arenaRoot, false);
-            // Place the briefing beyond the rear edge of the island so it stays
-            // clear of the temple silhouette from the desktop and headset views.
-            _waveBriefingRoot.localPosition = new Vector3(-1.28f, 1.48f, 0.30f);
-            _waveBriefingRoot.localScale = Vector3.one * 0.53f;
-            AttachBillboard(_waveBriefingRoot);
+            _waveBriefingRoot = PanelRoot("Next Wave Enemy Skill Briefing", new Vector3(-1.55f, 1.80f, -0.10f));
+            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Chinese Enemy Briefing", "Briefing", new Vector2(0.50f, 0.75f), Vector3.zero);
+            _briefingWaveDigits = GeneratedLotusPanel.Digits(_waveBriefingRoot, new Vector3(0f, 0.239f, -0.003f), 0.028f);
+            float[] rows = { 0.275f, 0.387f, 0.498f, 0.610f, 0.723f, 0.839f };
+            for (int i = 0; i < 6; i++)
+                _enemyCountDigits[i] = GeneratedLotusPanel.Digits(_waveBriefingRoot,
+                    new Vector3(0.1175f, (0.5f - rows[i]) * 0.75f, -0.003f), 0.035f, 3);
+        }
 
-            GameObject briefingPanel = ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Quad,
-                "Generated Enemy Skill Briefing Panel",
-                _waveBriefingRoot,
-                new Vector3(0f, 0f, 0.010f),
-                new Vector3(0.90f, 1.08f, 1f),
-                CreateGeneratedOverlayUiMaterial(
-                    "UI/Generated/EnemyBriefingPanelV2/01_generated_image_url",
-                    new Vector2(0.660f, 0.800f),
-                    new Vector2(0.170f, 0.100f)));
-            ConfigureOverlayRenderer(briefingPanel);
+        private void BuildInteractionGuide()
+        {
+            // Move along the panel-to-camera line rather than a world axis.
+            // The side panel therefore comes both inward and forward as the
+            // viewer sees it, matching its camera-facing billboard normal.
+            _interactionGuideRoot = PanelRoot("Two Hand World Interaction Guide", InteractionGuidePositionTowardViewer());
+            GeneratedLotusPanel.Create(_interactionGuideRoot, "Generated Chinese Controller Guide", "Guide", new Vector2(0.72f, 0.48f), Vector3.zero);
+        }
 
-            _waveBriefingTitleText = ProceduralFactory.WorldText(
-                "Enemy Skill Briefing Title",
-                string.Empty,
-                _waveBriefingRoot,
-                new Vector3(0f, 0.260f, -0.030f),
-                0.013f,
-                new Color(1.00f, 0.95f, 0.74f),
-                overlay: true);
-            _waveBriefingBodyText = ProceduralFactory.WorldText(
-                "Enemy Skill Briefing Body",
-                string.Empty,
-                _waveBriefingRoot,
-                new Vector3(0.055f, -0.105f, -0.030f),
-                0.0115f,
-                new Color(0.96f, 0.98f, 0.91f),
-                anchor: TextAnchor.MiddleCenter,
-                overlay: true);
+        private static Vector3 InteractionGuidePositionTowardViewer()
+        {
+            Vector3 directionToViewer = GameDefinitions.DesignPlayerEyeLocal - InteractionGuideBasePosition;
+            return InteractionGuideBasePosition + directionToViewer.normalized * InteractionGuideForwardOffset;
+        }
+
+        private void OptimizeStaticPresentation()
+        {
+            var renderers = new HashSet<MeshRenderer>();
+            foreach (SceneModelAnchor anchor in _arenaRoot.GetComponentsInChildren<SceneModelAnchor>(true))
+                foreach (MeshRenderer renderer in anchor.GetComponentsInChildren<MeshRenderer>(true)) renderers.Add(renderer);
+            Transform layout = _arenaRoot.Find("Editable Decorative Scene Models");
+            if (layout != null)
+                foreach (MeshRenderer renderer in layout.GetComponentsInChildren<MeshRenderer>(true)) renderers.Add(renderer);
+            var batchObjects = new List<GameObject>();
+            int shadowCasters = 0;
+            long triangles = 0;
+            foreach (MeshRenderer renderer in renderers)
+            {
+                if (!renderer.enabled || !renderer.gameObject.activeInHierarchy) continue;
+                MeshFilter filter = renderer.GetComponent<MeshFilter>();
+                if (filter == null || filter.sharedMesh == null) continue;
+                Mesh mesh = filter.sharedMesh;
+                for (int i = 0; i < mesh.subMeshCount; i++) triangles += (long)mesh.GetIndexCount(i) / 3;
+                // The restored pond uses the authored depth-based water shader.
+                // Transparent water must not cast a stippled shadow onto its bed.
+                Material material = renderer.sharedMaterial;
+                if (material != null && material.shader != null && material.shader.name == "SyntyStudios/WaterShader")
+                {
+                    renderer.shadowCastingMode = ShadowCastingMode.Off;
+                    _input.Camera.depthTextureMode |= DepthTextureMode.Depth;
+                }
+                // Small ornaments contribute little visible shadow on headset,
+                // but used to be rendered again into the shadow map every frame.
+                if (renderer.bounds.size.magnitude < 0.32f) renderer.shadowCastingMode = ShadowCastingMode.Off;
+                if (renderer.shadowCastingMode != ShadowCastingMode.Off) shadowCasters++;
+                if (mesh.isReadable) batchObjects.Add(renderer.gameObject);
+            }
+            if (Application.isPlaying && batchObjects.Count > 1)
+                StaticBatchingUtility.Combine(batchObjects.ToArray(), _arenaRoot.gameObject);
+            Debug.Log($"[Lotus Performance] static renderers={renderers.Count}, triangles={triangles}, batch candidates={batchObjects.Count}, shadow casters={shadowCasters}, MSAA={QualitySettings.antiAliasing}, XR scale=1.");
+        }
+
+        private void NormalizeAuthoredArenaToMeters()
+        {
+            float conversion = 1f / GameDefinitions.AuthoredSceneScale;
+            // Unity Terrain ignores Transform scale: resize a runtime copy of
+            // its heightfield as well, never the user's TerrainData asset.
+            foreach (Terrain terrain in _arenaRoot.GetComponentsInChildren<Terrain>(true))
+            {
+                if (terrain.terrainData == null) continue;
+                TerrainData data = Instantiate(terrain.terrainData);
+                data.name += " (Runtime Meters)";
+                data.size *= conversion;
+                _runtimeTerrainData.Add(data);
+                terrain.terrainData = data;
+                TerrainCollider collider = terrain.GetComponent<TerrainCollider>();
+                if (collider != null) collider.terrainData = data;
+            }
+            _arenaRoot.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            _arenaRoot.localScale = Vector3.one;
+            Debug.Log($"[Lotus Walkaround] Authored island converted to meters. Board width={GameDefinitions.GridColumns * GameDefinitions.CellSize:F3}m; XR tracking scale remains 1.");
+        }
+
+        private void EnsureArenaWorldAnchor()
+        {
+            if (_arenaRoot == null || _input == null)
+            {
+                return;
+            }
+
+            bool wrongParent = _arenaRoot.parent != null;
+            bool moved = Vector3.Distance(_arenaRoot.position, _arenaWorldPositionAtBuild) > 0.0001f ||
+                         Quaternion.Angle(_arenaRoot.rotation, _arenaWorldRotationAtBuild) > 0.001f ||
+                         Vector3.Distance(_arenaRoot.lossyScale, _arenaWorldScaleAtBuild) > 0.0001f;
+            if (wrongParent || moved)
+            {
+                Debug.LogError("[Yi Nian Lotus City] Arena world anchor moved; restoring the authored room-space pose.", this);
+                _arenaRoot.SetParent(null, true);
+                _arenaRoot.SetPositionAndRotation(_arenaWorldPositionAtBuild, _arenaWorldRotationAtBuild);
+                _arenaRoot.localScale = _arenaWorldScaleAtBuild;
+            }
         }
 
         private static void ConfigureOverlayRenderer(GameObject panel)
@@ -1847,60 +1883,13 @@ namespace PicoTowerDefense
 
         private void BuildTowerHoverDisplay()
         {
-            _towerInfoRoot = new GameObject("Tower Hover Information Panel").transform;
-            _towerInfoRoot.gameObject.layer = 2;
-            _towerInfoRoot.SetParent(_arenaRoot, false);
-            _towerInfoRoot.localScale = Vector3.one * 0.42f;
+            _towerInfoRoot = PanelRoot("Tower Hover Information Panel", Vector3.zero);
+            GeneratedLotusPanel.Create(_towerInfoRoot, "Generated Chinese Tower Detail", "Stats", new Vector2(0.66f, 0.33f), Vector3.zero);
+            float[] columns = { 0.15f, 0.38f, 0.61f, 0.84f };
+            for (int i = 0; i < 4; i++)
+                _towerDigits[i] = GeneratedLotusPanel.Digits(_towerInfoRoot,
+                    new Vector3((columns[i] - 0.5f) * 0.66f, -0.033f, -0.003f), 0.042f, 5);
             _towerInfoRoot.gameObject.SetActive(false);
-            AttachBillboard(_towerInfoRoot);
-
-            Material bronze = ProceduralFactory.CreateUnlitMaterial(new Color(0.54f, 0.36f, 0.16f));
-            Material panel = ProceduralFactory.CreateUnlitMaterial(new Color(0.055f, 0.155f, 0.120f));
-            ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Cube,
-                "Tower Hover Bronze Frame",
-                _towerInfoRoot,
-                new Vector3(0f, 0f, 0.012f),
-                new Vector3(1.10f, 0.48f, 0.028f),
-                bronze);
-            ProceduralFactory.VisualPrimitive(
-                PrimitiveType.Cube,
-                "Tower Hover Panel",
-                _towerInfoRoot,
-                new Vector3(0f, 0f, 0f),
-                new Vector3(1.04f, 0.42f, 0.024f),
-                panel);
-            Vector3[] cornerPositions =
-            {
-                new(-0.485f, 0.180f, -0.018f), new(0.485f, 0.180f, -0.018f),
-                new(-0.485f, -0.180f, -0.018f), new(0.485f, -0.180f, -0.018f)
-            };
-            for (int corner = 0; corner < cornerPositions.Length; corner++)
-            {
-                ProceduralFactory.VisualPrimitive(
-                    PrimitiveType.Cube,
-                    $"Tower Hover Corner Ornament {corner + 1}",
-                    _towerInfoRoot,
-                    cornerPositions[corner],
-                    new Vector3(0.070f, 0.040f, 0.018f),
-                    bronze);
-            }
-            _towerInfoTitleText = ProceduralFactory.WorldText(
-                "Tower Hover Title",
-                string.Empty,
-                _towerInfoRoot,
-                new Vector3(0f, 0.115f, -0.030f),
-                0.015f,
-                new Color(0.95f, 0.82f, 0.46f),
-                overlay: true);
-            _towerInfoBodyText = ProceduralFactory.WorldText(
-                "Tower Hover Body",
-                string.Empty,
-                _towerInfoRoot,
-                new Vector3(0f, -0.060f, -0.030f),
-                0.0125f,
-                new Color(0.90f, 0.94f, 0.86f),
-                overlay: true);
         }
 
         private void UpdateTowerHover(TowerAgent tower)
@@ -1917,7 +1906,7 @@ namespace PicoTowerDefense
             if (_towerInfoRoot.parent != _arenaRoot)
             {
                 _towerInfoRoot.SetParent(_arenaRoot, false);
-                _towerInfoRoot.localScale = Vector3.one * 0.42f;
+                _towerInfoRoot.localScale = Vector3.one;
             }
             BillboardText towerBillboard = _towerInfoRoot.GetComponent<BillboardText>();
             if (towerBillboard != null)
@@ -1945,20 +1934,17 @@ namespace PicoTowerDefense
             _hoveredInfoTower = null;
             SetTowerHoverText(kind, 1);
 
-            // Weapon cards already live in a billboarded UI group. Parenting the
-            // description there keeps it in the same readable plane and prevents
-            // the island terrain from hiding it at certain viewing angles.
+            // Keep the detail panel world-anchored above the arsenal. Its own
+            // billboard faces the viewer, independent of the arsenal's tilt.
             Transform controlsRoot = card.parent;
-            _towerInfoRoot.SetParent(controlsRoot, false);
-            _towerInfoRoot.localPosition = card.localPosition + new Vector3(0f, 0.44f, 0.45f);
-            _towerInfoRoot.localScale = Vector3.one * 0.70f;
-            _towerInfoRoot.localRotation = Quaternion.identity;
+            _towerInfoRoot.SetParent(_arenaRoot, false);
+            _towerInfoRoot.position = controlsRoot.position + Vector3.up * 0.40f;
+            _towerInfoRoot.localScale = Vector3.one;
             BillboardText cardBillboard = _towerInfoRoot.GetComponent<BillboardText>();
             if (cardBillboard != null)
             {
-                // The arsenal itself already faces the player. Avoid a second
-                // billboard rotation that can turn the detail card edge-on.
-                cardBillboard.enabled = false;
+                cardBillboard.enabled = true;
+                cardBillboard.FaceTarget();
             }
             _towerInfoRoot.gameObject.SetActive(true);
         }
@@ -1966,24 +1952,29 @@ namespace PicoTowerDefense
         private void SetTowerHoverText(TowerKind kind, int level)
         {
             TowerDefinition definition = GameDefinitions.Tower(kind, level);
-            TowerDefinition baseDefinition = GameDefinitions.Tower(kind);
-            if (_towerInfoTitleText != null)
+            _towerDigits[0]?.Set(level.ToString());
+            _towerDigits[1]?.Set(definition.Damage.ToString("0", System.Globalization.CultureInfo.InvariantCulture));
+            _towerDigits[2]?.Set(definition.FireRate.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture));
+            _towerDigits[3]?.Set((definition.Range / GameDefinitions.SpatialScale).ToString("0.0", System.Globalization.CultureInfo.InvariantCulture));
+        }
+
+        private static string LocalizedTowerName(TowerKind kind)
+        {
+            return kind switch
             {
-                _towerInfoTitleText.text = $"{baseDefinition.Name.ToUpperInvariant()}  L{level}";
-            }
-            if (_towerInfoBodyText != null)
-            {
-                _towerInfoBodyText.text = $"DAMAGE {definition.Damage:0}   RATE {definition.FireRate:0.0}/S\nRANGE {definition.Range / GameDefinitions.SpatialScale:0.0}\n{TowerRoleDescription(kind)}";
-            }
+                TowerKind.Cannon => "经轮守卫",
+                TowerKind.Frost => "莲花灯",
+                _ => "晨钟"
+            };
         }
 
         private static string TowerRoleDescription(TowerKind kind)
         {
             return kind switch
             {
-                TowerKind.Cannon => "HEAVY AREA HIT",
-                TowerKind.Frost => "SLOW CONTROL",
-                _ => "FAST CHIME SHOTS"
+                TowerKind.Cannon => "范围伤害",
+                TowerKind.Frost => "减速控制",
+                _ => "快速音波飞矢"
             };
         }
 
@@ -2343,6 +2334,7 @@ namespace PicoTowerDefense
             if (_controlsRoot != null) _controlsRoot.gameObject.SetActive(visible);
             if (_statusHudRoot != null) _statusHudRoot.gameObject.SetActive(visible);
             if (_waveBriefingRoot != null) _waveBriefingRoot.gameObject.SetActive(visible);
+            if (_interactionGuideRoot != null) _interactionGuideRoot.gameObject.SetActive(visible && _waveIndex == 0);
             if (_towerInfoRoot != null) _towerInfoRoot.gameObject.SetActive(false);
             if (_rangeRing != null) _rangeRing.enabled = false;
         }
@@ -2537,7 +2529,7 @@ namespace PicoTowerDefense
             for (int i = 0; i < _enemies.Count; i++)
             {
                 EnemyAgent enemy = _enemies[i];
-                if (enemy.IsDead || enemy.ReachedEnd || !enemy.HasReachedWeaponGate)
+                if (!enemy.IsValid || enemy.IsDead || enemy.ReachedEnd || !enemy.HasReachedWeaponGate)
                 {
                     continue;
                 }
@@ -2569,14 +2561,14 @@ namespace PicoTowerDefense
 
         private bool IsPlayerWeaponTargetValid(EnemyAgent target, Vector3 weaponOrigin)
         {
-            return target != null && target.HasReachedWeaponGate && !target.IsDead && !target.ReachedEnd &&
+            return target != null && target.IsValid && target.HasReachedWeaponGate && !target.IsDead && !target.ReachedEnd &&
                    (target.Position - weaponOrigin).sqrMagnitude <=
                    Mathf.Pow(GameDefinitions.PlayerWeaponRange * _worldScale, 2f);
         }
 
         private bool FirePlayerWeapon(EnemyAgent target, bool feedback)
         {
-            if (target == null || !target.HasReachedWeaponGate || target.IsDead || target.ReachedEnd)
+            if (target == null || !target.IsValid || !target.HasReachedWeaponGate || target.IsDead || target.ReachedEnd)
             {
                 return false;
             }
@@ -2614,6 +2606,11 @@ namespace PicoTowerDefense
                     Play("build", 0.35f);
                     break;
                 case SpatialAction.StartWave:
+                    if (_gameOver)
+                    {
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(LotusTitleStage.GameplaySceneName);
+                        return;
+                    }
                     if (StartNextWave())
                     {
                         Play("wave", 0.65f);
@@ -2937,7 +2934,7 @@ namespace PicoTowerDefense
             }
         }
 
-        private static void DestroyRuntimeObject(GameObject target)
+        private static void DestroyRuntimeObject(UnityEngine.Object target)
         {
             if (target == null)
             {
@@ -3173,6 +3170,13 @@ namespace PicoTowerDefense
             {
                 _waveInProgress = false;
                 _waveIndex++;
+                if (_waveIndex == 1 && _interactionGuideRoot != null)
+                {
+                    // The guide stays visible throughout preparation and the
+                    // whole first wave, then makes room only after that wave
+                    // has genuinely resolved.
+                    _interactionGuideRoot.gameObject.SetActive(false);
+                }
                 stateChanged = true;
                 if (_waveIndex >= GameDefinitions.Waves.Length)
                 {
@@ -3222,7 +3226,7 @@ namespace PicoTowerDefense
 
             ParticleSystem.NoiseModule noise = particles.noise;
             noise.enabled = true;
-            noise.quality = ParticleSystemNoiseQuality.High;
+            noise.quality = ParticleSystemNoiseQuality.Low;
             noise.strength = enemyRadius * 1.2f;
             noise.frequency = 0.72f;
             noise.scrollSpeed = 0.28f;
@@ -3385,7 +3389,7 @@ namespace PicoTowerDefense
                 bool enabled = action.Action switch
                 {
                     SpatialAction.StartExperience => !_experienceStarted,
-                    SpatialAction.StartWave => !_gameOver && !_waveInProgress && _waveIndex < GameDefinitions.Waves.Length,
+                    SpatialAction.StartWave => _gameOver || (!_waveInProgress && _waveIndex < GameDefinitions.Waves.Length),
                     _ => true
                 };
                 action.SetState(selected, action == _hoveredAction, enabled);
@@ -3399,57 +3403,13 @@ namespace PicoTowerDefense
                 return;
             }
 
-            string phase = _gameOver ? (_won ? "VICTORY" : "TEMPLE LOST") : _waveInProgress ? "DEFENDING" : "READY";
-            int levelTwo = 0;
-            int levelThree = 0;
-            for (int i = 0; i < _towers.Count; i++)
-            {
-                levelTwo += _towers[i].Level == 2 ? 1 : 0;
-                levelThree += _towers[i].Level == 3 ? 1 : 0;
-            }
-            if (_statusTitleText != null)
-            {
-                _statusTitleText.text = "COIN BALANCE";
-            }
-            if (_statusStatsText != null)
-            {
-                _statusStatsText.text = $"{_gold} COINS";
-            }
-            if (_statusPhaseText != null)
-            {
-                _statusPhaseText.text = $"LIVES {_lives}/{GameDefinitions.StartingLives}   {phase}";
-            }
-
-            int displayWave = Mathf.Clamp(_waveIndex + 1, 1, Mathf.Max(1, GameDefinitions.Waves.Length));
-            int waveTotal = _waveInProgress ? _currentWaveEnemyTotal : WaveEnemyCount(_waveIndex);
-            int waveResolved = _waveInProgress ? _currentWaveEnemyResolved : 0;
-            if (_gameOver && _won)
-            {
-                displayWave = GameDefinitions.Waves.Length;
-                waveTotal = Mathf.Max(1, waveTotal);
-                waveResolved = waveTotal;
-            }
-            float waveProgress = waveTotal > 0 ? waveResolved / (float)waveTotal : 0f;
-            if (_statusWaveLabelText != null)
-            {
-                _statusWaveLabelText.text = _gameOver && _won
-                    ? $"WAVES COMPLETE  {GameDefinitions.Waves.Length}/{GameDefinitions.Waves.Length}"
-                    : _waveInProgress
-                        ? $"WAVE {displayWave}/{GameDefinitions.Waves.Length}   ENEMIES {waveResolved}/{waveTotal}"
-                        : $"WAVE {displayWave}/{GameDefinitions.Waves.Length}   READY";
-            }
-            if (_statusWaveProgress != null)
-            {
-                float width = 0.42f * Mathf.Clamp01(waveProgress);
-                _statusWaveProgress.localScale = new Vector3(Mathf.Max(0.010f, width), 0.019f, 0.012f);
-                _statusWaveProgress.localPosition = new Vector3(-0.300f + width * 0.5f, -0.140f, -0.032f);
-            }
-            if (_statusHealthFill != null)
-            {
-                float width = 0.24f * Mathf.Clamp01(_lives / (float)GameDefinitions.StartingLives);
-                _statusHealthFill.localScale = new Vector3(Mathf.Max(0.010f, width), 0.019f, 0.012f);
-                _statusHealthFill.localPosition = new Vector3(0.250f + width * 0.5f, -0.140f, -0.032f);
-            }
+            int displayWave = Mathf.Clamp(_waveIndex + 1, 1, GameDefinitions.Waves.Length);
+            _goldDigits.Set(_gold.ToString());
+            _lifeDigits.Set($"{_lives}/{GameDefinitions.StartingLives}");
+            _waveDigits.Set($"{displayWave}/{GameDefinitions.Waves.Length}");
+            _waveArt.sharedMaterial = _gameOver ? GeneratedLotusPanel.Material("WaveStates", _won ? 1 : 2) :
+                _waveInProgress ? GeneratedLotusPanel.Material("WaveStates", 0) : GeneratedLotusPanel.Material("Arsenal", 3);
+            _startDigits.Set(_gameOver ? (_won ? "25/25" : "-") : $"{displayWave}/25");
             if (_baseHealthFill != null)
             {
                 float width = 0.40f * Mathf.Clamp01(_lives / (float)GameDefinitions.StartingLives);
@@ -3459,20 +3419,6 @@ namespace PicoTowerDefense
                 Vector3 position = _baseHealthFill.localPosition;
                 position.x = -0.20f + width * 0.5f;
                 _baseHealthFill.localPosition = position;
-            }
-            if (_startWaveLabelText != null)
-            {
-                _startWaveLabelText.text = _gameOver
-                    ? (_won ? "ALL WAVES\nCOMPLETE" : "TEMPLE\nFALLEN")
-                    : _waveInProgress
-                        ? $"ATTACKING\nWAVE {displayWave}/{GameDefinitions.Waves.Length}"
-                        : $"START ATTACK\nWAVE {displayWave}/{GameDefinitions.Waves.Length}";
-            }
-            if (_startWaveProgressFill != null)
-            {
-                float width = 0.32f * Mathf.Clamp01(waveProgress);
-                _startWaveProgressFill.localScale = new Vector3(Mathf.Max(0.006f, width), 0.017f, 0.018f);
-                _startWaveProgressFill.localPosition = new Vector3(0.470f + width * 0.5f, -0.205f, -0.014f);
             }
             RefreshWaveBriefing();
             RefreshActionVisuals();
@@ -3493,37 +3439,11 @@ namespace PicoTowerDefense
                 return;
             }
 
-            bool bossWave = (_waveIndex + 1) % 5 == 0;
-            _waveBriefingTitleText.text = bossWave
-                ? $"BOSS ALERT\nWAVE {_waveIndex + 1} / {GameDefinitions.Waves.Length}"
-                : $"ENEMY INTEL\nWAVE {_waveIndex + 1} / {GameDefinitions.Waves.Length}";
-            var lines = new List<string>();
-            var described = new HashSet<EnemyKind>();
-            SpawnBatch[] wave = GameDefinitions.Waves[_waveIndex];
-            for (int i = 0; i < wave.Length; i++)
-            {
-                if (described.Add(wave[i].Kind))
-                {
-                    int kindCount = 0;
-                    for (int batchIndex = 0; batchIndex < wave.Length; batchIndex++)
-                    {
-                        if (wave[batchIndex].Kind == wave[i].Kind)
-                        {
-                            kindCount += GameDefinitions.SpawnCount(wave[batchIndex]);
-                        }
-                    }
-                    lines.Add(EnemySkillSummary(wave[i].Kind, kindCount));
-                }
-            }
-            // WorldText builds a high-resolution atlas and applies a 0.125
-            // counter-scale. Preserve that factor when changing the text at
-            // runtime; assigning the requested size directly makes the body
-            // roughly eight times larger than the panel.
-            float requestedCharacterSize = described.Count >= 4 ? 0.0096f :
-                                           described.Count == 3 ? 0.0103f :
-                                           0.0115f;
-            _waveBriefingBodyText.characterSize = requestedCharacterSize * 0.125f;
-            _waveBriefingBodyText.text = string.Join("\n", lines);
+            _briefingWaveDigits.Set($"{_waveIndex + 1}/25");
+            int[] counts = new int[6];
+            foreach (SpawnBatch batch in GameDefinitions.Waves[_waveIndex])
+                counts[(int)batch.Kind] += GameDefinitions.SpawnCount(batch);
+            for (int i = 0; i < 6; i++) _enemyCountDigits[i].Set(counts[i].ToString());
         }
 
         private static int WaveEnemyCount(int waveIndex)
@@ -3546,12 +3466,12 @@ namespace PicoTowerDefense
         {
             return kind switch
             {
-                EnemyKind.Runner => $"GRASPING BURDEN x{count}\nFAST / STEALS 10 COINS",
-                EnemyKind.Tank => $"IGNORANCE BOSS x{count}\n800 HP / 38% ARMOR\n4 TEMPLE DAMAGE",
-                EnemyKind.Shield => $"DOUBT CARAPACE x{count}\nSTONE SHELL / 110 SHIELD",
-                EnemyKind.Splitter => $"ANGER CRAG x{count}\nHASTES ALLIES / SPLITS",
-                EnemyKind.Support => $"DELUSION CLOUD x{count}\nFOG SILENCES TOWERS",
-                _ => $"RESTLESS DUST x{count}\nSTONE SWARM / GROUP RUSH"
+                EnemyKind.Runner => $"疾行执念 ×{count}\n快速 / 偷取 10 灵光",
+                EnemyKind.Tank => $"无明兽首领 ×{count}\n800 生命 / 38% 护甲\n神庙伤害 4",
+                EnemyKind.Shield => $"疑甲 ×{count}\n石壳 / 110 护盾",
+                EnemyKind.Splitter => $"怒焰 ×{count}\n加速同伴 / 分裂",
+                EnemyKind.Support => $"妄雾 ×{count}\n雾气沉默防御塔",
+                _ => $"游尘 ×{count}\n成群突袭"
             };
         }
 
@@ -3615,9 +3535,24 @@ namespace PicoTowerDefense
             billboard.FaceTarget();
         }
 
+        private void FacePanelTowardDesignStart(Transform panel)
+        {
+            if (panel == null || _arenaRoot == null)
+            {
+                return;
+            }
+
+            Vector3 designEye = GameDefinitions.DesignPlayerEyeLocal;
+            Vector3 awayFromViewer = panel.localPosition - designEye;
+            if (awayFromViewer.sqrMagnitude > 0.0001f)
+            {
+                panel.localRotation = Quaternion.LookRotation(awayFromViewer.normalized, Vector3.up);
+            }
+        }
+
         private void FaceAllTextNow()
         {
-            BillboardText[] texts = GetComponentsInChildren<BillboardText>(true);
+            BillboardText[] texts = _arenaRoot.GetComponentsInChildren<BillboardText>(true);
             for (int i = 0; i < texts.Length; i++)
             {
                 texts[i].FaceTarget();

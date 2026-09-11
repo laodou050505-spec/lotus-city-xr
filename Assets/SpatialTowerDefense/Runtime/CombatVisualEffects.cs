@@ -48,8 +48,8 @@ namespace PicoTowerDefense
                 TowerKind.Frost => new Color(0.30f, 0.63f, 0.56f),
                 _ => Color.white
             };
-            float radius = kind == TowerKind.Cannon ? 0.16f : 0.12f;
-            SpawnImpact($"{kind} Purification Impact", worldPosition, parent, color, radius, kind != TowerKind.Arrow);
+            float radius = kind == TowerKind.Cannon ? 0.08f : 0.05f;
+            SpawnImpact($"{kind} Purification Impact", worldPosition, parent, color, radius, false);
         }
 
         public static void SpawnKeeperImpact(Vector3 worldPosition, Transform parent)
@@ -58,9 +58,9 @@ namespace PicoTowerDefense
                 "Keeper Purification Impact",
                 worldPosition,
                 parent,
-                new Color(0.78f, 0.59f, 0.26f),
-                0.14f,
-                true);
+                new Color(0.18f, 0.55f, 0.40f),
+                0.06f,
+                false);
         }
 
         private static void SpawnImpact(
@@ -330,7 +330,7 @@ namespace PicoTowerDefense
 
     public sealed class TransientPurificationRing : MonoBehaviour
     {
-        private const int SegmentCount = 32;
+        private const int SegmentCount = 20;
         private readonly LineRenderer[] _rings = new LineRenderer[2];
         private Color _color;
         private float _maximumRadius;
@@ -341,7 +341,8 @@ namespace PicoTowerDefense
         {
             _color = color;
             _maximumRadius = maximumRadius;
-            _duration = 0.30f;
+            _duration = 0.45f;
+            transform.localScale = Vector3.one * (_maximumRadius * 0.65f);
             _rings[0] = CreateRing("Ground Wave", Quaternion.identity, material);
             if (crossedRing)
             {
@@ -354,10 +355,10 @@ namespace PicoTowerDefense
             _elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(_elapsed / _duration);
             float eased = 1f - Mathf.Pow(1f - t, 3f);
-            transform.localScale = Vector3.one * Mathf.Lerp(0.10f, _maximumRadius, eased);
+            transform.localScale = Vector3.one * Mathf.Lerp(_maximumRadius * 0.65f, _maximumRadius, eased);
             transform.localRotation = Quaternion.Euler(0f, t * 65f, 0f);
 
-            Color fade = new(_color.r, _color.g, _color.b, (1f - t) * 0.48f);
+            Color fade = new(_color.r, _color.g, _color.b, Mathf.Sin(t * Mathf.PI) * 0.20f);
             for (int i = 0; i < _rings.Length; i++)
             {
                 if (_rings[i] == null)
@@ -366,7 +367,7 @@ namespace PicoTowerDefense
                 }
                 _rings[i].startColor = fade;
                 _rings[i].endColor = new Color(fade.r, fade.g, fade.b, fade.a * 0.30f);
-                float width = Mathf.Lerp(0.026f, 0.006f, t);
+                float width = Mathf.Lerp(0.006f, 0.002f, t);
                 _rings[i].startWidth = width;
                 _rings[i].endWidth = width;
             }
@@ -385,6 +386,10 @@ namespace PicoTowerDefense
             ringObject.transform.localRotation = localRotation;
             var line = ringObject.AddComponent<LineRenderer>();
             line.sharedMaterial = material;
+            line.startColor = new Color(_color.r, _color.g, _color.b, 0f);
+            line.endColor = new Color(_color.r, _color.g, _color.b, 0f);
+            line.startWidth = 0.004f;
+            line.endWidth = 0.004f;
             line.useWorldSpace = false;
             line.loop = true;
             line.positionCount = SegmentCount;

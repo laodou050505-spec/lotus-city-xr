@@ -30,6 +30,7 @@ namespace PicoTowerDefense
         public float ShieldPoints { get; private set; }
         public bool IsDead { get; private set; }
         public bool ReachedEnd { get; private set; }
+        public bool IsValid => Root != null;
         public int PathSegment => _segment;
         public Vector3 LocalPosition => Root.transform.localPosition;
         public Vector3 Position => Root.transform.position;
@@ -157,7 +158,7 @@ namespace PicoTowerDefense
 
         public void HealNearby(float deltaTime, IReadOnlyList<EnemyAgent> enemies)
         {
-            if (IsDead || ReachedEnd)
+            if ((Definition.HealPerSecond <= 0f && Kind != EnemyKind.Splitter) || IsDead || ReachedEnd)
             {
                 return;
             }

@@ -80,8 +80,8 @@ namespace PicoTowerDefense
 
         /// <summary>
         /// Moves saved scene-authored models under the runtime arena without
-        /// changing their world pose. The parent is moved in front of the
-        /// player's head for XR, so every saved model remains spatially anchored.
+        /// changing their authored world pose. Once all saved content has
+        /// been adopted, the complete arena is converted to room-scale meters.
         /// </summary>
         public static int AdoptSavedModels(Transform arenaRoot)
         {

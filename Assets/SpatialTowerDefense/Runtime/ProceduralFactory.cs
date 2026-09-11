@@ -6,7 +6,13 @@ namespace PicoTowerDefense
     public static class ProceduralFactory
     {
         private const int IgnoreRaycastLayer = 2;
-        private const string RuntimeGlyphs = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/:-";
+        private const string RuntimeGlyphs =
+            " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/:-+.%×" +
+            "一念莲城灵光余额生命神庙波次准备防守胜利失守完成开始进攻中敌人情报预首领来袭第共" +
+            "晨钟经轮守卫供灯塔手柄操作左扳机选择放置拖拽切换右净化重置视角键等级秒" +
+            "疾行执念无明兽疑甲怒焰妄雾游尘快速偷取铜钱护甲伤害石壳护盾" +
+            "加速同伴分裂雾气沉默攻击力攻速范围范围伤害减速控制音波飞矢成群突袭";
+        private static Font _runtimeFont;
         // The authored board uses white stone tiles for the enemy route and
         // green moss tiles exclusively for tower placement. Keep these
         // resources reserved for gameplay so the free-form scenery tool cannot
@@ -137,7 +143,7 @@ namespace PicoTowerDefense
             go.transform.SetParent(parent, false);
             go.transform.localPosition = localPosition;
             var mesh = go.AddComponent<TextMesh>();
-            Font font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            Font font = RuntimeFont();
             if (font != null)
             {
                 mesh.font = font;
@@ -191,6 +197,22 @@ namespace PicoTowerDefense
                 }
             }
             return mesh;
+        }
+
+        private static Font RuntimeFont()
+        {
+            if (_runtimeFont != null)
+            {
+                return _runtimeFont;
+            }
+
+            _runtimeFont = Resources.Load<Font>("Fonts/NotoSansSC-Regular");
+            if (_runtimeFont == null)
+            {
+                Debug.LogError("[Yi Nian Lotus City] Required Noto Sans SC runtime font is missing; Chinese world-space labels cannot render.");
+                _runtimeFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            }
+            return _runtimeFont;
         }
 
         public static Transform BuildTowerVisual(TowerKind kind, Transform parent, int level = 1)
