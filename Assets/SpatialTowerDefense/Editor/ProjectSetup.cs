@@ -1113,5 +1113,148 @@ namespace PicoTowerDefenseEditor
                 current = next;
             }
         }
+
+        // ---------------------------------------------------------------------------
+        // 游戏内面板截图 — 在 Edit 模式（batchmode 不加 -nographics）下运行。
+        // 直接调用 GeneratedLotusPanel API，不启动 Play 模式。
+        // 输出：/tmp/screenshot_status_briefing.png, /tmp/screenshot_guide.png,
+        //       /tmp/screenshot_stats.png
+        // Run via: lockf /tmp/en-unity-A.lock unity -batchmode -buildTarget Android
+        //          -executeMethod PicoTowerDefenseEditor.ProjectSetup.CaptureScreenshots
+        // ---------------------------------------------------------------------------
+        [MenuItem("Tools/Spatial Tower Defense/Capture Panel Screenshots (Edit Mode)")]
+        public static void CaptureScreenshots()
+        {
+            const int W = 1920, H = 1080;
+            string outDir = "/tmp";
+            Directory.CreateDirectory(outDir);
+
+            // 相机位置：设计眼点 (0, 2.12, -2.40)，俯仰 25°（在 arena 局部坐标下）
+            Vector3 eyePos = new Vector3(0f, 2.12f, -2.40f);
+
+            // 创建竞技场根节点（单位矩阵，位于世界原点）
+            var arenaGO = new GameObject("ScreenshotArena");
+            var arenaRoot = arenaGO.transform;
+            arenaRoot.position = Vector3.zero;
+            arenaRoot.rotation = Quaternion.identity;
+            arenaRoot.localScale = Vector3.one;
+
+            // ── 辅助方法：在 arenaRoot 下创建面板根，朝向视点 ──
+            Transform MakePanelRoot(string name, Vector3 localPos)
+            {
+                var t = new GameObject(name).transform;
+                t.SetParent(arenaRoot, false);
+                t.localPosition = localPos;
+                // 令面板的 +Z 朝向摄像机（Billboard 效果）
+                Vector3 toCam = eyePos - localPos;
+                if (toCam.sqrMagnitude > 0.0001f)
+                    t.rotation = Quaternion.LookRotation(toCam.normalized, Vector3.up);
+                return t;
+            }
+
+            // ── 创建 Status 面板 ──
+            var statusRoot = MakePanelRoot("Status Root", new Vector3(0f, 1.90f, 0.26f));
+            GeneratedLotusPanel.Create(statusRoot, "Status Panel", "Status", new Vector2(1.20f, 0.40f), Vector3.zero);
+            var goldD  = GeneratedLotusPanel.Digits(statusRoot, new Vector3(-0.40f, -0.056f, -0.003f), 0.073f);
+            var lifeD  = GeneratedLotusPanel.Digits(statusRoot, new Vector3(0f, -0.056f, -0.003f), 0.067f);
+            var waveD  = GeneratedLotusPanel.Digits(statusRoot, new Vector3(0.40f, -0.056f, -0.003f), 0.067f);
+            goldD.Set("999");
+            lifeD.Set("3");
+            waveD.Set("1");
+
+            // ── 创建 Briefing 面板 ──
+            var briefRoot = MakePanelRoot("Briefing Root", new Vector3(-1.55f, 1.80f, -0.10f));
+            GeneratedLotusPanel.Create(briefRoot, "Briefing Panel", "Briefing", new Vector2(0.80f, 1.20f), Vector3.zero);
+            var briefWaveD = GeneratedLotusPanel.Digits(briefRoot, new Vector3(0f, 0.383f, -0.003f), 0.045f);
+            briefWaveD.Set("1/25");
+            float[] rows = { 0.275f, 0.387f, 0.498f, 0.610f, 0.723f, 0.839f };
+            var enemyDs = new LotusDigitField[6];
+            for (int i = 0; i < 6; i++)
+            {
+                enemyDs[i] = GeneratedLotusPanel.Digits(briefRoot,
+                    new Vector3(0.188f, (0.5f - rows[i]) * 1.20f, -0.003f), 0.056f, 3);
+                enemyDs[i].Set((i + 2).ToString());
+            }
+
+            // ── 创建 Guide 面板（约 (1.26, 1.82, -0.62)）──
+            // InteractionGuidePositionTowardViewer() 计算结果
+            Vector3 guideBasePos = new Vector3(1.55f, 1.75f, -0.22f);
+            Vector3 dirToViewer = (eyePos - guideBasePos).normalized;
+            Vector3 guideLocalPos = guideBasePos + dirToViewer * 0.50f;
+            var guideRoot = MakePanelRoot("Guide Root", guideLocalPos);
+            GeneratedLotusPanel.Create(guideRoot, "Guide Panel", "Guide", new Vector2(0.96f, 0.64f), Vector3.zero);
+
+            // ── 创建 Stats（塔悬浮信息）面板，放在游戏板上方 ──
+            var statsRoot = MakePanelRoot("Stats Root", new Vector3(0f, 1.50f, 0.50f));
+            GeneratedLotusPanel.Create(statsRoot, "Stats Panel", "Stats", new Vector2(0.88f, 0.44f), Vector3.zero);
+            float[] cols = { 0.15f, 0.38f, 0.61f, 0.84f };
+            var towerDs = new LotusDigitField[4];
+            for (int i = 0; i < 4; i++)
+            {
+                towerDs[i] = GeneratedLotusPanel.Digits(statsRoot,
+                    new Vector3((cols[i] - 0.5f) * 0.88f, -0.044f, -0.003f), 0.056f, 5);
+            }
+            towerDs[0].Set("3");      // Level
+            towerDs[1].Set("150");    // Attack
+            towerDs[2].Set("1.5");    // Speed
+            towerDs[3].Set("3.0");    // Range
+
+            // ── 摄像机设置 ──
+            var camGO = new GameObject("ScreenshotCam");
+            var cam = camGO.AddComponent<Camera>();
+            cam.fieldOfView = 80f;
+            cam.nearClipPlane = 0.1f;
+            cam.farClipPlane = 20f;
+            cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.backgroundColor = new Color(0.08f, 0.10f, 0.09f, 1f);
+            cam.cullingMask = ~0;
+
+            var rt = new RenderTexture(W, H, 24, RenderTextureFormat.ARGB32);
+            rt.antiAliasing = 2;
+            cam.targetTexture = rt;
+
+            // ── 截图函数 ──
+            void Shoot(string filename, Vector3 camLocalPos, Vector3 lookAtLocalPos)
+            {
+                cam.transform.position = arenaRoot.TransformPoint(camLocalPos);
+                cam.transform.LookAt(arenaRoot.TransformPoint(lookAtLocalPos), Vector3.up);
+                cam.Render();
+                RenderTexture.active = rt;
+                var tex = new Texture2D(W, H, TextureFormat.RGB24, false);
+                tex.ReadPixels(new Rect(0, 0, W, H), 0, 0);
+                tex.Apply();
+                RenderTexture.active = null;
+                byte[] png = tex.EncodeToPNG();
+                string fullPath = Path.Combine(outDir, filename);
+                File.WriteAllBytes(fullPath, png);
+                UnityEngine.Object.DestroyImmediate(tex);
+                Debug.Log($"[Screenshot] Saved {fullPath}");
+            }
+
+            // 截图 1：Status + Briefing（眼点俯视前方两块面板）
+            Shoot("screenshot_status_briefing.png",
+                  eyePos,
+                  new Vector3(-0.775f, 1.85f, 0.10f));
+
+            // 截图 2：Guide（右侧面板，相机偏右）
+            Shoot("screenshot_guide.png",
+                  eyePos,
+                  guideLocalPos);
+
+            // 截图 3：Stats 塔悬浮面板（靠近游戏板）
+            Shoot("screenshot_stats.png",
+                  new Vector3(0f, 1.90f, -1.20f),
+                  new Vector3(0f, 1.50f, 0.50f));
+
+            // 清理临时对象
+            cam.targetTexture = null;
+            rt.Release();
+            UnityEngine.Object.DestroyImmediate(rt);
+            UnityEngine.Object.DestroyImmediate(camGO);
+            UnityEngine.Object.DestroyImmediate(arenaGO);
+
+            Debug.Log("[Screenshot] All 3 panel screenshots saved to /tmp/");
+        }
+
     }
 }

@@ -1778,15 +1778,16 @@ namespace PicoTowerDefense
         private void BuildWaveBriefingDisplay()
         {
             _waveBriefingRoot = PanelRoot("Next Wave Enemy Skill Briefing", new Vector3(-1.55f, 1.80f, -0.10f));
-            // 等比放大 ×1.40：0.50×0.75 → 0.70×1.05m，比例 0.667:1 与图片 1024×1536 一致。
-            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Enemy Briefing", "Briefing", new Vector2(0.70f, 1.05f), Vector3.zero);
-            // 波次数字：Y 按 ×1.40 缩放 0.239→0.335，高度 0.028→0.039。
-            _briefingWaveDigits = GeneratedLotusPanel.Digits(_waveBriefingRoot, new Vector3(0f, 0.335f, -0.003f), 0.039f);
+            // 等比放大 ×1.143：0.70×1.05 → 0.80×1.20m，比例 0.667:1 与图片 1024×1536 一致。
+            // 扩大至 0.80×1.20 以满足 VR 可读性规格 C（d=2.79m，68px名字/50px描述）。
+            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Enemy Briefing", "Briefing", new Vector2(0.80f, 1.20f), Vector3.zero);
+            // 波次数字：Y 按 ×1.143 缩放 0.335→0.383，高度 0.039→0.045。
+            _briefingWaveDigits = GeneratedLotusPanel.Digits(_waveBriefingRoot, new Vector3(0f, 0.383f, -0.003f), 0.045f);
             float[] rows = { 0.275f, 0.387f, 0.498f, 0.610f, 0.723f, 0.839f };
             for (int i = 0; i < 6; i++)
-                // 敌人计数：X ×1.40 0.1175→0.1645，Y 乘数 0.75→1.05，高度 0.035→0.049。
+                // 敌人计数：X ×1.143 0.1645→0.188，Y 乘数 1.05→1.20，高度 0.049→0.056。
                 _enemyCountDigits[i] = GeneratedLotusPanel.Digits(_waveBriefingRoot,
-                    new Vector3(0.1645f, (0.5f - rows[i]) * 1.05f, -0.003f), 0.049f, 3);
+                    new Vector3(0.188f, (0.5f - rows[i]) * 1.20f, -0.003f), 0.056f, 3);
         }
 
         private void BuildInteractionGuide()
