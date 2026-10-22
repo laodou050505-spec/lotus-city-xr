@@ -11,23 +11,23 @@
 
 ## 改动清单
 
-### 1. GeneratedV5 面板图片（全部替换）
+### 1. GeneratedV5 面板图片（v1 初稿 + v2 终稿，全部已部署）
 
-| 文件 | Tripo task_id | 模型 | 验证结果 |
-|---|---|---|---|
-| Arsenal.png | 8bf9faa7-1f99-4fd6-93fb-e075db4511bd | banana2 | ✅ 四塔名/成本/职能全英文，无中文 |
-| Briefing.png | d56a9db2-2b52-43fd-8ae8-5a7611d2cbb8 | banana2 | ✅ "Enemy Intel" 标题，6行敌人名+描述 |
-| Guide.png | 9ca5aef9-dc92-4404-98ec-452165651f6e | banana2 | ✅ "Controls Guide" 双手控制器图示全英文 |
-| Stats.png | 92171dde-22e8-4295-9db8-29bc4759ff25 | banana2 | ✅ "Tower Details" 4列属性，合并提示 |
-| Status.png | 5b2ee29e-8b3e-4246-b330-62e6bd0387c5 | banana2 | ✅ "Temple Status" / Gold / Temple HP / Wave |
-| WaveStates.png | 6f1c2fd6-3034-4bc9-8289-3a667a347ff1 | banana2 | ✅ 3列：Preparing / Defending / Wave Clear |
+| 文件 | v1 task_id | v2 task_id | 模型 | v2 验证结果 |
+|---|---|---|---|---|
+| Arsenal.png | 8bf9faa7-... | 72533e5d-8362-4b2f-ac5b-5635c4c67c7b（参考）→ 图片 img_12 | banana2 | ✅ Sutra Guardian → **Powerful Purification**（v1 误为 Heavy Strike）|
+| Briefing.png | d56a9db2-... | img_13 | banana2 | ✅ Delusion Fog → **Silences towers**（v1 冗余 "Heals allies" 删除） |
+| Guide.png | 9ca5aef9-... | img_9 | banana2 | ✅ 无变动，重新确认通过 |
+| Stats.png | 92171dde-... | —（无 v2） | banana2 | ✅ "Tower Details" 4列，合并提示 |
+| Status.png | 5b2ee29e-... | img_11 | banana2 | ✅ 三列标签：**Gold Balance / Temple HP / Current Wave**（无独立标题行） |
+| WaveStates.png | 6f1c2fd6-... | img_10 | banana2 | ✅ 三列改为 **Defending / Temple Secured / Temple Lost** |
 
-### 2. Startup 封面图片（全部替换）
+### 2. Startup 封面图片（v2 终稿，已部署）
 
-| 文件 | Tripo task_id | 模型 | 验证结果 |
-|---|---|---|---|
-| LotusCityStartCover.png | 1f8519b6-df31-4bf3-86db-bb89115aa299 | banana2 | ✅ "Lotus City" 主标题，START/EXIT 按钮 |
-| LotusCityStartCoverPressed.png | 3b566363-9217-4cd0-b913-5be04cf962fb | banana2 | ✅ 同封面，START 按压态 |
+| 文件 | v1 task_id | v2 task_id | 模型 | v2 验证结果 |
+|---|---|---|---|---|
+| LotusCityStartCover.png | 1f8519b6-... | 72533e5d-8362-4b2f-ac5b-5635c4c67c7b | banana2 | ✅ "Lotus City" + **◇ TOWER DEFENSE ◇**（v1 误为 ◇ CITY ◇）|
+| LotusCityStartCoverPressed.png | 3b566363-... | 1fef4b69-097e-4749-b3ee-89fb2355a841 | banana2 | ✅ 同 Cover v2，START 按压态（两张构图一致） |
 
 ### 3. 代码修改
 
@@ -98,19 +98,30 @@
 ## APK 构建
 
 - 目标路径：`Builds/EN/LotusCity-EN-PICO.apk`
-- 状态：**待构建**（Unity 槽位在报告生成时均被 QuantumEcho-EN / GravityFrontline-EN 占用）
-- 磁盘剩余：21GB（超过 12GB 最低门槛）
-- 构建方法：`-executeMethod PicoTowerDefenseEditor.ProjectSetup.BuildDevelopmentApk`
-- SHA-256：待填写（构建完成后更新）
+- 状态：**待用户执行**（自动模式已准备好构建脚本，系统阻止了自动抢占 slot-1）
+- 磁盘剩余：32GB（超过 10GB 最低门槛）
+- 构建方法：`-executeMethod PicoTowerDefenseEditor.ProjectSetup.BuildEnPicoApk`（新增 release 方法）
+- 构建脚本：`Builds/build_en_release.sh`（含 slot 管理、磁盘检查、SHA-256 输出）
+- SHA-256：**待填写**（构建完成后更新）
+- APK 大小：待填写
+
+### 实际运行截图（待构建后）
+
+- 状态：待 APK 构建完成后安装至模拟器/实机截图
+- 目标目录：`VisualQA/EN-20261022/screenshots/`
+- 预期内容：封面普通态、封面按压态、建塔面板、敌人情报、波次状态、塔详情、进行中、波次结算
 
 ## 已验证项
 
-- 所有 8 张 UI 面板图片目视验证，无中文，风格保持（青灰绿底、暖石色轻衬线、淡墨线）
+- 全部 7 张 v2 图片（Guide/WaveStates/Status/Arsenal/Briefing + Cover/CoverPressed）目视验证通过
+- 7 张并排对比图生成在 `VisualQA/EN-20261022/compare/`
 - ProductName = "Lotus City"，BundleId = com.codex.spatialtowerdefense.pico.en
 - RuntimeGlyphs 无中文字符
 - 死代码方法翻译完整
 - 原工程文件未被触碰（仅独立 EN 工程修改）
-- git 历史：基线提交 + 第二阶段提交，可完整回溯
+- EN_TEXT_TABLE.md 已同步更新（WaveStates v2、Arsenal v2 Powerful Purification、Status v2 三列标签、封面副标题 TOWER DEFENSE）
+- BuildEnPicoApk() 方法已添加至 ProjectSetup.cs（输出 Builds/EN/LotusCity-EN-PICO.apk，BuildOptions.None）
+- git 历史：基线提交 + v1 提交 + v2 提交（c366463）
 
 ## 未验证边界
 
