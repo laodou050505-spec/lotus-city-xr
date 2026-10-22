@@ -7,11 +7,7 @@ namespace PicoTowerDefense
     {
         private const int IgnoreRaycastLayer = 2;
         private const string RuntimeGlyphs =
-            " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/:-+.%×" +
-            "一念莲城灵光余额生命神庙波次准备防守胜利失守完成开始进攻中敌人情报预首领来袭第共" +
-            "晨钟经轮守卫供灯塔手柄操作左扳机选择放置拖拽切换右净化重置视角键等级秒" +
-            "疾行执念无明兽疑甲怒焰妄雾游尘快速偷取铜钱护甲伤害石壳护盾" +
-            "加速同伴分裂雾气沉默攻击力攻速范围范围伤害减速控制音波飞矢成群突袭";
+            " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/:-+.%×!?.,;'\"()";
         private static Font _runtimeFont;
         // The authored board uses white stone tiles for the enemy route and
         // green moss tiles exclusively for tower placement. Keep these

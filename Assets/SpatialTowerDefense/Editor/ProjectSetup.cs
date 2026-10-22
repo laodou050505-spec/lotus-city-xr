@@ -849,11 +849,11 @@ namespace PicoTowerDefenseEditor
         private static void ConfigurePlayer()
         {
             PlayerSettings.companyName = "Codex Spatial Lab";
-            PlayerSettings.productName = "一念莲城";
+            PlayerSettings.productName = "Lotus City";
             PlayerSettings.bundleVersion = "0.2.0";
             PlayerSettings.colorSpace = ColorSpace.Linear;
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
-            PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, "com.codex.spatialtowerdefense.pico");
+            PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, "com.codex.spatialtowerdefense.pico.en");
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel29;

@@ -1740,7 +1740,7 @@ namespace PicoTowerDefense
         private void BuildStatusDisplay()
         {
             _statusHudRoot = PanelRoot("World Status HUD", new Vector3(0f, 1.90f, 0.26f));
-            GeneratedLotusPanel.Create(_statusHudRoot, "Generated Chinese Status", "Status", new Vector2(0.90f, 0.30f), Vector3.zero);
+            GeneratedLotusPanel.Create(_statusHudRoot, "Generated Status HUD", "Status", new Vector2(0.90f, 0.30f), Vector3.zero);
             _goldDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(-0.30f, -0.042f, -0.003f), 0.055f);
             _lifeDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0f, -0.042f, -0.003f), 0.050f);
             _waveDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0.30f, -0.042f, -0.003f), 0.050f);
@@ -1749,7 +1749,7 @@ namespace PicoTowerDefense
         private void BuildWaveBriefingDisplay()
         {
             _waveBriefingRoot = PanelRoot("Next Wave Enemy Skill Briefing", new Vector3(-1.55f, 1.80f, -0.10f));
-            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Chinese Enemy Briefing", "Briefing", new Vector2(0.50f, 0.75f), Vector3.zero);
+            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Enemy Briefing", "Briefing", new Vector2(0.50f, 0.75f), Vector3.zero);
             _briefingWaveDigits = GeneratedLotusPanel.Digits(_waveBriefingRoot, new Vector3(0f, 0.239f, -0.003f), 0.028f);
             float[] rows = { 0.275f, 0.387f, 0.498f, 0.610f, 0.723f, 0.839f };
             for (int i = 0; i < 6; i++)
@@ -1763,7 +1763,7 @@ namespace PicoTowerDefense
             // The side panel therefore comes both inward and forward as the
             // viewer sees it, matching its camera-facing billboard normal.
             _interactionGuideRoot = PanelRoot("Two Hand World Interaction Guide", InteractionGuidePositionTowardViewer());
-            GeneratedLotusPanel.Create(_interactionGuideRoot, "Generated Chinese Controller Guide", "Guide", new Vector2(0.72f, 0.48f), Vector3.zero);
+            GeneratedLotusPanel.Create(_interactionGuideRoot, "Generated Controller Guide", "Guide", new Vector2(0.72f, 0.48f), Vector3.zero);
         }
 
         private static Vector3 InteractionGuidePositionTowardViewer()
@@ -1884,7 +1884,7 @@ namespace PicoTowerDefense
         private void BuildTowerHoverDisplay()
         {
             _towerInfoRoot = PanelRoot("Tower Hover Information Panel", Vector3.zero);
-            GeneratedLotusPanel.Create(_towerInfoRoot, "Generated Chinese Tower Detail", "Stats", new Vector2(0.66f, 0.33f), Vector3.zero);
+            GeneratedLotusPanel.Create(_towerInfoRoot, "Generated Tower Detail", "Stats", new Vector2(0.66f, 0.33f), Vector3.zero);
             float[] columns = { 0.15f, 0.38f, 0.61f, 0.84f };
             for (int i = 0; i < 4; i++)
                 _towerDigits[i] = GeneratedLotusPanel.Digits(_towerInfoRoot,
@@ -1962,9 +1962,9 @@ namespace PicoTowerDefense
         {
             return kind switch
             {
-                TowerKind.Cannon => "经轮守卫",
-                TowerKind.Frost => "莲花灯",
-                _ => "晨钟"
+                TowerKind.Cannon => "Sutra Guardian",
+                TowerKind.Frost => "Lotus Lamp",
+                _ => "Morning Bell"
             };
         }
 
@@ -1972,9 +1972,9 @@ namespace PicoTowerDefense
         {
             return kind switch
             {
-                TowerKind.Cannon => "范围伤害",
-                TowerKind.Frost => "减速控制",
-                _ => "快速音波飞矢"
+                TowerKind.Cannon => "Heavy Strike",
+                TowerKind.Frost => "Frost Control",
+                _ => "Area Purification"
             };
         }
 
@@ -3466,12 +3466,12 @@ namespace PicoTowerDefense
         {
             return kind switch
             {
-                EnemyKind.Runner => $"疾行执念 ×{count}\n快速 / 偷取 10 灵光",
-                EnemyKind.Tank => $"无明兽首领 ×{count}\n800 生命 / 38% 护甲\n神庙伤害 4",
-                EnemyKind.Shield => $"疑甲 ×{count}\n石壳 / 110 护盾",
-                EnemyKind.Splitter => $"怒焰 ×{count}\n加速同伴 / 分裂",
-                EnemyKind.Support => $"妄雾 ×{count}\n雾气沉默防御塔",
-                _ => $"游尘 ×{count}\n成群突袭"
+                EnemyKind.Runner => $"Grasping Burden ×{count}\nSwift / Steals 10 Gold",
+                EnemyKind.Tank => $"Ignorance Beast Boss ×{count}\n800 HP / 38% Armor\nTemple Damage 4",
+                EnemyKind.Shield => $"Doubt Carapace ×{count}\nStone Shell / 110 Shield",
+                EnemyKind.Splitter => $"Anger Flame ×{count}\nHastens Allies / Splits",
+                EnemyKind.Support => $"Delusion Fog ×{count}\nFog Silences Towers",
+                _ => $"Restless Dust ×{count}\nSwarming Rush"
             };
         }
 
