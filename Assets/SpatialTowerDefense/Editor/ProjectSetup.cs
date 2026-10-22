@@ -1009,6 +1009,7 @@ namespace PicoTowerDefenseEditor
                 "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Guide.png",
                 "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Stats.png",
                 "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/WaveStates.png",
+                "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Arsenal.png",
             })
             {
                 if (AssetImporter.GetAtPath(texPath) is TextureImporter ti)
