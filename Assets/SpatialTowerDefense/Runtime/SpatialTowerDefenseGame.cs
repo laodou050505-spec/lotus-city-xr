@@ -1800,7 +1800,7 @@ namespace PicoTowerDefense
             // The side panel therefore comes both inward and forward as the
             // viewer sees it, matching its camera-facing billboard normal.
             _interactionGuideRoot = PanelRoot("Two Hand World Interaction Guide", InteractionGuidePositionTowardViewer());
-            GeneratedLotusPanel.Create(_interactionGuideRoot, "Generated Controller Guide", "Guide", new Vector2(0.72f, 0.48f), Vector3.zero);
+            GeneratedLotusPanel.Create(_interactionGuideRoot, "Generated Controller Guide", "Guide", new Vector2(0.72f, 0.55f), Vector3.zero);
         }
 
         private static Vector3 InteractionGuidePositionTowardViewer()
@@ -1925,7 +1925,7 @@ namespace PicoTowerDefense
             float[] columns = { 0.15f, 0.38f, 0.61f, 0.84f };
             for (int i = 0; i < 4; i++)
                 _towerDigits[i] = GeneratedLotusPanel.Digits(_towerInfoRoot,
-                    new Vector3((columns[i] - 0.5f) * 0.66f, -0.033f, -0.003f), 0.042f, 5);
+                    new Vector3((columns[i] - 0.5f) * 0.66f, -0.033f, -0.003f), 0.050f, 5);
             _towerInfoRoot.gameObject.SetActive(false);
         }
 

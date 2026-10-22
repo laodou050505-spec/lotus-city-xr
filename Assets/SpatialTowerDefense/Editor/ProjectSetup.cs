@@ -1006,6 +1006,9 @@ namespace PicoTowerDefenseEditor
             {
                 "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Status.png",
                 "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Briefing.png",
+                "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Guide.png",
+                "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Stats.png",
+                "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/WaveStates.png",
             })
             {
                 if (AssetImporter.GetAtPath(texPath) is TextureImporter ti)
@@ -1050,7 +1053,7 @@ namespace PicoTowerDefenseEditor
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log("[Polish-20261022] Texture reimport and audio import complete. Run Verify to check all panels.");
+            Debug.Log("[Polish-20261022] Texture reimport and audio import complete (Status, Briefing, Guide, Stats, WaveStates). Run Verify to check all panels.");
         }
 
         private static void ConfigureAudioImporters()
