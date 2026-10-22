@@ -1,0 +1,1834 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 3}
+  - {fileID: 12}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 36
+    width: 1512
+    height: 775
+  m_MinSize: {x: 300, y: 112}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 0
+  controlID: 36312
+  draggingID: 0
+--- !u!114 &2
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12013, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Scene
+    m_Image: {fileID: 8634526014445323508, guid: 0000000000000000d000000000000000, type: 0}
+    m_Tooltip: 
+    m_TextWithWhitespace: "Scene\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 341
+    y: 97
+    width: 754.5
+    height: 545
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData:
+    - dockPosition: 0
+      containerId: overlay-container--left
+      displayed: 1
+      id: unity-transform-toolbar
+      index: 0
+      contents: '{"m_Layout":2,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 2
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      displayed: 0
+      id: unity-scene-view-toolbar
+      index: 5
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-289.5,"y":0.0010000000474974514},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":1,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: -289.5, y: 0.001}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 1
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      displayed: 0
+      id: unity-grid-and-snap-toolbar
+      index: 4
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-437.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":1,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: -437, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 1
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Light Settings
+      index: 0
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-container--right
+      displayed: 1
+      id: Orientation
+      index: 0
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-111.0,"y":-99.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: -111, y: -99}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 3
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Camera
+      index: 2
+      contents: 
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Cloth Constraints
+      index: 1
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Cloth Collisions
+      index: 2
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Navmesh Display
+      index: 5
+      contents: 
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Agent Display
+      index: 6
+      contents: 
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Obstacle Display
+      index: 7
+      contents: 
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Occlusion Culling
+      index: 3
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Scene Visibility
+      index: 4
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: unity-search-toolbar
+      index: 5
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Particles
+      index: 6
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/Physics Debugger
+      index: 7
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      displayed: 0
+      id: Tool Settings
+      index: 3
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-165.0,"y":-166.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: -165, y: -166}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 3
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: Floating
+      displayed: 0
+      id: AINavigationOverlay
+      index: 0
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":true,"m_FloatingSnapOffset":{"x":-268.0,"y":-260.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 1
+      collapsed: 0
+      snapOffset: {x: -268, y: -260}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 3
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: APV Overlay
+      index: 8
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":48.0,"y":48.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 48, y: 48}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Cinemachine Tool Settings
+      index: 12
+      contents: 
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 48, y: 48}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/TrailRenderer
+      index: 8
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":48.0,"y":48.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 48, y: 48}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      displayed: 0
+      id: Brush Attributes
+      index: 0
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      displayed: 0
+      id: unity-scene-view-camera-mode-toolbar
+      index: 2
+      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":-328.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":1,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: -328, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 1
+      layout: 1
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-toolbar__left
+      displayed: 0
+      id: Terrain Tools
+      index: 0
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-toolbar__left
+      displayed: 0
+      id: Brush Masks
+      index: 1
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--left
+      displayed: 0
+      id: Scene View/Lighting Visualization Colors
+      index: 0
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: SceneView/CamerasOverlay
+      index: 9
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: Scene View/PBR Validation Settings
+      index: 10
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--left
+      displayed: 1
+      id: Overlays/OverlayMenu
+      index: 1
+      contents: '{"m_Layout":1,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 24, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 1
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 0
+      id: unity-spline-inspector
+      index: 12
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      displayed: 0
+      id: unity-tool-contexts-toolbar
+      index: 1
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    - dockPosition: 1
+      containerId: overlay-container--right
+      displayed: 1
+      id: XR Building Blocks
+      index: 11
+      contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":true,"m_Floating":false,"m_FloatingSnapOffset":{"x":-210.0,"y":-228.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":3,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      floating: 0
+      collapsed: 0
+      snapOffset: {x: -210, y: -228}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 3
+      layout: 4
+      size: {x: 0, y: 0}
+      sizeOverridden: 0
+    m_ContainerData:
+    - containerId: overlay-toolbar__top
+      scrollOffset: 0
+    - containerId: overlay-toolbar__left
+      scrollOffset: 0
+    - containerId: overlay-dynamic-panel--left
+      scrollOffset: 0
+    - containerId: overlay-container--left
+      scrollOffset: 0
+    - containerId: overlay-container--right
+      scrollOffset: 0
+    - containerId: overlay-dynamic-panel--right
+      scrollOffset: 0
+    - containerId: overlay-toolbar__right
+      scrollOffset: 0
+    - containerId: overlay-toolbar__bottom
+      scrollOffset: 0
+    - containerId: Floating
+      scrollOffset: 0
+    m_DynamicPanelContainerData:
+    - containerId: overlay-dynamic-panel--left
+      width: 56
+      saveData:
+        state: 0
+        overlayData: []
+    - containerId: overlay-dynamic-panel--right
+      width: 56
+      saveData:
+        state: 0
+        overlayData: []
+    m_OverlaysVisible: 1
+    m_PresetDirty: 1
+    m_DynamicPanelBehavior: 0
+    m_DynamicPanelBehaviorModified: 0
+  m_WindowGUID: cc27987af1a868c49b0894db9c0f5429
+  m_Gizmos: 1
+  m_OverrideSceneCullingMask: 6917529027641081856
+  m_SceneIsLit: 1
+  m_SceneLighting: 1
+  m_2DMode: 0
+  m_isRotationLocked: 0
+  m_PlayAudio: 0
+  m_AudioPlay: 0
+  m_DebugDrawModesUseInteractiveLightBakingData: 0
+  m_Position:
+    m_Target: {x: -1173.7014, y: -1728.5033, z: 3141.027}
+    speed: 2
+    m_Value: {x: -1173.7014, y: -1728.5033, z: 3141.027}
+  m_RenderMode: 0
+  m_CameraMode:
+    drawMode: 0
+    name: Shaded
+    section: Shading Mode
+  m_ValidateTrueMetals: 0
+  m_DoValidateTrueMetals: 0
+  m_SceneViewState:
+    m_AlwaysRefresh: 0
+    showFog: 1
+    showSkybox: 1
+    showFlares: 1
+    showImageEffects: 1
+    showParticleSystems: 1
+    showVisualEffectGraphs: 1
+    m_FxEnabled: 1
+  m_Grid:
+    xGrid:
+      m_Fade:
+        m_Target: 0
+        speed: 2
+        m_Value: 0
+      m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
+      m_OffsetAlongAxis: {x: 0, y: 0, z: 0}
+      m_Size: {x: 0, y: 0}
+    yGrid:
+      m_Fade:
+        m_Target: 1
+        speed: 2
+        m_Value: 1
+      m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
+      m_OffsetAlongAxis: {x: 0, y: 0, z: 0}
+      m_Size: {x: 1, y: 1}
+    zGrid:
+      m_Fade:
+        m_Target: 0
+        speed: 2
+        m_Value: 0
+      m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
+      m_OffsetAlongAxis: {x: 0, y: 0, z: 0}
+      m_Size: {x: 0, y: 0}
+    m_ShowGrid: 1
+    m_GridAxis: 1
+    m_gridOpacity: 0.5
+    m_NearestPlaneToHandleMode: 0
+  m_Rotation:
+    m_Target: {x: -0.21362676, y: 0.1741351, z: -0.038722783, w: -0.96051025}
+    speed: 2
+    m_Value: {x: -0.2136226, y: 0.17413172, z: -0.03872203, w: -0.9604916}
+  m_Size:
+    m_Target: 1919.2926
+    speed: 2
+    m_Value: 1916.4178
+  m_Ortho:
+    m_Target: 0
+    speed: 2
+    m_Value: 0
+  m_CameraSettings:
+    m_Speed: 1
+    m_SpeedNormalized: 0.5
+    m_SpeedMin: 0.001
+    m_SpeedMax: 2
+    m_EasingEnabled: 1
+    m_EasingDuration: 0.4
+    m_AccelerationEnabled: 1
+    m_AccelerationSpeed: 0.8
+    m_SpeedModifier: 5
+    m_FieldOfViewHorizontalOrVertical: 60
+    m_NearClip: 0.03
+    m_FarClip: 10000
+    m_DynamicClip: 1
+    m_OcclusionCulling: 0
+  m_LastSceneViewRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_LastSceneViewOrtho: 0
+  m_Viewpoint:
+    m_SceneView: {fileID: 2}
+    m_CameraOverscanSettings:
+      m_Opacity: 50
+      m_Scale: 1
+  m_ReplacementShader: {fileID: 0}
+  m_ReplacementString: 
+  m_SceneVisActive: 1
+  m_LastLockedObject: {fileID: 0}
+  m_LastDebugDrawMode:
+    drawMode: 35
+    name: Contributors / Receivers
+    section: Lighting
+  m_ViewIsLockedToObject: 0
+--- !u!114 &3
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 4}
+  - {fileID: 9}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1097.5
+    height: 775
+  m_MinSize: {x: 200, y: 112}
+  m_MaxSize: {x: 16192, y: 16192}
+  vertical: 1
+  controlID: 36313
+  draggingID: 0
+--- !u!114 &4
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 5}
+  - {fileID: 7}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1097.5
+    height: 571
+  m_MinSize: {x: 200, y: 56}
+  m_MaxSize: {x: 16192, y: 8096}
+  vertical: 0
+  controlID: 36314
+  draggingID: 0
+--- !u!114 &5
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 341
+    height: 571
+  m_MinSize: {x: 201, y: 226}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 6}
+  m_Panes:
+  - {fileID: 6}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &6
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12061, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Hierarchy
+    m_Image: {fileID: -3734745235275155857, guid: 0000000000000000d000000000000000, type: 0}
+    m_Tooltip: 
+    m_TextWithWhitespace: "Hierarchy\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 97
+    width: 340
+    height: 545
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_ContainerData: []
+    m_DynamicPanelContainerData: []
+    m_OverlaysVisible: 1
+    m_PresetDirty: 0
+    m_DynamicPanelBehavior: 0
+    m_DynamicPanelBehaviorModified: 0
+  m_SceneHierarchy:
+    m_TreeViewState:
+      scrollPos: {x: 0, y: 772}
+      m_SelectedIDs: []
+      m_LastClickedID:
+        m_rawData: 0
+      m_ExpandedIDs:
+      - m_rawData: 568105589212571200
+      - m_rawData: 568105589212571204
+      - m_rawData: 568105589212571208
+      - m_rawData: 568105589212572104
+      - m_rawData: 568105589212572108
+      - m_rawData: 568105589212572406
+      - m_rawData: 568105589212572650
+      - m_rawData: 568105589212825248
+      - m_rawData: 568105589212825252
+      - m_rawData: 568105589212825266
+      - m_rawData: 568105589212825270
+      - m_rawData: 568105589212825284
+      - m_rawData: 568105589212825288
+      - m_rawData: 568105589212825302
+      - m_rawData: 568105589212825306
+      - m_rawData: 568105589212825310
+      - m_rawData: 568105589212825324
+      - m_rawData: 568105589212825328
+      - m_rawData: 568105589212825342
+      - m_rawData: 568105589212825346
+      - m_rawData: 568105589212825360
+      - m_rawData: 568105589212825364
+      - m_rawData: 568105589212825378
+      - m_rawData: 568105589212825382
+      - m_rawData: 568105589212825396
+      - m_rawData: 568105589212825400
+      - m_rawData: 568105589212825414
+      - m_rawData: 568105589212825418
+      - m_rawData: 568105589212825432
+      - m_rawData: 568105589212825436
+      - m_rawData: 568105589212825450
+      - m_rawData: 568105589212825454
+      - m_rawData: 568105589212825468
+      - m_rawData: 568105589212825472
+      - m_rawData: 568105589212825486
+      - m_rawData: 568105589212825490
+      - m_rawData: 568105589212825504
+      - m_rawData: 568105589212825508
+      - m_rawData: 568105589212825522
+      - m_rawData: 568105589212825526
+      - m_rawData: 568105589212825540
+      - m_rawData: 568105589212825544
+      - m_rawData: 568105589212825558
+      - m_rawData: 568105589212825562
+      - m_rawData: 568105589212825576
+      - m_rawData: 568105589212825580
+      - m_rawData: 568105589212825594
+      - m_rawData: 568105589212825598
+      - m_rawData: 568105589212825612
+      - m_rawData: 568105589212825616
+      - m_rawData: 568105589212825630
+      - m_rawData: 568105589212825634
+      - m_rawData: 568105589212825648
+      - m_rawData: 568105589212825652
+      - m_rawData: 568105589212825666
+      - m_rawData: 568105589212825670
+      - m_rawData: 568105589212825684
+      - m_rawData: 568105589212825688
+      - m_rawData: 568105589212825702
+      - m_rawData: 568105589212825706
+      - m_rawData: 568105589212825720
+      - m_rawData: 568105589212825724
+      - m_rawData: 568105589212825738
+      - m_rawData: 568105589212825742
+      - m_rawData: 568105589212825756
+      - m_rawData: 568105589212825760
+      - m_rawData: 568105589212825774
+      - m_rawData: 568105589212825778
+      - m_rawData: 568105589212825792
+      - m_rawData: 568105589212825796
+      - m_rawData: 568105589212825810
+      - m_rawData: 568105589212825814
+      - m_rawData: 568105589212825828
+      - m_rawData: 568105589212825832
+      - m_rawData: 568105589212825846
+      - m_rawData: 568105589212825850
+      - m_rawData: 568105589212825864
+      - m_rawData: 568105589212825868
+      - m_rawData: 568105589212825882
+      - m_rawData: 568105589212825886
+      - m_rawData: 568105589212825900
+      - m_rawData: 568105589212825904
+      - m_rawData: 568105589212825918
+      - m_rawData: 568105589212825922
+      - m_rawData: 568105589212825936
+      - m_rawData: 568105589212825940
+      - m_rawData: 568105589212825954
+      - m_rawData: 568105589212825958
+      - m_rawData: 568105589212825972
+      - m_rawData: 568105589212825976
+      - m_rawData: 568105589212825990
+      - m_rawData: 568105589212825994
+      - m_rawData: 568105589212826008
+      - m_rawData: 568105589212826012
+      - m_rawData: 568105589212826026
+      - m_rawData: 568105589212826030
+      - m_rawData: 568105589212826044
+      - m_rawData: 568105589212826048
+      - m_rawData: 568105589212826062
+      - m_rawData: 568105589212826066
+      - m_rawData: 568105589212826080
+      - m_rawData: 568105589212826084
+      - m_rawData: 568105589212826098
+      - m_rawData: 568105589212826102
+      - m_rawData: 568105589212826116
+      - m_rawData: 568105589212826120
+      - m_rawData: 568105589212826134
+      - m_rawData: 568105589212826138
+      - m_rawData: 568105589212826152
+      - m_rawData: 568105589212826156
+      - m_rawData: 568105589212826170
+      - m_rawData: 568105589212826174
+      - m_rawData: 568105589212826188
+      - m_rawData: 568105589212826192
+      - m_rawData: 568105589212826206
+      - m_rawData: 568105589212826210
+      - m_rawData: 568105589212826224
+      - m_rawData: 568105589212826228
+      - m_rawData: 568105589212826242
+      - m_rawData: 568105589212826246
+      - m_rawData: 568105589212826260
+      - m_rawData: 568105589212826264
+      - m_rawData: 568105589212826278
+      - m_rawData: 568105589212826282
+      - m_rawData: 568105589212826296
+      - m_rawData: 568105589212826300
+      - m_rawData: 568105589212826314
+      - m_rawData: 568105589212826318
+      - m_rawData: 568105589212826332
+      - m_rawData: 568105589212826336
+      - m_rawData: 568105589212826350
+      - m_rawData: 568105589212826354
+      - m_rawData: 568105589212826368
+      - m_rawData: 568105589212826372
+      - m_rawData: 568105589212826386
+      - m_rawData: 568105589212826390
+      - m_rawData: 568105589212826404
+      - m_rawData: 568105589212826408
+      - m_rawData: 568105589212826422
+      - m_rawData: 568105589212826426
+      - m_rawData: 568105589212826440
+      - m_rawData: 568105589212826444
+      - m_rawData: 568105589212826458
+      - m_rawData: 568105589212826462
+      - m_rawData: 568105589212826476
+      - m_rawData: 568105589212826480
+      - m_rawData: 568105589212826494
+      - m_rawData: 568105589212826498
+      - m_rawData: 568105589212826508
+      - m_rawData: 568105589212842444
+      - m_rawData: 568105589212842448
+      - m_rawData: 568105589212842462
+      - m_rawData: 568105589212842466
+      - m_rawData: 568105589212842480
+      - m_rawData: 568105589212842484
+      - m_rawData: 568105589212842498
+      - m_rawData: 568105589212842502
+      - m_rawData: 568105589212842506
+      - m_rawData: 568105589212842520
+      - m_rawData: 568105589212842524
+      - m_rawData: 568105589212842538
+      - m_rawData: 568105589212842542
+      - m_rawData: 568105589212842556
+      - m_rawData: 568105589212842560
+      - m_rawData: 568105589212842574
+      - m_rawData: 568105589212842578
+      - m_rawData: 568105589212842592
+      - m_rawData: 568105589212842596
+      - m_rawData: 568105589212842610
+      - m_rawData: 568105589212842614
+      - m_rawData: 568105589212842628
+      - m_rawData: 568105589212842632
+      - m_rawData: 568105589212842646
+      - m_rawData: 568105589212842650
+      - m_rawData: 568105589212842664
+      - m_rawData: 568105589212842668
+      - m_rawData: 568105589212842682
+      - m_rawData: 568105589212842686
+      - m_rawData: 568105589212842700
+      - m_rawData: 568105589212842704
+      - m_rawData: 568105589212842718
+      - m_rawData: 568105589212842722
+      - m_rawData: 568105589212842736
+      - m_rawData: 568105589212842740
+      - m_rawData: 568105589212842754
+      - m_rawData: 568105589212842758
+      - m_rawData: 568105589212842772
+      - m_rawData: 568105589212842776
+      - m_rawData: 568105589212842790
+      - m_rawData: 568105589212842794
+      - m_rawData: 568105589212842808
+      - m_rawData: 568105589212842812
+      - m_rawData: 568105589212842826
+      - m_rawData: 568105589212842830
+      - m_rawData: 568105589212842844
+      - m_rawData: 568105589212842848
+      - m_rawData: 568105589212842862
+      - m_rawData: 568105589212842866
+      - m_rawData: 568105589212842880
+      - m_rawData: 568105589212842884
+      - m_rawData: 568105589212842898
+      - m_rawData: 568105589212842902
+      - m_rawData: 568105589212842916
+      - m_rawData: 568105589212842920
+      - m_rawData: 568105589212842934
+      - m_rawData: 568105589212842938
+      - m_rawData: 568105589212842952
+      - m_rawData: 568105589212842956
+      - m_rawData: 568105589212842970
+      - m_rawData: 568105589212842974
+      - m_rawData: 568105589212842988
+      - m_rawData: 568105589212842992
+      - m_rawData: 568105589212843006
+      - m_rawData: 568105589212843010
+      - m_rawData: 568105589212843024
+      - m_rawData: 568105589212843028
+      - m_rawData: 568105589212843042
+      - m_rawData: 568105589212843046
+      - m_rawData: 568105589212843060
+      - m_rawData: 568105589212843064
+      - m_rawData: 568105589212843078
+      - m_rawData: 568105589212843082
+      - m_rawData: 568105589212843096
+      - m_rawData: 568105589212843100
+      - m_rawData: 568105589212843114
+      - m_rawData: 568105589212843118
+      - m_rawData: 568105589212843132
+      - m_rawData: 568105589212843136
+      - m_rawData: 568105589212843150
+      - m_rawData: 568105589212843154
+      - m_rawData: 568105589212843168
+      - m_rawData: 568105589212843172
+      - m_rawData: 568105589212843186
+      - m_rawData: 568105589212843190
+      - m_rawData: 568105589212843204
+      - m_rawData: 568105589212843208
+      - m_rawData: 568105589212843222
+      - m_rawData: 568105589212843226
+      - m_rawData: 568105589212843240
+      - m_rawData: 568105589212843244
+      - m_rawData: 568105589212843258
+      - m_rawData: 568105589212843262
+      - m_rawData: 568105589212843276
+      - m_rawData: 568105589212843280
+      - m_rawData: 568105589212843294
+      - m_rawData: 568105589212843298
+      - m_rawData: 568105589212843312
+      - m_rawData: 568105589212843316
+      - m_rawData: 568105589212843330
+      - m_rawData: 568105589212843334
+      - m_rawData: 568105589212843348
+      - m_rawData: 568105589212843352
+      - m_rawData: 568105589212843366
+      - m_rawData: 568105589212843370
+      - m_rawData: 568105589212843384
+      - m_rawData: 568105589212843388
+      - m_rawData: 568105589212843402
+      - m_rawData: 568105589212843406
+      - m_rawData: 568105589212843420
+      - m_rawData: 568105589212843424
+      - m_rawData: 568105589212843438
+      - m_rawData: 568105589212843442
+      - m_rawData: 568105589212843456
+      - m_rawData: 568105589212843460
+      - m_rawData: 568105589212843474
+      - m_rawData: 568105589212843478
+      - m_rawData: 568105589212843492
+      - m_rawData: 568105589212843496
+      - m_rawData: 568105589212843510
+      - m_rawData: 568105589212843514
+      - m_rawData: 568105589212843528
+      - m_rawData: 568105589212843532
+      - m_rawData: 568105589212843546
+      - m_rawData: 568105589212843550
+      - m_rawData: 568105589212843564
+      - m_rawData: 568105589212843568
+      - m_rawData: 568105589212843582
+      - m_rawData: 568105589212843586
+      - m_rawData: 568105589212843600
+      - m_rawData: 568105589212843604
+      - m_rawData: 568105589212843618
+      - m_rawData: 568105589212843622
+      - m_rawData: 568105589212843636
+      - m_rawData: 568105589212843640
+      - m_rawData: 568105589212843654
+      - m_rawData: 568105589212843658
+      - m_rawData: 568105589212843672
+      - m_rawData: 568105589212843676
+      - m_rawData: 568105589212843690
+      - m_rawData: 568105589212843694
+      - m_rawData: 568105589212843704
+      - m_rawData: 568105589212867096
+      - m_rawData: 568105589212867100
+      - m_rawData: 568105589212867114
+      - m_rawData: 568105589212867118
+      - m_rawData: 568105589212867132
+      - m_rawData: 568105589212867136
+      - m_rawData: 568105589212867150
+      - m_rawData: 568105589212867154
+      - m_rawData: 568105589212867158
+      - m_rawData: 568105589212867172
+      - m_rawData: 568105589212867176
+      - m_rawData: 568105589212867190
+      - m_rawData: 568105589212867194
+      - m_rawData: 568105589212867208
+      - m_rawData: 568105589212867212
+      - m_rawData: 568105589212867226
+      - m_rawData: 568105589212867230
+      - m_rawData: 568105589212867244
+      - m_rawData: 568105589212867248
+      - m_rawData: 568105589212867262
+      - m_rawData: 568105589212867266
+      - m_rawData: 568105589212867280
+      - m_rawData: 568105589212867284
+      - m_rawData: 568105589212867298
+      - m_rawData: 568105589212867302
+      - m_rawData: 568105589212867316
+      - m_rawData: 568105589212867320
+      - m_rawData: 568105589212867334
+      - m_rawData: 568105589212867338
+      - m_rawData: 568105589212867352
+      - m_rawData: 568105589212867356
+      - m_rawData: 568105589212867370
+      - m_rawData: 568105589212867374
+      - m_rawData: 568105589212867388
+      - m_rawData: 568105589212867392
+      - m_rawData: 568105589212867406
+      - m_rawData: 568105589212867410
+      - m_rawData: 568105589212867424
+      - m_rawData: 568105589212867428
+      - m_rawData: 568105589212867442
+      - m_rawData: 568105589212867446
+      - m_rawData: 568105589212867460
+      - m_rawData: 568105589212867464
+      - m_rawData: 568105589212867478
+      - m_rawData: 568105589212867482
+      - m_rawData: 568105589212867496
+      - m_rawData: 568105589212867500
+      - m_rawData: 568105589212867514
+      - m_rawData: 568105589212867518
+      - m_rawData: 568105589212867532
+      - m_rawData: 568105589212867536
+      - m_rawData: 568105589212867550
+      - m_rawData: 568105589212867554
+      - m_rawData: 568105589212867568
+      - m_rawData: 568105589212867572
+      - m_rawData: 568105589212867586
+      - m_rawData: 568105589212867590
+      - m_rawData: 568105589212867604
+      - m_rawData: 568105589212867608
+      - m_rawData: 568105589212867622
+      - m_rawData: 568105589212867626
+      - m_rawData: 568105589212867640
+      - m_rawData: 568105589212867644
+      - m_rawData: 568105589212867658
+      - m_rawData: 568105589212867662
+      - m_rawData: 568105589212867676
+      - m_rawData: 568105589212867680
+      - m_rawData: 568105589212867694
+      - m_rawData: 568105589212867698
+      - m_rawData: 568105589212867712
+      - m_rawData: 568105589212867716
+      - m_rawData: 568105589212867730
+      - m_rawData: 568105589212867734
+      - m_rawData: 568105589212867748
+      - m_rawData: 568105589212867752
+      - m_rawData: 568105589212867766
+      - m_rawData: 568105589212867770
+      - m_rawData: 568105589212867784
+      - m_rawData: 568105589212867788
+      - m_rawData: 568105589212867802
+      - m_rawData: 568105589212867806
+      - m_rawData: 568105589212867820
+      - m_rawData: 568105589212867824
+      - m_rawData: 568105589212867838
+      - m_rawData: 568105589212867842
+      - m_rawData: 568105589212867856
+      - m_rawData: 568105589212867860
+      - m_rawData: 568105589212867874
+      - m_rawData: 568105589212867878
+      - m_rawData: 568105589212867892
+      - m_rawData: 568105589212867896
+      - m_rawData: 568105589212867910
+      - m_rawData: 568105589212867914
+      - m_rawData: 568105589212867928
+      - m_rawData: 568105589212867932
+      - m_rawData: 568105589212867946
+      - m_rawData: 568105589212867950
+      - m_rawData: 568105589212867964
+      - m_rawData: 568105589212867968
+      - m_rawData: 568105589212867982
+      - m_rawData: 568105589212867986
+      - m_rawData: 568105589212868000
+      - m_rawData: 568105589212868004
+      - m_rawData: 568105589212868018
+      - m_rawData: 568105589212868022
+      - m_rawData: 568105589212868036
+      - m_rawData: 568105589212868040
+      - m_rawData: 568105589212868054
+      - m_rawData: 568105589212868058
+      - m_rawData: 568105589212868072
+      - m_rawData: 568105589212868076
+      - m_rawData: 568105589212868090
+      - m_rawData: 568105589212868094
+      - m_rawData: 568105589212868108
+      - m_rawData: 568105589212868112
+      - m_rawData: 568105589212868126
+      - m_rawData: 568105589212868130
+      - m_rawData: 568105589212868144
+      - m_rawData: 568105589212868148
+      - m_rawData: 568105589212868162
+      - m_rawData: 568105589212868166
+      - m_rawData: 568105589212868180
+      - m_rawData: 568105589212868184
+      - m_rawData: 568105589212868198
+      - m_rawData: 568105589212868202
+      - m_rawData: 568105589212868216
+      - m_rawData: 568105589212868220
+      - m_rawData: 568105589212868234
+      - m_rawData: 568105589212868238
+      - m_rawData: 568105589212868252
+      - m_rawData: 568105589212868256
+      - m_rawData: 568105589212868270
+      - m_rawData: 568105589212868274
+      - m_rawData: 568105589212868288
+      - m_rawData: 568105589212868292
+      - m_rawData: 568105589212868306
+      - m_rawData: 568105589212868310
+      - m_rawData: 568105589212868324
+      - m_rawData: 568105589212868328
+      - m_rawData: 568105589212868342
+      - m_rawData: 568105589212868346
+      - m_rawData: 568105589212868356
+      - m_rawData: 568105589212919770
+      - m_rawData: 568105589212959400
+      - m_rawData: 568105589212959404
+      - m_rawData: 568105589212959418
+      - m_rawData: 568105589212959422
+      - m_rawData: 568105589212959426
+      - m_rawData: 568105589212970230
+      - m_rawData: 568105589212984398
+      - m_rawData: 568105589212984666
+      - m_rawData: 568105589212987946
+      - m_rawData: 568105589213035364
+      - m_rawData: 568105589213038644
+      - m_rawData: 568105589213039128
+      - m_rawData: 568105589213042404
+      - m_rawData: 568105589213042884
+      - m_rawData: 568105589213046300
+      - m_rawData: 568105589213046568
+      - m_rawData: 568105589213049984
+      - m_rawData: 568105589213050304
+      - m_rawData: 568105589213060204
+      - m_rawData: 568105589213074782
+      - m_rawData: 568105589213077120
+      - m_rawData: 568105589213091436
+      - m_rawData: 568105589213091516
+      - m_rawData: 568105589213091772
+      - m_rawData: 568105589213103396
+      - m_rawData: 568105589213103728
+      - m_rawData: 568105589213114350
+      - m_rawData: 568105589213117760
+      - m_rawData: 568105589213119520
+      - m_rawData: 568105589213119534
+      - m_rawData: 568105589213119538
+      - m_rawData: 568105589213122124
+      - m_rawData: 568105589213122128
+      - m_rawData: 568105589213122410
+      - m_rawData: 568105589213126150
+      - m_rawData: 568105589213130392
+      - m_rawData: 568105589213136638
+      - m_rawData: 568105589213136642
+      - m_rawData: 568105589213136646
+      - m_rawData: 568105589213136700
+      - m_rawData: 568105589213136982
+      - m_rawData: 568105589213140724
+      - m_rawData: 568105589213145592
+      - m_rawData: 568105589213145596
+      - m_rawData: 568105589213145600
+      - m_rawData: 568105589213145654
+      - m_rawData: 568105589213145938
+      - m_rawData: 568105589213150898
+      - m_rawData: 568105589213150902
+      - m_rawData: 568105589213150906
+      - m_rawData: 568105589213154224
+      - m_rawData: 568105589213154228
+      - m_rawData: 568105589213154232
+      - m_rawData: 568105589213154286
+      - m_rawData: 568105589213154568
+      - m_rawData: 568105589213160208
+      - m_rawData: 568105589213171044
+      - m_rawData: 568105589213199678
+      - m_rawData: 568105589213441932
+      - m_rawData: 568105589213442354
+      - m_rawData: 568105589213453744
+      - m_rawData: 568105589213454064
+      - m_rawData: 568105589213465356
+      - m_rawData: 568105589213465778
+      - m_rawData: 568105589213477168
+      - m_rawData: 568105589213477488
+      - m_rawData: 568105589213488780
+      - m_rawData: 568105589213489202
+      - m_rawData: 568105589213500604
+      - m_rawData: 568105589213500924
+      - m_rawData: 568105589213504424
+      - m_rawData: 568105589213515716
+      - m_rawData: 568105589213516138
+      - m_rawData: 568105589213528338
+      - m_rawData: 568105589213528658
+      - m_rawData: 568105589213531516
+      - m_rawData: 568105589213531594
+      - m_rawData: 568105589213531826
+      - m_rawData: 568105589213543866
+      - m_rawData: 568105589213544292
+      - m_rawData: 568105589213546126
+      - m_rawData: 568105589213546204
+      - m_rawData: 568105589213546436
+      - m_rawData: 568105589213558596
+      - m_rawData: 568105589213558916
+      - m_rawData: 568105589213570246
+      - m_rawData: 568105589213573746
+      - m_rawData: 568105589213583744
+      - m_rawData: 568105589213587118
+      - m_rawData: 568105589213596916
+      - m_rawData: 568105589213602378
+      - m_rawData: 568105589213602382
+      - m_rawData: 568105589213602422
+      - m_rawData: 568105589213614440
+      - m_rawData: 568105589213746972
+      - m_rawData: 568105589213746976
+      - m_rawData: 568105589213747008
+      - m_rawData: 568105589213747012
+      - m_rawData: 568105589213747026
+      - m_rawData: 568105589213747030
+      - m_rawData: 568105589213747044
+      - m_rawData: 568105589213747048
+      - m_rawData: 568105589213747062
+      - m_rawData: 568105589213747066
+      - m_rawData: 568105589213747070
+      - m_rawData: 568105589213747120
+      - m_rawData: 568105589213747124
+      - m_rawData: 568105589213747372
+      - m_rawData: 568105589213747376
+      - m_rawData: 568105589213747390
+      - m_rawData: 568105589213747394
+      - m_rawData: 568105589213747408
+      - m_rawData: 568105589213747412
+      - m_rawData: 568105589213747714
+      - m_rawData: 568105589213747718
+      - m_rawData: 568105589213747858
+      - m_rawData: 568105589213747862
+      - m_rawData: 568105589213748218
+      - m_rawData: 568105589213748222
+      - m_rawData: 568105589213748236
+      - m_rawData: 568105589213748240
+      - m_rawData: 568105589213748254
+      - m_rawData: 568105589213748258
+      - m_rawData: 568105589213748314
+      - m_rawData: 568105589213748318
+      - m_rawData: 568105589213748322
+      - m_rawData: 568105589213749150
+      - m_rawData: 568105589213749154
+      - m_rawData: 568105589213749812
+      - m_rawData: 568105589213756052
+      - m_rawData: 568105584918844200
+      - m_rawData: 568105584918844384
+      - m_rawData: 568105584918847374
+      - m_rawData: 568105584918891068
+      - m_rawData: 568105584918893348
+      - m_rawData: 568105584918893934
+      - m_rawData: 568105584918895106
+      - m_rawData: 568105584918896864
+      - m_rawData: 568105584918919510
+      - m_rawData: 568105584918919784
+      - m_rawData: 568105584918919932
+      - m_rawData: 568105584918920284
+      - m_rawData: 568105584918920440
+      - m_rawData: 568105584918921660
+      - m_rawData: 568105584918921892
+      - m_rawData: 568105584918945568
+      - m_rawData: 568105584918950064
+      - m_rawData: 568105584918950310
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData:
+          m_rawData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_TrimLeadingAndTrailingWhitespace: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_ExpandedScenes: []
+    m_CurrenRootEntityId:
+      m_rawData: 0
+    m_LockTracker:
+      m_IsLocked: 0
+    m_CurrentSortingName: TransformSorting
+  m_WindowGUID: 4c969a2b90040154d917609493e03593
+--- !u!114 &7
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: SceneView
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 341
+    y: 0
+    width: 756.5
+    height: 571
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
+  m_ActualView: {fileID: 2}
+  m_Panes:
+  - {fileID: 2}
+  - {fileID: 8}
+  m_Selected: 0
+  m_LastSelected: 1
+--- !u!114 &8
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Game
+    m_Image: {fileID: 4621777727084837110, guid: 0000000000000000d000000000000000, type: 0}
+    m_Tooltip: 
+    m_TextWithWhitespace: "Game\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 294
+    y: 69
+    width: 745
+    height: 802.5
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_ContainerData: []
+    m_DynamicPanelContainerData: []
+    m_OverlaysVisible: 1
+    m_PresetDirty: 0
+    m_DynamicPanelBehavior: 0
+    m_DynamicPanelBehaviorModified: 0
+  m_SerializedViewNames: []
+  m_SerializedViewValues: []
+  m_PlayModeViewName: GameView
+  m_ShowGizmos: 0
+  m_TargetDisplay: 0
+  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
+  m_TargetSize: {x: 745, y: 781.5}
+  m_TextureFilterMode: 0
+  m_TextureHideFlags: 61
+  m_RenderIMGUI: 1
+  m_EnterPlayModeBehavior: 0
+  m_UseMipMap: 0
+  m_VSyncEnabled: 0
+  m_Gizmos: 0
+  m_Stats: 0
+  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_ZoomArea:
+    m_HRangeLocked: 0
+    m_VRangeLocked: 0
+    hZoomLockedByDefault: 0
+    vZoomLockedByDefault: 0
+    m_HBaseRangeMin: -186.25
+    m_HBaseRangeMax: 186.25
+    m_VBaseRangeMin: -195.375
+    m_VBaseRangeMax: 195.375
+    m_HAllowExceedBaseRangeMin: 1
+    m_HAllowExceedBaseRangeMax: 1
+    m_VAllowExceedBaseRangeMin: 1
+    m_VAllowExceedBaseRangeMax: 1
+    m_ScaleWithWindow: 0
+    m_HSlider: 0
+    m_VSlider: 0
+    m_IgnoreScrollWheelUntilClicked: 0
+    m_EnableMouseInput: 1
+    m_EnableSliderZoomHorizontal: 0
+    m_EnableSliderZoomVertical: 0
+    m_UniformScale: 1
+    m_UpDirection: 1
+    m_DrawArea:
+      serializedVersion: 2
+      x: 0
+      y: 21
+      width: 745
+      height: 781.5
+    m_Scale: {x: 2, y: 2}
+    m_Translation: {x: 372.5, y: 390.75}
+    m_MarginLeft: 0
+    m_MarginRight: 0
+    m_MarginTop: 0
+    m_MarginBottom: 0
+    m_LastShownAreaInsideMargins:
+      serializedVersion: 2
+      x: -186.25
+      y: -195.375
+      width: 372.5
+      height: 390.75
+    m_MinimalGUI: 1
+  m_defaultScale: 2
+  m_LastWindowPixelSize: {x: 1490, y: 1605}
+  m_ClearInEditMode: 1
+  m_NoCameraWarning: 1
+  m_LowResolutionForAspectRatios: 01000000000000000000
+  m_XRRenderMode: 0
+  m_RenderTexture: {fileID: 0}
+  m_showToolbar: 1
+--- !u!114 &9
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: ProjectBrowser
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 571
+    width: 1097.5
+    height: 204
+  m_MinSize: {x: 231, y: 276}
+  m_MaxSize: {x: 10001, y: 10026}
+  m_ActualView: {fileID: 10}
+  m_Panes:
+  - {fileID: 10}
+  - {fileID: 11}
+  m_Selected: 0
+  m_LastSelected: 1
+--- !u!114 &10
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_TitleContent:
+    m_Text: Project
+    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000, type: 0}
+    m_Tooltip: 
+    m_TextWithWhitespace: "Project\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 668
+    width: 1096.5
+    height: 178
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_ContainerData: []
+    m_DynamicPanelContainerData: []
+    m_OverlaysVisible: 1
+    m_PresetDirty: 0
+    m_DynamicPanelBehavior: 0
+    m_DynamicPanelBehaviorModified: 0
+  m_SearchFilter:
+    m_NameFilter: 
+    m_ClassNames: []
+    m_AssetLabels: []
+    m_AssetBundleNames: []
+    m_ReferencingEntityIds: []
+    m_SceneHandles: []
+    m_ShowAllHits: 0
+    m_SkipHidden: 0
+    m_SearchArea: 1
+    m_Folders:
+    - Assets/PolygonNatureBiomes/PNB_Core/Materials
+    m_Globs: []
+    m_ProductIds: 
+    m_AnyWithAssetOrigin: 0
+    m_OriginalText: 
+    m_ImportLogFlags: 0
+    m_FilterByTypeIntersection: 0
+  m_ViewMode: 1
+  m_StartGridSize: 64
+  m_LastFolders:
+  - Assets/PolygonNatureBiomes/PNB_Core/Materials
+  m_LastFoldersGridSize: -1
+  m_LastProjectPath: /Users/ld/Documents/Codex/2026-08-03/http-localhost-8080-codex-text-link/outputs/SpatialTowerDefensePICO
+  m_LockTracker:
+    m_IsLocked: 0
+  m_LastLocalAssetsSearchArea: 1
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 29.5}
+    m_SelectedIDs:
+    - m_rawData: 568105584918950348
+    m_LastClickedID:
+      m_rawData: 568105584918950348
+    m_ExpandedIDs:
+    - m_rawData: 0
+    - m_rawData: 568105584918838720
+    - m_rawData: 568105584918844720
+    - m_rawData: 568105584918844738
+    - m_rawData: 568105584918950340
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData:
+        m_rawData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_TrimLeadingAndTrailingWhitespace: 0
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_EntityId:
+        m_rawData: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_AssetTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: []
+    m_LastClickedID:
+      m_rawData: 0
+    m_ExpandedIDs:
+    - m_rawData: 0
+    - m_rawData: 568105584918838720
+    - m_rawData: 568105584918844738
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData:
+        m_rawData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_TrimLeadingAndTrailingWhitespace: 0
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_EntityId:
+        m_rawData: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_ListAreaState:
+    m_SelectedInstanceIDs: []
+    m_LastClickedEntityId:
+      m_rawData: 0
+    m_HadKeyboardFocusLastEvent: 0
+    m_ExpandedInstanceIDs: []
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData:
+        m_rawData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_TrimLeadingAndTrailingWhitespace: 0
+      m_ClientGUIView: {fileID: 0}
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_EntityId:
+        m_rawData: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+    m_NewAssetIndexInList: -1
+    m_ScrollPosition: {x: 0, y: 0}
+    m_GridSize: 64
+  m_SkipHiddenPackages: 0
+  m_DirectoriesAreaWidth: 207
+--- !u!114 &11
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12003, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Console
+    m_Image: {fileID: -4950941429401207979, guid: 0000000000000000d000000000000000, type: 0}
+    m_Tooltip: 
+    m_TextWithWhitespace: "Console\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 897.5
+    width: 1347
+    height: 38.5
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_ContainerData: []
+    m_DynamicPanelContainerData: []
+    m_OverlaysVisible: 1
+    m_PresetDirty: 0
+    m_DynamicPanelBehavior: 0
+    m_DynamicPanelBehaviorModified: 0
+--- !u!114 &12
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 1097.5
+    y: 0
+    width: 414.5
+    height: 775
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 13}
+  m_Panes:
+  - {fileID: 13}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &13
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12019, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Inspector
+    m_Image: {fileID: -440750813802333266, guid: 0000000000000000d000000000000000, type: 0}
+    m_Tooltip: 
+    m_TextWithWhitespace: "Inspector\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 1097.5
+    y: 97
+    width: 413.5
+    height: 749
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_ContainerData: []
+    m_DynamicPanelContainerData: []
+    m_OverlaysVisible: 1
+    m_PresetDirty: 0
+    m_DynamicPanelBehavior: 0
+    m_DynamicPanelBehaviorModified: 0
+  m_ObjectsLockedBeforeSerialization: []
+  m_EntityIdsLockedBeforeSerialization: []
+  m_PreviewResizer:
+    m_CachedPref: 160
+    m_ControlHash: -371814159
+    m_PrefName: Preview_InspectorPreview
+  m_LastInspectedObjectEntityId:
+    m_rawData: 0
+  m_LastVerticalScrollValue: 0
+  m_GlobalObjectId: 
+  m_InspectorMode: 0
+  m_LockTracker:
+    m_IsLocked: 0
+  m_PreviewWindow: {fileID: 0}
