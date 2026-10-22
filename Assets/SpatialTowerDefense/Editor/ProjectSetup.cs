@@ -740,6 +740,30 @@ namespace PicoTowerDefenseEditor
             Debug.Log($"[Spatial Tower Defense] PICO APK built: {apkPath}");
         }
 
+        [MenuItem("Tools/Spatial Tower Defense/Build EN Release APK")]
+        public static void BuildEnPicoApk()
+        {
+            Apply();
+            Verify();
+            string buildDirectory = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "Builds", "EN"));
+            Directory.CreateDirectory(buildDirectory);
+            string apkPath = Path.Combine(buildDirectory, "LotusCity-EN-PICO.apk");
+            var options = new BuildPlayerOptions
+            {
+                scenes = EditorBuildSettings.scenes.Where(scene => scene.enabled).Select(scene => scene.path).ToArray(),
+                locationPathName = apkPath,
+                target = BuildTarget.Android,
+                targetGroup = BuildTargetGroup.Android,
+                options = BuildOptions.None
+            };
+            BuildReport report = BuildPipeline.BuildPlayer(options);
+            if (report.summary.result != BuildResult.Succeeded)
+            {
+                throw new BuildFailedException($"Android build failed: {report.summary.result} ({report.summary.totalErrors} errors)");
+            }
+            Debug.Log($"[Lotus City EN] PICO release APK: {apkPath}");
+        }
+
         [MenuItem("Tools/Spatial Tower Defense/Build macOS Desktop Test")]
         public static void BuildDesktopTest()
         {
