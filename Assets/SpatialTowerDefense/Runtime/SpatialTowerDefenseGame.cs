@@ -1767,31 +1767,26 @@ namespace PicoTowerDefense
         private void BuildStatusDisplay()
         {
             _statusHudRoot = PanelRoot("World Status HUD", new Vector3(0f, 1.90f, 0.26f));
-            // Panel enlarged from 0.90x0.30 → 0.90x0.50m so baked column labels meet
-            // VR spec C body minimum (45.4mm cap height at 2.67m viewing distance).
-            GeneratedLotusPanel.Create(_statusHudRoot, "Generated Status HUD", "Status", new Vector2(0.90f, 0.50f), Vector3.zero);
-            // Digit heights enlarged from 0.055/0.050 → 0.070m: cap ≈ 47.6mm ≥ 45.4mm body min.
-            _goldDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(-0.30f, -0.042f, -0.003f), 0.070f);
-            _lifeDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0f, -0.042f, -0.003f), 0.070f);
-            _waveDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0.30f, -0.042f, -0.003f), 0.070f);
+            // 等比放大 ×1.333：0.90×0.30 → 1.20×0.40m，比例 3:1 与图片 2172×724 一致。
+            GeneratedLotusPanel.Create(_statusHudRoot, "Generated Status HUD", "Status", new Vector2(1.20f, 0.40f), Vector3.zero);
+            // 数字槽按 ×1.333 同比移动：X ±0.30→±0.40，Y -0.042→-0.056，高度相应放大。
+            _goldDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(-0.40f, -0.056f, -0.003f), 0.073f);
+            _lifeDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0f, -0.056f, -0.003f), 0.067f);
+            _waveDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0.40f, -0.056f, -0.003f), 0.067f);
         }
 
         private void BuildWaveBriefingDisplay()
         {
             _waveBriefingRoot = PanelRoot("Next Wave Enemy Skill Briefing", new Vector3(-1.55f, 1.80f, -0.10f));
-            // Panel enlarged from 0.50x0.75 → 0.60x1.40m so baked enemy names meet
-            // VR spec C body minimum (47.4mm cap height at 2.79m viewing distance).
-            // Row positions (rows[] fractions) unchanged; only the scale factor updates.
-            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Enemy Briefing", "Briefing", new Vector2(0.60f, 1.40f), Vector3.zero);
-            // Wave digit: height 0.028→0.072m (cap ≈ 49mm ≥ 47.4mm body min);
-            // Y position scaled proportionally: 0.239 × (1.40/0.75) ≈ 0.446m.
-            _briefingWaveDigits = GeneratedLotusPanel.Digits(_waveBriefingRoot, new Vector3(0f, 0.446f, -0.003f), 0.072f);
+            // 等比放大 ×1.40：0.50×0.75 → 0.70×1.05m，比例 0.667:1 与图片 1024×1536 一致。
+            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Enemy Briefing", "Briefing", new Vector2(0.70f, 1.05f), Vector3.zero);
+            // 波次数字：Y 按 ×1.40 缩放 0.239→0.335，高度 0.028→0.039。
+            _briefingWaveDigits = GeneratedLotusPanel.Digits(_waveBriefingRoot, new Vector3(0f, 0.335f, -0.003f), 0.039f);
             float[] rows = { 0.275f, 0.387f, 0.498f, 0.610f, 0.723f, 0.839f };
             for (int i = 0; i < 6; i++)
-                // Enemy count digit: height 0.035→0.052m (cap ≈ 35.4mm ≥ 33.5mm secondary min);
-                // Y multiplier updated from 0.75 → 1.40 to match enlarged panel height.
+                // 敌人计数：X ×1.40 0.1175→0.1645，Y 乘数 0.75→1.05，高度 0.035→0.049。
                 _enemyCountDigits[i] = GeneratedLotusPanel.Digits(_waveBriefingRoot,
-                    new Vector3(0.1175f, (0.5f - rows[i]) * 1.40f, -0.003f), 0.052f, 3);
+                    new Vector3(0.1645f, (0.5f - rows[i]) * 1.05f, -0.003f), 0.049f, 3);
         }
 
         private void BuildInteractionGuide()
@@ -1800,7 +1795,8 @@ namespace PicoTowerDefense
             // The side panel therefore comes both inward and forward as the
             // viewer sees it, matching its camera-facing billboard normal.
             _interactionGuideRoot = PanelRoot("Two Hand World Interaction Guide", InteractionGuidePositionTowardViewer());
-            GeneratedLotusPanel.Create(_interactionGuideRoot, "Generated Controller Guide", "Guide", new Vector2(0.72f, 0.55f), Vector3.zero);
+            // 等比放大 ×1.333：0.72×0.48 → 0.96×0.64m，比例 1.5:1 与图片 1536×1024 一致。
+            GeneratedLotusPanel.Create(_interactionGuideRoot, "Generated Controller Guide", "Guide", new Vector2(0.96f, 0.64f), Vector3.zero);
         }
 
         private static Vector3 InteractionGuidePositionTowardViewer()
@@ -1921,11 +1917,13 @@ namespace PicoTowerDefense
         private void BuildTowerHoverDisplay()
         {
             _towerInfoRoot = PanelRoot("Tower Hover Information Panel", Vector3.zero);
-            GeneratedLotusPanel.Create(_towerInfoRoot, "Generated Tower Detail", "Stats", new Vector2(0.66f, 0.33f), Vector3.zero);
+            // 等比放大 ×1.333：0.66×0.33 → 0.88×0.44m，比例 2:1 与图片 1774×887 一致。
+            GeneratedLotusPanel.Create(_towerInfoRoot, "Generated Tower Detail", "Stats", new Vector2(0.88f, 0.44f), Vector3.zero);
             float[] columns = { 0.15f, 0.38f, 0.61f, 0.84f };
             for (int i = 0; i < 4; i++)
+                // X 乘数 0.66→0.88，Y -0.033→-0.044，高度 0.050→0.056。
                 _towerDigits[i] = GeneratedLotusPanel.Digits(_towerInfoRoot,
-                    new Vector3((columns[i] - 0.5f) * 0.66f, -0.033f, -0.003f), 0.050f, 5);
+                    new Vector3((columns[i] - 0.5f) * 0.88f, -0.044f, -0.003f), 0.056f, 5);
             _towerInfoRoot.gameObject.SetActive(false);
         }
 
