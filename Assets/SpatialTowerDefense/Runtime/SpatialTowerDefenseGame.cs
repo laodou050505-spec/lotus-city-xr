@@ -662,6 +662,14 @@ namespace PicoTowerDefense
             RenderSettings.ambientEquatorColor = new Color(0.30f, 0.31f, 0.26f);
             RenderSettings.ambientGroundColor = new Color(0.12f, 0.13f, 0.10f);
 
+            // Gentle temple mist — linear fog adds depth without obscuring
+            // the close-up boardgame scale, and complements the celadon palette.
+            RenderSettings.fog = true;
+            RenderSettings.fogMode = FogMode.Linear;
+            RenderSettings.fogColor = new Color(0.34f, 0.38f, 0.37f, 1f);
+            RenderSettings.fogStartDistance = 4.5f;
+            RenderSettings.fogEndDistance = 16.0f;
+
             var sunObject = new GameObject("Key Light");
             sunObject.transform.SetParent(_arenaRoot, false);
             sunObject.transform.localPosition = new Vector3(-1.9f, 3.6f, -2.2f);
@@ -1452,6 +1460,20 @@ namespace PicoTowerDefense
                 new Vector3(0.090f, 0.020f, 0.070f), stone);
             ProceduralFactory.VisualPrimitive(PrimitiveType.Sphere, $"{name} Flame", _arenaRoot, position + new Vector3(0f, 0.120f, 0f),
                 Vector3.one * 0.027f, gold);
+
+            // Warm amber point light with gentle flicker — no shadows to
+            // keep draw call budget within PICO 4 mobile VR limits.
+            var lightObj = new GameObject($"{name} Glow");
+            lightObj.layer = 2;
+            lightObj.transform.SetParent(_arenaRoot, false);
+            lightObj.transform.localPosition = position + new Vector3(0f, 0.126f, 0f);
+            Light lanternLight = lightObj.AddComponent<Light>();
+            lanternLight.type = LightType.Point;
+            lanternLight.color = new Color(1f, 0.76f, 0.34f);
+            lanternLight.range = 0.55f;
+            lanternLight.intensity = 0.22f;
+            lanternLight.shadows = LightShadows.None;
+            lightObj.AddComponent<LanternFlicker>();
         }
 
         private void BuildStonePagoda(Vector3 position, Material stone, Material tile, Material gold)
@@ -1576,6 +1598,8 @@ namespace PicoTowerDefense
             glow.range = 0.46f;
             glow.intensity = 0.18f;
             glow.shadows = LightShadows.None;
+            // Pulse slowly to draw the eye toward the protected structure.
+            root.gameObject.AddComponent<TempleHeartPulse>();
         }
 
         private static Transform FindAuthoredProtectedStructure()
@@ -2983,6 +3007,52 @@ namespace PicoTowerDefense
             Destroy(burst.gameObject);
         }
 
+        /// <summary>
+        /// Spawns a single expanding prayer-bell ripple ring on the arena
+        /// floor when a new wave begins. Purely cosmetic — no gameplay effect.
+        /// </summary>
+        private IEnumerator AnimateWaveBellRipple()
+        {
+            var rippleRoot = new GameObject("Wave Bell Ripple").transform;
+            rippleRoot.gameObject.layer = 2;
+            rippleRoot.SetParent(_actorsRoot, false);
+            rippleRoot.localPosition = new Vector3(0f, GameDefinitions.TableHeight + 0.006f, 0f);
+
+            const int Segments = 48;
+            var line = rippleRoot.gameObject.AddComponent<LineRenderer>();
+            line.sharedMaterial = CombatVisualEffects.LineMaterial;
+            line.useWorldSpace = false;
+            line.loop = true;
+            line.positionCount = Segments;
+            line.startWidth = 0.007f;
+            line.endWidth = 0.007f;
+            line.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            line.receiveShadows = false;
+
+            const float Duration = 0.90f;
+            const float MaxRadius = 1.60f;
+            Color rippleColor = new Color(0.55f, 0.82f, 0.72f, 0f);
+            float elapsed = 0f;
+
+            while (elapsed < Duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / Duration);
+                float radius = Mathf.Lerp(0.06f, MaxRadius, 1f - Mathf.Pow(1f - t, 2f));
+                rippleColor.a = Mathf.Sin(t * Mathf.PI) * 0.42f;
+                line.startColor = rippleColor;
+                line.endColor = new Color(rippleColor.r, rippleColor.g, rippleColor.b, rippleColor.a * 0.25f);
+                for (int i = 0; i < Segments; i++)
+                {
+                    float angle = i / (float)Segments * Mathf.PI * 2f;
+                    line.SetPosition(i, new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius));
+                }
+                yield return null;
+            }
+
+            Destroy(rippleRoot.gameObject);
+        }
+
         private IEnumerator AnimatePurifiedLight(Vector3 startWorldPosition)
         {
             Vector3 startLocal = _actorsRoot.InverseTransformPoint(startWorldPosition) + Vector3.up * 0.08f;
@@ -3071,6 +3141,14 @@ namespace PicoTowerDefense
             _currentWaveEnemyTotal = WaveEnemyCount(_waveIndex);
             _currentWaveEnemyResolved = 0;
             RefreshStateDisplay();
+
+            // Brief double-pulse tells the player the wave has launched.
+            _input.Pulse(0.55f, 0.10f);
+            if (Application.isPlaying && _actorsRoot != null)
+            {
+                StartCoroutine(AnimateWaveBellRipple());
+            }
+
             return true;
         }
 
@@ -3164,6 +3242,8 @@ namespace PicoTowerDefense
                 _gameOver = true;
                 _won = false;
                 Play("lose", 0.9f);
+                // Sustained low pulse signals defeat.
+                _input.Pulse(0.80f, 0.22f);
                 stateChanged = true;
             }
             else if (_waveInProgress && !_spawning && _spawnQueue.Count == 0 && _enemies.Count == 0)
@@ -3183,6 +3263,8 @@ namespace PicoTowerDefense
                     _gameOver = true;
                     _won = true;
                     Play("win", 0.9f);
+                    // Crisp strong pulse marks victory.
+                    _input.Pulse(0.88f, 0.18f);
                 }
             }
 
@@ -3206,17 +3288,18 @@ namespace PicoTowerDefense
             main.loop = false;
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
             main.scalingMode = ParticleSystemScalingMode.Hierarchy;
-            main.startLifetime = new ParticleSystem.MinMaxCurve(0.78f, 1.16f);
-            main.startSpeed = new ParticleSystem.MinMaxCurve(0.10f, 0.18f);
-            main.startSize = new ParticleSystem.MinMaxCurve(enemyRadius * 0.38f, enemyRadius * 0.78f);
+            main.startLifetime = new ParticleSystem.MinMaxCurve(0.82f, 1.24f);
+            main.startSpeed = new ParticleSystem.MinMaxCurve(0.13f, 0.26f);
+            main.startSize = new ParticleSystem.MinMaxCurve(enemyRadius * 0.50f, enemyRadius * 0.96f);
             main.startRotation = new ParticleSystem.MinMaxCurve(-Mathf.PI, Mathf.PI);
+            main.gravityModifier = -0.055f;
             main.startColor = new ParticleSystem.MinMaxGradient(
-                new Color(0.18f, 0.68f, 0.58f, 0.62f),
-                new Color(0.45f, 0.88f, 0.72f, 0.78f));
-            main.maxParticles = 32;
+                new Color(0.18f, 0.68f, 0.58f, 0.68f),
+                new Color(0.50f, 0.92f, 0.76f, 0.84f));
+            main.maxParticles = 48;
 
             ParticleSystem.EmissionModule emission = particles.emission;
-            emission.rateOverTime = 24f;
+            emission.rateOverTime = 36f;
 
             ParticleSystem.ShapeModule shape = particles.shape;
             shape.shapeType = ParticleSystemShapeType.Cone;
@@ -3270,7 +3353,42 @@ namespace PicoTowerDefense
             renderer.sharedMaterial = EnemySmokeMaterial();
 
             particles.Play();
-            yield return new WaitForSeconds(1.65f);
+
+            // Small golden burst at ground level — visual cue that Spirit Light
+            // is being released. Reuses the line material via point emitters.
+            if (enemyRadius >= 0.03f)
+            {
+                var sparkRoot = new GameObject("Purification Spark Burst").transform;
+                sparkRoot.gameObject.layer = 2;
+                sparkRoot.SetParent(_actorsRoot, false);
+                sparkRoot.localPosition = localPosition + Vector3.up * enemyRadius * 0.28f;
+                Material sparkMat = ProceduralFactory.CreateUnlitMaterial(new Color(1f, 0.86f, 0.42f, 0.88f));
+                for (int si = 0; si < 6; si++)
+                {
+                    float a = si / 6f * Mathf.PI * 2f;
+                    float r = enemyRadius * 0.38f;
+                    ProceduralFactory.VisualPrimitive(
+                        PrimitiveType.Sphere,
+                        $"Spark {si + 1}",
+                        sparkRoot,
+                        new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r),
+                        Vector3.one * (enemyRadius * 0.09f),
+                        sparkMat);
+                }
+                float sparkElapsed = 0f;
+                while (sparkElapsed < 0.50f)
+                {
+                    sparkElapsed += Time.deltaTime;
+                    float st = Mathf.Clamp01(sparkElapsed / 0.50f);
+                    sparkRoot.localScale = Vector3.one * (1f + st * 2.2f);
+                    sparkRoot.localPosition = localPosition + Vector3.up * (enemyRadius * 0.28f + st * 0.18f);
+                    sparkMat.color = new Color(1f, 0.86f, 0.42f, (1f - st) * 0.88f);
+                    yield return null;
+                }
+                Destroy(sparkRoot.gameObject);
+            }
+
+            yield return new WaitForSeconds(1.15f);
             Destroy(smokeObject);
         }
 

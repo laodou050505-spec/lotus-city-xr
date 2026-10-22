@@ -358,7 +358,7 @@ namespace PicoTowerDefense
             transform.localScale = Vector3.one * Mathf.Lerp(_maximumRadius * 0.65f, _maximumRadius, eased);
             transform.localRotation = Quaternion.Euler(0f, t * 65f, 0f);
 
-            Color fade = new(_color.r, _color.g, _color.b, Mathf.Sin(t * Mathf.PI) * 0.20f);
+            Color fade = new(_color.r, _color.g, _color.b, Mathf.Sin(t * Mathf.PI) * 0.38f);
             for (int i = 0; i < _rings.Length; i++)
             {
                 if (_rings[i] == null)
@@ -401,6 +401,67 @@ namespace PicoTowerDefense
                 line.SetPosition(i, new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)));
             }
             return line;
+        }
+    }
+
+    /// <summary>
+    /// Gently flickers a point light to simulate a warm lantern flame.
+    /// Attach to the same GameObject as the Light component.
+    /// </summary>
+    public sealed class LanternFlicker : MonoBehaviour
+    {
+        private Light _light;
+        private float _phase;
+        private float _speed;
+        private const float MinIntensity = 0.13f;
+        private const float MaxIntensity = 0.30f;
+
+        private void Awake()
+        {
+            _light = GetComponent<Light>();
+            _phase = UnityEngine.Random.Range(0f, Mathf.PI * 2f);
+            _speed = UnityEngine.Random.Range(2.0f, 3.8f);
+        }
+
+        private void Update()
+        {
+            if (_light == null)
+            {
+                return;
+            }
+
+            float t1 = 0.5f + 0.5f * Mathf.Sin(Time.time * _speed + _phase);
+            float t2 = 0.5f + 0.5f * Mathf.Sin(Time.time * _speed * 2.3f + _phase * 1.7f);
+            _light.intensity = Mathf.Lerp(MinIntensity, MaxIntensity, Mathf.Lerp(t1, t2, 0.40f));
+        }
+    }
+
+    /// <summary>
+    /// Slowly pulses the temple objective point light to draw attention and
+    /// convey vitality of the protected structure.
+    /// Attach to the same GameObject as the Light component.
+    /// </summary>
+    public sealed class TempleHeartPulse : MonoBehaviour
+    {
+        private Light _light;
+        private float _phase;
+
+        private void Awake()
+        {
+            _light = GetComponent<Light>();
+        }
+
+        private void Update()
+        {
+            if (_light == null)
+            {
+                return;
+            }
+
+            _phase += Time.deltaTime * 1.35f;
+            float wave = 0.5f + 0.5f * Mathf.Sin(_phase);
+            _light.intensity = Mathf.Lerp(0.12f, 0.28f, wave);
+            _light.range = Mathf.Lerp(0.40f, 0.58f, wave * 0.7f);
         }
     }
 }
