@@ -89,3 +89,107 @@
 3. **灯笼数量**：目前 6 只灯笼均添加了点光源。若实际测试 FPS 下降，可减少到每隔一只（3 只）。
 4. **雾对 VR 舒适感影响**：薄雾（start 4.5m）在近场（棋盘 2.2m）不可见；中远距离有助于减少深度冲突，通常对 VR 舒适感利大于弊。真实头显测试后如有问题可将 `fogStartDistance` 调大。
 5. **金色迸发使用 `sparkMat.color`**：通过 `sharedMaterial` 共享颜色，多个同时死亡的敌人会造成最后一个写入值覆盖前者。考虑到这是次要视觉细节，暂不处理；如需独立，可改为 `renderer.material`（实例化）。
+
+---
+
+# 追加内容：图九 VR 字高修正 + 开始按钮手柄反馈（2026-10-22）
+
+## 一、字高检查表（规范 C 实测数据）
+
+| 面板 | 世界尺寸 (m) | 图像尺寸 (px) | 密度 (px/m) | 设计距离 (m) | 层级 | 字体 (px) | 大写字高 (px) | 实测 (mm) | 规范 (mm) | 结果 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Status | 0.90×0.50 | 1956×1448 | 2896 | 2.67 | 列标题 | 100 | 69 | 47.7 | ≥45.4 | ✓ |
+| Status | — | — | — | 2.67 | 动态数字 h=0.070m | 0.070×0.68=47.6mm | — | 47.6 | ≥45.4 | ✓ |
+| Briefing | 0.60×1.40 | 930×2160 | 1543 | 2.79 | 标题 | 130 | 90 | 82.0 | ≥78.1 | ✓ |
+| Briefing | — | — | — | 2.79 | 敌人名 | 75 | 52 | 47.4 | ≥47.4 | ✓ |
+| Briefing | — | — | — | 2.79 | 描述行 | 56 | 39 | 35.5 | ≥33.5 | ✓ |
+| Briefing | — | — | — | 2.79 | 数字 h=0.052m | 0.052×0.68=35.4mm | — | 35.4 | ≥33.5 | ✓ |
+| Briefing | — | — | — | 2.79 | 波次数字 h=0.072m | 0.072×0.68=49.0mm | — | 49.0 | ≥47.4 | ✓ |
+| Guide | 0.72×0.55 | 1536×1024 | 1862 | 2.20 | 标题 | 167 | 115 | 61.9 | ≥61.6 | ✓ |
+| Guide | — | — | — | 2.20 | 正文 | 101 | 70 | 37.4 | ≥37.4 | ✓ |
+| Stats | 0.66×0.33 | 1774×887 | 2688 | 2.0 | 标题 | 220 | 152 | 56.5 | ≥56.0 | ✓ |
+| Stats | — | — | — | 2.0 | 列标题 | 133 | 92 | 34.1 | ≥34.0 | ✓ |
+| Stats | — | — | — | 2.0 | 提示文字 | 94 | 65 | 24.1 | ≥24.0 | ✓ |
+| Stats | — | — | — | 2.0 | 动态数字 h=0.050m | 0.050×0.68=34.0mm | — | 34.0 | ≥34.0 | ✓ |
+| WaveStates | 0.18×0.36 | 512×1024/col | 2844 | 1.48 | 状态名 | 107 | 74 | 26.0 | ≥25.2 | ✓ |
+| WaveStates | — | — | — | 1.48 | 副标题 | 74 | 51 | 18.0 | ≥17.8 | ✓ |
+| Arsenal | 0.18×0.36 | 443×887/col | 2464 | 1.48 | 全部文字 | 64 | 44 | 17.9 | ≥17.8 | ✓ |
+
+*注：Arsenal 使用次要规范（d×0.012），因其为主动点击目标且悬停触发 Stats 面板（正文级）。*
+
+## 二、面板改动摘要
+
+### Status.png — 列标题放大
+- 面板尺寸：0.90×0.30m → 0.90×0.50m（代码改）
+- 列标题重绘：font=100px，cap=69px=47.7mm（旧版仅约13mm）
+- 动态数字高度：0.055/0.050m → 0.070m
+
+### Briefing.png — 整体重排
+- 面板尺寸：0.50×0.75m → 0.60×1.40m（代码改）
+- 标题 "ENEMY INTEL"：130px（82.0mm，旧版约5mm）
+- 敌人名：75px（47.4mm）；技能描述：56px（35.5mm）
+- 布局：字宽超限处缩写（"800 HP · 38% Armor"、"Heals, silences towers"）
+
+### Guide.png — 全部放大
+- 面板尺寸：0.72×0.48m → 0.72×0.55m（代码改，密度 2133→1862 px/m）
+- 标题 "Two-Hand Controls"：167px（61.9mm，旧版约13.6mm）
+- 正文 5 行：101px（37.4mm，旧版约8.7mm）
+
+### Stats.png — 全部放大
+- 像素不变（1774×887），字号大幅提升
+- 标题 "Tower Details"：220px（56.5mm）
+- 列标题 Level/Attack/Speed/Range：133px（34.1mm）
+- 提示：94px（24.1mm）
+- 动态数字高度：0.042m → 0.050m（代码改）
+
+### WaveStates.png — 重排
+- "Defending"：107px 单行；"Temple Saved/Lost"：107px 双行
+- 副标题（"Purify foes" / "Lamp endures" / "Try Again"）：74px
+- 保留原始植物插画（叶、莲、落叶）
+
+### Arsenal.png — 放大 + 缩写
+- "Slowing Control" → "Slow Control"（62→374px，符合443px列宽）
+- "Prayer Wheel Guardian" 拆为两行
+- 全部文字：64px（17.9mm，次要规范）
+
+## 三、开始/退出按钮手柄反馈（LotusTitleStage.cs）
+
+| 事件 | 震动参数 | 音效 |
+|---|---|---|
+| 射线悬停进入 START/EXIT | Pulse(0.15, 0.02) 双手 | 无 |
+| 按下 START/EXIT | Pulse(0.40, 0.04) 双手 | med_ui_soft_02.mp3 |
+| 悬停高亮叠色 START | (1.0, 0.85, 0.38, 0.52) | — |
+| 悬停高亮叠色 EXIT | (0.22, 0.65, 0.56, 0.32) | — |
+
+音效来源：ange-embed ui_audio 集合，asset ID=3f9bb65b，URL=https://cdn-ange.holymolly.ai/1/8/18ddbccc-5892-4dcd-b3c9-1804033b266d.mp3
+
+## 四、Batchmode 执行方法
+
+```
+lockf /tmp/en-unity-A.lock unity \
+  -batchmode -buildTarget Android \
+  -projectPath /Users/ld/Documents/Codex/EnglishEditions/LotusCity-EN \
+  -executeMethod PicoTowerDefenseEditor.ProjectSetup.ApplyPolish20261022 \
+  -quit
+```
+
+reimport 范围：Status / Briefing / Guide / Stats / WaveStates / Arsenal + 两个音频文件
+
+## 五、git 提交记录
+
+| 提交 | 摘要 |
+|---|---|
+| 02b2679 | Status + Briefing 面板字高修正，开始按钮手柄/音效 |
+| 06e9419 | Guide / Stats / WaveStates 面板字高修正 |
+| c9e15f1 | Arsenal 面板字高修正 |
+
+## 六、对比图路径
+
+```
+VisualQA/Polish-20261022/Status_comparison.png
+VisualQA/Polish-20261022/Briefing_comparison.png
+VisualQA/Polish-20261022/Guide_comparison.png
+VisualQA/Polish-20261022/Stats_comparison.png
+VisualQA/Polish-20261022/WaveStates_comparison.png
+VisualQA/Polish-20261022/Arsenal_comparison.png
+```
