@@ -251,11 +251,11 @@ namespace PicoTowerDefense
 
         private static readonly Dictionary<EnemyKind, EnemyDefinition> EnemyDefinitions = new()
         {
-            [EnemyKind.Grunt] = new EnemyDefinition("Restless Dust", 64f, 0.62f * SpatialScale, 8, 0.045f * SpatialScale, Hex(0x6B7180)),
-            [EnemyKind.Runner] = new EnemyDefinition("Grasping Burden", 55f, 0.92f * SpatialScale, 8, 0.043f * SpatialScale, Hex(0x8C755D)),
-            [EnemyKind.Tank] = new EnemyDefinition("Ignorance Beast Boss", 800f, 0.28f * SpatialScale, 50, 0.078f * SpatialScale, Hex(0x665B72), armor: 0.38f, coreDamage: 4),
+            [EnemyKind.Grunt] = new EnemyDefinition("Drifting Dust", 64f, 0.62f * SpatialScale, 8, 0.045f * SpatialScale, Hex(0x6B7180)),
+            [EnemyKind.Runner] = new EnemyDefinition("Fleeting Obsession", 55f, 0.92f * SpatialScale, 8, 0.043f * SpatialScale, Hex(0x8C755D)),
+            [EnemyKind.Tank] = new EnemyDefinition("Ignorance Beast", 800f, 0.28f * SpatialScale, 50, 0.078f * SpatialScale, Hex(0x665B72), armor: 0.38f, coreDamage: 4),
             [EnemyKind.Shield] = new EnemyDefinition("Doubt Carapace", 115f, 0.48f * SpatialScale, 13, 0.052f * SpatialScale, Hex(0x87969B), shieldPoints: 110f),
-            [EnemyKind.Splitter] = new EnemyDefinition("Anger Flame", 90f, 0.68f * SpatialScale, 10, 0.049f * SpatialScale, Hex(0xA64E42)),
+            [EnemyKind.Splitter] = new EnemyDefinition("Wrath Flame", 90f, 0.68f * SpatialScale, 10, 0.049f * SpatialScale, Hex(0xA64E42)),
             [EnemyKind.Support] = new EnemyDefinition("Delusion Fog", 125f, 0.42f * SpatialScale, 16, 0.052f * SpatialScale, Hex(0x7B8591))
         };
 
@@ -309,9 +309,9 @@ namespace PicoTowerDefense
                 },
                 TowerKind.Cannon => clampedLevel switch
                 {
-                    1 => "Sutra Guardian Pillar",
-                    2 => "Sutra Guardian Wheel Platform",
-                    _ => "Sutra Guardian Gate"
+                    1 => "Prayer Wheel Guardian Pillar",
+                    2 => "Prayer Wheel Guardian Wheel Platform",
+                    _ => "Prayer Wheel Guardian Gate"
                 },
                 _ => clampedLevel switch
                 {

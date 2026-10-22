@@ -1962,7 +1962,7 @@ namespace PicoTowerDefense
         {
             return kind switch
             {
-                TowerKind.Cannon => "Sutra Guardian",
+                TowerKind.Cannon => "Prayer Wheel Guardian",
                 TowerKind.Frost => "Lotus Lamp",
                 _ => "Morning Bell"
             };
@@ -1972,7 +1972,7 @@ namespace PicoTowerDefense
         {
             return kind switch
             {
-                TowerKind.Cannon => "Heavy Strike",
+                TowerKind.Cannon => "Heavy Purify",
                 TowerKind.Frost => "Frost Control",
                 _ => "Area Purification"
             };
@@ -3466,12 +3466,12 @@ namespace PicoTowerDefense
         {
             return kind switch
             {
-                EnemyKind.Runner => $"Grasping Burden ×{count}\nSwift / Steals 10 Gold",
-                EnemyKind.Tank => $"Ignorance Beast Boss ×{count}\n800 HP / 38% Armor\nTemple Damage 4",
-                EnemyKind.Shield => $"Doubt Carapace ×{count}\nStone Shell / 110 Shield",
-                EnemyKind.Splitter => $"Anger Flame ×{count}\nHastens Allies / Splits",
-                EnemyKind.Support => $"Delusion Fog ×{count}\nFog Silences Towers",
-                _ => $"Restless Dust ×{count}\nSwarming Rush"
+                EnemyKind.Runner => $"Fleeting Obsession ×{count}\nFast, steals Spirit Light",
+                EnemyKind.Tank => $"Ignorance Beast ×{count}\n800 HP / 38% Armor\nTemple Damage 4",
+                EnemyKind.Shield => $"Doubt Carapace ×{count}\nStone-shell shield",
+                EnemyKind.Splitter => $"Wrath Flame ×{count}\nHastens allies, splits",
+                EnemyKind.Support => $"Delusion Fog ×{count}\nHeals allies, silences towers",
+                _ => $"Drifting Dust ×{count}\nSwarming raid"
             };
         }
 
