@@ -992,6 +992,67 @@ namespace PicoTowerDefenseEditor
             graphicsSettings.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        // ---------------------------------------------------------------------------
+        // Polish-20261022: batchmode-safe import + scene-save step
+        // Run via: unity -buildTarget Android -executeMethod PicoTowerDefenseEditor.ProjectSetup.ApplyPolish20261022
+        // ---------------------------------------------------------------------------
+        [MenuItem("Tools/Spatial Tower Defense/Apply Polish 2026-10-22")]
+        public static void ApplyPolish20261022()
+        {
+            // 1. Force reimport regenerated panel textures (Status, Briefing).
+            //    GeneratedPanelImporter.OnPreprocessTexture applies the correct
+            //    import settings automatically on reimport.
+            foreach (string texPath in new[]
+            {
+                "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Status.png",
+                "Assets/SpatialTowerDefense/Resources/UI/GeneratedV5/Briefing.png",
+            })
+            {
+                if (AssetImporter.GetAtPath(texPath) is TextureImporter ti)
+                {
+                    ti.SaveAndReimport();
+                    Debug.Log($"[Polish] Reimported texture: {texPath}");
+                }
+                else
+                {
+                    Debug.LogWarning($"[Polish] Texture not found (will be imported on next refresh): {texPath}");
+                }
+            }
+
+            // 2. Import and configure the new UI button audio clips.
+            foreach (string audioPath in new[]
+            {
+                "Assets/SpatialTowerDefense/Resources/UI/Audio/med_ui_soft_02.mp3",
+                "Assets/SpatialTowerDefense/Resources/UI/Audio/med_pos_hard_01.mp3",
+            })
+            {
+                if (AssetImporter.GetAtPath(audioPath) is AudioImporter ai)
+                {
+                    var settings = ai.defaultSampleSettings;
+                    settings.loadType = AudioClipLoadType.CompressedInMemory;
+                    settings.compressionFormat = AudioCompressionFormat.Vorbis;
+                    settings.sampleRateSetting = AudioSampleRateSetting.OptimizeSampleRate;
+                    settings.quality = 0.78f;
+                    settings.preloadAudioData = true;
+                    ai.defaultSampleSettings = settings;
+                    ai.forceToMono = false;
+                    ai.loadInBackground = false;
+                    ai.SaveAndReimport();
+                    Debug.Log($"[Polish] Imported audio: {audioPath}");
+                }
+                else
+                {
+                    // Asset not yet tracked — refresh first then retry.
+                    AssetDatabase.ImportAsset(audioPath, ImportAssetOptions.ForceSynchronousImport);
+                    Debug.Log($"[Polish] Force-imported audio: {audioPath}");
+                }
+            }
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("[Polish-20261022] Texture reimport and audio import complete. Run Verify to check all panels.");
+        }
+
         private static void ConfigureAudioImporters()
         {
             ConfigureAudioImporter("Assets/Resources/Audio/LotusCityMusic.wav", true);

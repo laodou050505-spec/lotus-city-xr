@@ -1767,21 +1767,31 @@ namespace PicoTowerDefense
         private void BuildStatusDisplay()
         {
             _statusHudRoot = PanelRoot("World Status HUD", new Vector3(0f, 1.90f, 0.26f));
-            GeneratedLotusPanel.Create(_statusHudRoot, "Generated Status HUD", "Status", new Vector2(0.90f, 0.30f), Vector3.zero);
-            _goldDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(-0.30f, -0.042f, -0.003f), 0.055f);
-            _lifeDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0f, -0.042f, -0.003f), 0.050f);
-            _waveDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0.30f, -0.042f, -0.003f), 0.050f);
+            // Panel enlarged from 0.90x0.30 → 0.90x0.50m so baked column labels meet
+            // VR spec C body minimum (45.4mm cap height at 2.67m viewing distance).
+            GeneratedLotusPanel.Create(_statusHudRoot, "Generated Status HUD", "Status", new Vector2(0.90f, 0.50f), Vector3.zero);
+            // Digit heights enlarged from 0.055/0.050 → 0.070m: cap ≈ 47.6mm ≥ 45.4mm body min.
+            _goldDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(-0.30f, -0.042f, -0.003f), 0.070f);
+            _lifeDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0f, -0.042f, -0.003f), 0.070f);
+            _waveDigits = GeneratedLotusPanel.Digits(_statusHudRoot, new Vector3(0.30f, -0.042f, -0.003f), 0.070f);
         }
 
         private void BuildWaveBriefingDisplay()
         {
             _waveBriefingRoot = PanelRoot("Next Wave Enemy Skill Briefing", new Vector3(-1.55f, 1.80f, -0.10f));
-            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Enemy Briefing", "Briefing", new Vector2(0.50f, 0.75f), Vector3.zero);
-            _briefingWaveDigits = GeneratedLotusPanel.Digits(_waveBriefingRoot, new Vector3(0f, 0.239f, -0.003f), 0.028f);
+            // Panel enlarged from 0.50x0.75 → 0.60x1.40m so baked enemy names meet
+            // VR spec C body minimum (47.4mm cap height at 2.79m viewing distance).
+            // Row positions (rows[] fractions) unchanged; only the scale factor updates.
+            GeneratedLotusPanel.Create(_waveBriefingRoot, "Generated Enemy Briefing", "Briefing", new Vector2(0.60f, 1.40f), Vector3.zero);
+            // Wave digit: height 0.028→0.072m (cap ≈ 49mm ≥ 47.4mm body min);
+            // Y position scaled proportionally: 0.239 × (1.40/0.75) ≈ 0.446m.
+            _briefingWaveDigits = GeneratedLotusPanel.Digits(_waveBriefingRoot, new Vector3(0f, 0.446f, -0.003f), 0.072f);
             float[] rows = { 0.275f, 0.387f, 0.498f, 0.610f, 0.723f, 0.839f };
             for (int i = 0; i < 6; i++)
+                // Enemy count digit: height 0.035→0.052m (cap ≈ 35.4mm ≥ 33.5mm secondary min);
+                // Y multiplier updated from 0.75 → 1.40 to match enlarged panel height.
                 _enemyCountDigits[i] = GeneratedLotusPanel.Digits(_waveBriefingRoot,
-                    new Vector3(0.1175f, (0.5f - rows[i]) * 0.75f, -0.003f), 0.035f, 3);
+                    new Vector3(0.1175f, (0.5f - rows[i]) * 1.40f, -0.003f), 0.052f, 3);
         }
 
         private void BuildInteractionGuide()

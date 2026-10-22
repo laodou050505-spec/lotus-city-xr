@@ -36,6 +36,11 @@ namespace PicoTowerDefense
         private bool _inputHasSettled;
         private int _inputSettledFrame;
         private int _pointerReadyFrame;
+        // Hover edge detection for haptic pulse on entry
+        private bool _wasHoveringStart;
+        private bool _wasHoveringExit;
+        // Wood-hit UI click audio (loaded from Resources at runtime)
+        private AudioSource _clickAudio;
 
         public Transform TitleRoot => _titleRoot;
         public Camera TitleCamera => _input != null ? _input.Camera : null;
@@ -80,6 +85,18 @@ namespace PicoTowerDefense
             bool rightHoveringExit = rightHitCollider == _exitCollider;
             bool hoveringStart = leftHoveringStart || rightHoveringStart;
             bool hoveringExit = leftHoveringExit || rightHoveringExit;
+
+            // Haptic feedback on hover entry (spec A: 0.15 strength, 20ms).
+            bool enteredStart = hoveringStart && !_wasHoveringStart;
+            bool enteredExit  = hoveringExit  && !_wasHoveringExit;
+            if (enteredStart || enteredExit)
+            {
+                _input.Pulse(0.15f, 0.02f);
+                _input.PulseAttack(0.15f, 0.02f);
+            }
+            _wasHoveringStart = hoveringStart;
+            _wasHoveringExit  = hoveringExit;
+
             SetButtonFeedback(hoveringStart, hoveringExit, _pressArmed || _rightPressArmed);
             _input.SetAimVisual(hit ? hitInfo.point : ray.origin + ray.direction * 5f, hit);
             _input.SetAttackVisual(rightHit ? rightHitInfo.point : rightRay.origin + rightRay.direction * 5f, rightHit);
@@ -115,6 +132,12 @@ namespace PicoTowerDefense
             if (confirmDown && inputReady && Time.frameCount > _inputSettledFrame)
             {
                 _pressArmed = CanActivateStart(leftHoveringStart);
+                if (leftHoveringStart || leftHoveringExit)
+                {
+                    // Haptic + audio feedback on left-hand press (spec A: 0.4 strength, 40ms).
+                    _input.Pulse(0.40f, 0.04f);
+                    if (_clickAudio != null && _clickAudio.clip != null) _clickAudio.Play();
+                }
                 if (leftHoveringExit)
                 {
                     ExitApplication();
@@ -128,6 +151,12 @@ namespace PicoTowerDefense
             if (rightDown && inputReady && Time.frameCount > _inputSettledFrame)
             {
                 _rightPressArmed = CanActivateStart(rightHoveringStart);
+                if (rightHoveringStart || rightHoveringExit)
+                {
+                    // Haptic + audio feedback on right-hand press (spec A: 0.4 strength, 40ms).
+                    _input.PulseAttack(0.40f, 0.04f);
+                    if (_clickAudio != null && _clickAudio.clip != null) _clickAudio.Play();
+                }
                 if (rightHoveringExit)
                 {
                     ExitApplication();
@@ -223,17 +252,19 @@ namespace PicoTowerDefense
             _pressedRenderer.enabled = false;
 
             // The original Figma frame remains the visual source. These two
-            // overlays occupy exactly the current button bounds and only add
-            // a warm/cool translucent wash while a controller ray hovers.
-            // No scale animation is used, so the button sizes never change.
-            _startHoverMaterial = CreateHoverMaterial(new Color(0.96f, 0.72f, 0.29f, 0.33f));
+            // overlays occupy exactly the current button bounds and add a
+            // warm/cool translucent wash while a controller ray hovers.
+            // Brightness increased from 0.33→0.52 alpha for visible hover cue (spec A).
+            // No scale animation is used, so the button hit areas never change.
+            _startHoverMaterial = CreateHoverMaterial(new Color(1.00f, 0.85f, 0.38f, 0.52f));
             _startHoverRenderer = CreateTitleFeedbackOverlay(
                 "START Hover Colour Feedback",
                 TitleArtPosition(394f, 600.5f, coverWidth, coverHeight, -0.006f),
                 new Vector3(coverWidth * 390f / 1920f, coverHeight * 87f / 1080f, 1f),
                 _startHoverMaterial,
                 arrowShape: true);
-            _exitHoverMaterial = CreateHoverMaterial(new Color(0.20f, 0.55f, 0.48f, 0.18f));
+            // EXIT hover alpha increased from 0.18→0.32 for visible hover cue (spec A).
+            _exitHoverMaterial = CreateHoverMaterial(new Color(0.22f, 0.65f, 0.56f, 0.32f));
             _exitHoverRenderer = CreateTitleFeedbackOverlay(
                 "EXIT Hover Colour Feedback",
                 TitleArtPosition(362f, 688f, coverWidth, coverHeight, -0.006f),
@@ -256,6 +287,18 @@ namespace PicoTowerDefense
 
             BillboardText titleFacing = _titleRoot.gameObject.AddComponent<BillboardText>();
             titleFacing.Target = _input.Camera.transform;
+
+            // Set up 2D UI click audio (wood-hit sound, ange-embed ui_audio med_ui_soft_02).
+            // The clip is loaded from Resources at runtime so no Inspector assignment is needed.
+            var audioGo = new GameObject("Title Button Click Audio");
+            audioGo.transform.SetParent(_titleRoot, false);
+            _clickAudio = audioGo.AddComponent<AudioSource>();
+            _clickAudio.playOnAwake = false;
+            _clickAudio.spatialBlend = 0f;   // 2D: heard at constant volume regardless of head pose
+            _clickAudio.volume = 0.80f;
+            AudioClip clip = Resources.Load<AudioClip>("UI/Audio/med_ui_soft_02");
+            if (clip != null) _clickAudio.clip = clip;
+
             ConfigureDesktopTitleStart();
             _inputEnabledAt = Time.unscaledTime + 2f;
             _inputHasSettled = false;
@@ -267,6 +310,8 @@ namespace PicoTowerDefense
             // callback can still extend it to filter its own OS click.
             _pointerReadyFrame = Time.frameCount + 12;
             _rightTriggerWasPressed = false;
+            _wasHoveringStart = false;
+            _wasHoveringExit = false;
             Debug.Log("[Yi Nian Lotus City] Title scene ready: only the opaque Figma title shrine is active; gameplay scene is not loaded.");
         }
 
