@@ -1473,6 +1473,9 @@ namespace PicoTowerDefense
             lanternLight.range = 0.55f;
             lanternLight.intensity = 0.22f;
             lanternLight.shadows = LightShadows.None;
+            // 默认画质为 Ultra（4 盏像素光），内置管线下像素点光会给范围内每个物体追加一次绘制；
+            // 改为顶点光：保留暖光氛围，几乎不增加 Draw Call
+            lanternLight.renderMode = LightRenderMode.ForceVertex;
             lightObj.AddComponent<LanternFlicker>();
         }
 
@@ -3362,7 +3365,7 @@ namespace PicoTowerDefense
                 sparkRoot.gameObject.layer = 2;
                 sparkRoot.SetParent(_actorsRoot, false);
                 sparkRoot.localPosition = localPosition + Vector3.up * enemyRadius * 0.28f;
-                Material sparkMat = ProceduralFactory.CreateUnlitMaterial(new Color(1f, 0.86f, 0.42f, 0.88f));
+                Material sparkMat = ProceduralFactory.CreateTransparentMaterial(new Color(1f, 0.86f, 0.42f, 0.88f)); // 透明材质，淡出才会生效
                 for (int si = 0; si < 6; si++)
                 {
                     float a = si / 6f * Mathf.PI * 2f;
@@ -3386,6 +3389,7 @@ namespace PicoTowerDefense
                     yield return null;
                 }
                 Destroy(sparkRoot.gameObject);
+                Destroy(sparkMat); // 每次迸发新建的材质要销毁，避免泄漏
             }
 
             yield return new WaitForSeconds(1.15f);
