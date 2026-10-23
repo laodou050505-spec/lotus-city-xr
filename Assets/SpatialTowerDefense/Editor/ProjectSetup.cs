@@ -1145,10 +1145,11 @@ namespace PicoTowerDefenseEditor
                 var t = new GameObject(name).transform;
                 t.SetParent(arenaRoot, false);
                 t.localPosition = localPos;
-                // 令面板的 +Z 朝向摄像机（Billboard 效果）
+                // Unity Quad 可读面在 local -Z，所以令面板 +Z 背向摄像机。
+                // （+Z 朝向摄像机 = 摄像机看到背面 = 文字镜像；取反后正面朝向摄像机 = 文字正读）
                 Vector3 toCam = eyePos - localPos;
                 if (toCam.sqrMagnitude > 0.0001f)
-                    t.rotation = Quaternion.LookRotation(toCam.normalized, Vector3.up);
+                    t.rotation = Quaternion.LookRotation(-toCam.normalized, Vector3.up);
                 return t;
             }
 
