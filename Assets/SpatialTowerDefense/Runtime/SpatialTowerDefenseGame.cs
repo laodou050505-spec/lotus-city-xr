@@ -29,6 +29,8 @@ namespace PicoTowerDefense
         private readonly LotusDigitField[] _enemyCountDigits = new LotusDigitField[6];
         private readonly LotusDigitField[] _towerDigits = new LotusDigitField[4];
         private Renderer _waveArt;
+        private const float StartDigitsIdleY = -0.042f;   // Arsenal 第 4 张卡：山水画下沿与 "Start Wave" 之间
+        private const float StartDigitsStateY = -0.128f;  // WaveStates 卡：副标题下方
         private Transform _statusHudRoot;
         private Transform _controlsRoot;
         private Transform _statusWaveProgress;
@@ -1658,8 +1660,9 @@ namespace PicoTowerDefense
                 if (index == 3)
                 {
                     _waveArt = art.GetComponent<Renderer>();
-                    // v4: 波次计数器从 y=-0.098 下移到 y=-0.155，避免与烘焙文字 "Start Wave [Left Y]" 重叠
-                    _startDigits = GeneratedLotusPanel.Digits(_controlsRoot, new Vector3(x, -0.155f, -0.003f), 0.029f);
+                    // v4：波次计数器按卡面状态摆位（见 RefreshHud）：待开波时放在山水与 "Start Wave" 之间，
+                    // 防守/结束时放在 WaveStates 副标题下方，两种卡面都不与烘焙文字重叠
+                    _startDigits = GeneratedLotusPanel.Digits(_controlsRoot, new Vector3(x, StartDigitsIdleY, -0.003f), 0.029f);
                 }
             }
         }
@@ -3542,6 +3545,9 @@ namespace PicoTowerDefense
             _waveArt.sharedMaterial = _gameOver ? GeneratedLotusPanel.Material("WaveStates", _won ? 1 : 2) :
                 _waveInProgress ? GeneratedLotusPanel.Material("WaveStates", 0) : GeneratedLotusPanel.Material("Arsenal", 3);
             _startDigits.Set(_gameOver ? (_won ? "25/25" : "-") : $"{displayWave}/25");
+            Vector3 startDigitsPos = _startDigits.transform.localPosition;
+            startDigitsPos.y = _gameOver || _waveInProgress ? StartDigitsStateY : StartDigitsIdleY;
+            _startDigits.transform.localPosition = startDigitsPos;
             if (_baseHealthFill != null)
             {
                 float width = 0.40f * Mathf.Clamp01(_lives / (float)GameDefinitions.StartingLives);
