@@ -1658,7 +1658,8 @@ namespace PicoTowerDefense
                 if (index == 3)
                 {
                     _waveArt = art.GetComponent<Renderer>();
-                    _startDigits = GeneratedLotusPanel.Digits(_controlsRoot, new Vector3(x, -0.098f, -0.003f), 0.029f);
+                    // v4: 波次计数器从 y=-0.098 下移到 y=-0.155，避免与烘焙文字 "Start Wave [Left Y]" 重叠
+                    _startDigits = GeneratedLotusPanel.Digits(_controlsRoot, new Vector3(x, -0.155f, -0.003f), 0.029f);
                 }
             }
         }
